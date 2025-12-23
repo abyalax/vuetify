@@ -9,7 +9,9 @@
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --build --force",
-    "lint": "eslint . --fix"
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "prepare": "husky"
   },
   "dependencies": {
     "@fontsource/roboto": "5.2.7",
@@ -28,6 +30,8 @@
     "@vue/tsconfig": "^0.8.1",
     "eslint": "^9.35.0",
     "eslint-config-vuetify": "^4.2.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "npm-run-all2": "^8.0.4",
     "sass-embedded": "^1.92.1",
     "typescript": "~5.9.2",
@@ -39,5 +43,10 @@
     "vite-plugin-vue-layouts-next": "^1.0.0",
     "vite-plugin-vuetify": "^2.1.2",
     "vue-tsc": "^3.0.7"
+  },
+  "lint-staged": {
+    "*.{js,ts,vue}": [
+      "eslint --fix"
+    ]
   }
 }
