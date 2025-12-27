@@ -16,7 +16,7 @@
   const page = ref({ title: 'Curriculum Vitae' })
   const breadcrumbs = ref<Breadcrumb[]>([
     {
-      title: 'Curriculum Vitae',
+      title: 'CV',
       disabled: false,
       href: '/cv',
     },

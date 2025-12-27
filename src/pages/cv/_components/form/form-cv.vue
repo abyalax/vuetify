@@ -1,7 +1,8 @@
 <script setup lang="ts">
   import { toTypedSchema } from '@vee-validate/zod'
   import { ErrorMessage, Field, Form } from 'vee-validate'
-  import { cvSchema, educationShape, experienceShape, type FormDataCV, type PayloadCV } from './cv-schema'
+  import { zodObjectToShape } from '@/libs/zod/zod-to-field-config'
+  import { cvSchema, educationShape, experienceSchema, type FormDataCV, type PayloadCV } from './cv-schema'
 
   type Props = {
     initialValues?: PayloadCV
@@ -11,6 +12,7 @@
 
   const props = defineProps<Props>()
   const validationSchema = toTypedSchema(cvSchema)
+  const experienceShape = zodObjectToShape(experienceSchema)
 
 </script>
 

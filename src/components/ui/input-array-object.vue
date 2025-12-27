@@ -1,6 +1,6 @@
 <script setup lang="ts" generic="T extends Record<string, any>, O extends Record<string, any>">
   import type { FieldConfig } from '.'
-  import { useFieldArray } from 'vee-validate'
+  import { Field, useFieldArray } from 'vee-validate'
 
   export interface Props<O> {
     name: string
@@ -33,41 +33,64 @@
 
     <div class="d-flex flex-column ga-4">
       <v-card
-        v-for="(field, index) in fields"
-        :key="field.key"
+        v-for="(f, index) in fields"
+        :key="f.key"
         class="pa-4"
         variant="outlined"
       >
         <div class="d-flex flex-column ga-3">
           <template v-for="([key, config]) in Object.entries(shape)" :key="key">
-            <v-textarea
+            <Field
               v-if="config.type === 'textarea'"
-              v-model="field.value[key]"
-              density="compact"
-              :label="config.label"
+              v-slot="{ field, errors, handleChange, handleBlur }"
               :name="`${name}[${index}].${key}`"
-              variant="outlined"
-            />
-
-            <v-text-field
+            >
+              <v-textarea
+                v-bind="field"
+                density="compact"
+                :error-messages="errors"
+                :label="config.label"
+                variant="outlined"
+                @blur="handleBlur"
+                @update:model-value="handleChange"
+              />
+            </Field>
+            <Field
               v-else-if="config.type === 'number'"
-              v-model.number="field.value[key]"
-              density="compact"
-              :label="config.label"
+              v-slot="{ field, errors, handleChange, handleBlur }"
               :name="`${name}[${index}].${key}`"
-              type="number"
-              variant="outlined"
-            />
+            >
+              <v-text-field
+                density="compact"
+                v-bind="field"
+                :error-messages="errors"
+                :label="config.label"
+                :name="`${name}[${index}].${key}`"
+                type="number"
+                variant="outlined"
+                @blur="handleBlur"
+                @update:model-value="handleChange"
+              />
+            </Field>
 
-            <v-text-field
+            <Field
               v-else
-              v-model="field.value[key]"
-              density="compact"
-              :label="config.label"
+              v-slot="{ field, errors, handleChange, handleBlur }"
               :name="`${name}[${index}].${key}`"
-              :type="config.type ?? 'text'"
-              variant="outlined"
-            />
+            >
+              <v-text-field
+                v-bind="field"
+                density="compact"
+                :error-messages="errors"
+                :label="config.label"
+                :name="`${name}[${index}].${key}`"
+                :type="config.type ?? 'text'"
+                variant="outlined"
+                @blur="handleBlur"
+                @update:model-value="handleChange"
+              />
+            </Field>
+
           </template>
 
           <v-btn
