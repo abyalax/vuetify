@@ -32,7 +32,7 @@ declare module 'vue-router/auto-routes' {
     '/candidate/create/': RouteRecordInfo<'/candidate/create/', '/candidate/create', Record<never, never>, Record<never, never>>,
     '/cv/': RouteRecordInfo<'/cv/', '/cv', Record<never, never>, Record<never, never>>,
     '/cv/_components/form/form-cv': RouteRecordInfo<'/cv/_components/form/form-cv', '/cv/_components/form/form-cv', Record<never, never>, Record<never, never>>,
-    '/cv/_components/table-cv-server': RouteRecordInfo<'/cv/_components/table-cv-server', '/cv/_components/table-cv-server', Record<never, never>, Record<never, never>>,
+    '/cv/_components/table-cv': RouteRecordInfo<'/cv/_components/table-cv', '/cv/_components/table-cv', Record<never, never>, Record<never, never>>,
     '/cv/[id]/': RouteRecordInfo<'/cv/[id]/', '/cv/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
     '/cv/[id]/update/': RouteRecordInfo<'/cv/[id]/update/', '/cv/:id/update', { id: ParamValue<true> }, { id: ParamValue<false> }>,
     '/cv/create/': RouteRecordInfo<'/cv/create/', '/cv/create', Record<never, never>, Record<never, never>>,
@@ -45,6 +45,12 @@ declare module 'vue-router/auto-routes' {
     '/dashboard/_components/transaction-history': RouteRecordInfo<'/dashboard/_components/transaction-history', '/dashboard/_components/transaction-history', Record<never, never>, Record<never, never>>,
     '/dashboard/_components/unique-visitor': RouteRecordInfo<'/dashboard/_components/unique-visitor', '/dashboard/_components/unique-visitor', Record<never, never>, Record<never, never>>,
     '/dashboard/_components/widget-five': RouteRecordInfo<'/dashboard/_components/widget-five', '/dashboard/_components/widget-five', Record<never, never>, Record<never, never>>,
+    '/job-post/': RouteRecordInfo<'/job-post/', '/job-post', Record<never, never>, Record<never, never>>,
+    '/job-post/_components/form/form-job-post': RouteRecordInfo<'/job-post/_components/form/form-job-post', '/job-post/_components/form/form-job-post', Record<never, never>, Record<never, never>>,
+    '/job-post/_components/table-job-post': RouteRecordInfo<'/job-post/_components/table-job-post', '/job-post/_components/table-job-post', Record<never, never>, Record<never, never>>,
+    '/job-post/[id]/': RouteRecordInfo<'/job-post/[id]/', '/job-post/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
+    '/job-post/[id]/update/': RouteRecordInfo<'/job-post/[id]/update/', '/job-post/:id/update', { id: ParamValue<true> }, { id: ParamValue<false> }>,
+    '/job-post/create/': RouteRecordInfo<'/job-post/create/', '/job-post/create', Record<never, never>, Record<never, never>>,
   }
 
   /**
@@ -114,8 +120,8 @@ declare module 'vue-router/auto-routes' {
       routes: '/cv/_components/form/form-cv'
       views: never
     }
-    'src/pages/cv/_components/table-cv-server.vue': {
-      routes: '/cv/_components/table-cv-server'
+    'src/pages/cv/_components/table-cv.vue': {
+      routes: '/cv/_components/table-cv'
       views: never
     }
     'src/pages/cv/[id]/index.vue': {
@@ -164,6 +170,30 @@ declare module 'vue-router/auto-routes' {
     }
     'src/pages/dashboard/_components/widget-five.vue': {
       routes: '/dashboard/_components/widget-five'
+      views: never
+    }
+    'src/pages/job-post/index.vue': {
+      routes: '/job-post/'
+      views: never
+    }
+    'src/pages/job-post/_components/form/form-job-post.vue': {
+      routes: '/job-post/_components/form/form-job-post'
+      views: never
+    }
+    'src/pages/job-post/_components/table-job-post.vue': {
+      routes: '/job-post/_components/table-job-post'
+      views: never
+    }
+    'src/pages/job-post/[id]/index.vue': {
+      routes: '/job-post/[id]/'
+      views: never
+    }
+    'src/pages/job-post/[id]/update/index.vue': {
+      routes: '/job-post/[id]/update/'
+      views: never
+    }
+    'src/pages/job-post/create/index.vue': {
+      routes: '/job-post/create/'
       views: never
     }
   }

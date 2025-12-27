@@ -7,7 +7,7 @@ export interface Candidate {
   id: string
   fullName: string
   email: string
-  phoneNumbers: string[] // dynamic input
+  phoneNumbers: string[]
   location?: string
   status: CandidateStatus
 
@@ -47,8 +47,8 @@ export interface CV {
   name: string
   summary?: string
 
-  skills: string[] // dynamic input
-  experiences: CVExperience[] // dynamic group input
+  skills: string[]
+  experiences: CVExperience[]
   educations: CVEducation[]
 
   expectedSalary?: number
@@ -60,8 +60,6 @@ export interface CV {
 
 export type CreateCV = Omit<CV, 'id'>
 export type UpdateCV = Partial<CV>
-
-// domains/job-posts/types/job-post.type.ts
 
 export type JobStatus
   = | 'draft'
@@ -76,17 +74,18 @@ export interface JobPost {
   location: string
 
   description: string
-  requirements: string[] // dynamic input
+  requirements: string[]
   responsibilities?: string[]
 
   employmentType: EmploymentType
-  salaryRange?: {
-    min: number
-    max: number
-  }
+  minSalary: number
+  maxSalary: number
 
   status: JobStatus
 
   createdAt: string
   updatedAt: string
 }
+
+export type CreateJobPost = Omit<JobPost, 'id'>
+export type UpdateJobPost = Partial<JobPost>

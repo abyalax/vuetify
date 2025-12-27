@@ -1,17 +1,18 @@
 <script setup lang="ts">
   import type { TFilterParams } from '@/common/meta'
-  import type { CV } from '@/types'
-  import { mdiBriefcaseOutline, mdiChevronDown, mdiClose, mdiDelete, mdiDeleteOutline, mdiDownload, mdiEyeOutline, mdiFileDocumentOutline, mdiMagnify, mdiPackage, mdiPencilOutline, mdiPlus, mdiSchoolOutline } from '@mdi/js'
+  import type { JobPost } from '@/types'
+  import { mdiBriefcaseCheckOutline, mdiChevronDown, mdiClipboardTextOutline, mdiClose, mdiDelete, mdiDeleteOutline, mdiDownload, mdiEyeOutline, mdiFileDocumentOutline, mdiMagnify, mdiPackage, mdiPencilOutline, mdiPlus } from '@mdi/js'
   import { useDebounceFn } from '@vueuse/core'
   import { computed, reactive, ref, watch } from 'vue'
   import { useRoute, useRouter } from 'vue-router'
-  import { VBtn, VCard, VCardTitle, VChip, VList, VListItem, VMenu, VTextField, VTooltip } from 'vuetify/components'
-  import { useDeleteCV } from '../_hooks/use-delete-cv'
-  import { useGetListCV } from '../_hooks/use-get-list-cv'
+  import { VBtn, VCard, VCardTitle, VList, VListItem, VMenu, VTextField, VTooltip } from 'vuetify/components'
+  import { useDeleteJob } from '../_hooks/use-delete-job-post'
+  import { useGetListJob } from '../_hooks/use-get-list-jobs-post'
 
   const router = useRouter()
   const route = useRoute()
-  const selected = ref<CV[]>([])
+  const selected = ref<JobPost[]>([])
+  const expanded = ref([])
   const state = reactive<TFilterParams>({
     page: Number(route.query.page) || 1,
     per_page: Number(route.query.per_page) || 10,
@@ -24,11 +25,13 @@
   }, 500)
 
   const headers = [
-    { title: 'Name', key: 'name', align: 'start' },
-    { title: 'Skills', key: 'skills', sortable: false },
-    { title: 'Experience', key: 'experiences', sortable: true, align: 'start' },
-    { title: 'Educations', key: 'educations', sortable: true, align: 'start' },
-    { title: 'Expected Salary', key: 'expectedSalary', align: 'end' },
+    { title: 'Title', key: 'Title', align: 'start', sortable: true },
+    { title: 'Department', key: 'department', align: 'start', sortable: true },
+    { title: 'Description', key: 'description', sortable: false },
+    { title: 'Type Of Employee', key: 'employmentType', sortable: false },
+    // todo: requierements and responsibilities
+    { title: 'Status', key: 'status', sortable: false },
+    { title: 'Address', key: 'location', align: 'start', sortable: true },
     { title: 'Actions', key: 'actions', sortable: false, align: 'center', width: '140px' },
   ] as const
 
@@ -40,43 +43,31 @@
     order: state.order,
   }))
 
-  const { data, isLoading } = useGetListCV(queryParams)
-  const { mutate } = useDeleteCV()
+  const { data, isLoading } = useGetListJob(queryParams)
+  const { mutate } = useDeleteJob()
   const items = computed(() => data.value?.items ?? [])
   const meta = computed(() => data.value?.meta)
 
-  const expandedExperiences = ref<Set<string>>(new Set())
-  const expandedEducations = ref<Set<string>>(new Set())
-
-  function toggleExperience (itemId: string) {
-    if (expandedExperiences.value.has(itemId)) {
-      expandedExperiences.value.delete(itemId)
-    } else {
-      expandedExperiences.value.add(itemId)
-    }
+  function formatCurrency (value: number) {
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      maximumFractionDigits: 0,
+    }).format(value)
+  }
+  function handleCreate () {
+    router.push('/job-post/create')
   }
 
-  function toggleEducation (itemId: string) {
-    if (expandedEducations.value.has(itemId)) {
-      expandedEducations.value.delete(itemId)
-    } else {
-      expandedEducations.value.add(itemId)
-    }
+  function handleView (params: JobPost) {
+    router.push(`/job-post/${params.id}`)
   }
 
-  function handleCreateCV () {
-    router.push('/cv/create')
+  function handleEdit (params: JobPost) {
+    router.push(`/job-post/${params.id}/update`)
   }
 
-  function handleView (params: CV) {
-    router.push(`/cv/${params.id}`)
-  }
-
-  function handleEdit (params: CV) {
-    router.push(`/cv/${params.id}/update`)
-  }
-
-  function handleDelete (params: CV) {
+  function handleDelete (params: JobPost) {
     mutate(params.id)
   }
 
@@ -130,9 +121,9 @@
 <template>
   <VCard elevation="2">
     <VCardTitle class="d-flex align-center justify-space-between pa-4">
-      <span class="text-h5 font-weight-medium">CV Management</span>
-      <VBtn color="primary" :prepend-icon="mdiPlus" @click="handleCreateCV">
-        Create CV
+      <span class="text-h5 font-weight-medium">Job Post Management</span>
+      <VBtn color="primary" :prepend-icon="mdiPlus" @click="handleCreate">
+        Create New Job Post
       </VBtn>
     </VCardTitle>
 
@@ -177,7 +168,7 @@
         clearable
         density="compact"
         hide-details
-        placeholder="Search by name, skills..."
+        placeholder="Search by name..."
         :prepend-inner-icon="mdiMagnify"
         variant="outlined"
         @click:clear="searchInput = ''"
@@ -186,6 +177,7 @@
 
     <v-data-table-server
       v-model="selected"
+      v-model:expanded="expanded"
       v-model:items-per-page="state.per_page"
       v-model:page="state.page"
       class="custom-table"
@@ -197,116 +189,75 @@
       :items-length="meta?.total ?? 0"
       :loading="isLoading"
       :search="state.search"
+      show-expand
       show-select
       style="max-height: 65dvh;"
       @update:options="updateOptions"
     >
-      <template #[`item.name`]="{ value }">
-        <span class="font-weight-medium">{{ value }}</span>
-      </template>
-
-      <template #[`item.skills`]="{ value }">
-        <div class="d-flex flex-wrap ga-1 ">
-          <VChip
-            v-for="skill in value?.slice(0, 3)"
-            :key="skill"
-            color="primary"
-            size="small"
-            variant="tonal"
-          >
-            {{ skill }}
-          </VChip>
+      <template #[`item.title`]="{ item }">
+        <div class="d-flex flex-column py-2">
+          <span class="font-weight-bold text-primary">{{ item.title }}</span>
+          <span class="text-caption text-grey-darken-1">{{ item.department }}</span>
         </div>
       </template>
 
-      <template #[`item.experiences`]="{ item, value }">
-        <div v-if="value?.length > 0" class="experience-cell">
-          <template v-if="expandedExperiences.has(item.id)">
-            <div v-for="(exp, index) in value" :key="index" class="experience-item mb-2">
-              <div class="d-flex align-center ga-2 mb-1">
-                <v-icon color="primary" :icon="mdiBriefcaseOutline" size="16" />
-                <span class="text-body-2 font-weight-medium">{{ exp.position }}</span>
-              </div>
-              <div class="text-caption text-medium-emphasis">{{ exp.companyName }}</div>
-              <div class="text-caption text-medium-emphasis">
-                {{ exp.startDate }} - {{ exp.endDate || 'Present' }}
-              </div>
-              <div v-if="exp.description" class="text-caption text-medium-emphasis mt-1">
-                {{ exp.description }}
-              </div>
-            </div>
-          </template>
-          <template v-else>
-            <div class="experience-item">
-              <div class="d-flex align-center ga-2 mb-1">
-                <v-icon color="primary" :icon="mdiBriefcaseOutline" size="16" />
-                <span class="text-body-2 font-weight-medium">{{ value[0].position }}</span>
-              </div>
-              <div class="text-caption text-medium-emphasis">{{ value[0].companyName }}</div>
-              <div class="text-caption text-medium-emphasis">
-                {{ value[0].startDate }} - {{ value[0].endDate || 'Present' }}
-              </div>
-            </div>
-          </template>
-          <VChip
-            v-if="value.length > 1"
-            class="mt-2"
-            size="x-small"
-            style="cursor: pointer;"
-            variant="outlined"
-            @click="toggleExperience(item.id)"
-          >
-            {{ expandedExperiences.has(item.id) ? 'Show less' : `+${value.length - 1} more` }}
-          </VChip>
-        </div>
-        <span v-else class="text-medium-emphasis text-caption">No experience</span>
+      <template #[`item.employmentType`]="{ value }">
+        <v-chip class="text-capitalize" size="small" variant="tonal">
+          {{ value.replace('-', ' ') }}
+        </v-chip>
       </template>
 
-      <template #[`item.educations`]="{ item, value }">
-        <div v-if="value?.length > 0" class="education-cell">
-          <template v-if="expandedEducations.has(item.id)">
-            <div v-for="(edu, index) in value" :key="index" class="education-item mb-2">
-              <div class="d-flex align-center ga-2 mb-1">
-                <v-icon color="success" :icon="mdiSchoolOutline" size="16" />
-                <span class="text-body-2 font-weight-medium">{{ edu.degree }}</span>
-              </div>
-              <div class="text-caption text-medium-emphasis">{{ edu.institution }}</div>
-              <div class="text-caption text-medium-emphasis">
-                {{ edu.startYear }} - {{ edu.endYear || 'Present' }}
-              </div>
-            </div>
-          </template>
-          <template v-else>
-            <div class="education-item">
-              <div class="d-flex align-center ga-2 mb-1">
-                <v-icon color="success" :icon="mdiSchoolOutline" size="16" />
-                <span class="text-body-2 font-weight-medium">{{ value[0].degree }}</span>
-              </div>
-              <div class="text-caption text-medium-emphasis">{{ value[0].institution }}</div>
-              <div class="text-caption text-medium-emphasis">
-                {{ value[0].startYear }} - {{ value[0].endYear || 'Present' }}
-              </div>
-            </div>
-          </template>
-          <VChip
-            v-if="value.length > 1"
-            class="mt-2"
-            size="x-small"
-            style="cursor: pointer;"
-            variant="outlined"
-            @click="toggleEducation(item.id)"
-          >
-            {{ expandedEducations.has(item.id) ? 'Show less' : `+${value.length - 1} more` }}
-          </VChip>
-        </div>
-        <span v-else class="text-medium-emphasis text-caption">No education</span>
+      <template #[`item.status`]="{ value }">
+        <v-chip
+          class="text-uppercase font-weight-bold"
+          :color="value === 'published' ? 'success' : 'warning'"
+          label
+          size="small"
+        >
+          {{ value }}
+        </v-chip>
       </template>
 
-      <template #[`item.expectedSalary`]="{ value }">
-        <span v-if="value" class="font-weight-medium">
-          Rp {{ value.toLocaleString('id-ID') }}
-        </span>
-        <span v-else class="text-medium-emphasis">—</span>
+      <template #[`item.minSalary`]="{ item }">
+        <div class="text-no-wrap text-body-2">
+          {{ formatCurrency(item.minSalary) }} - {{ formatCurrency(item.maxSalary) }}
+        </div>
+      </template>
+
+      <template #expanded-row="{ columns, item }">
+        <tr>
+          <td class="py-4 px-6" :colspan="columns.length">
+            <v-row>
+              <v-col cols="12" md="6">
+                <div class="text-subtitle-2 font-weight-bold mb-2 text-indigo">
+                  <v-icon class="me-2" :icon="mdiClipboardTextOutline" size="small" />
+                  Requirements
+                </div>
+                <ul class="text-body-2 ps-4">
+                  <li v-for="(req, index) in item.requirements" :key="index" class="mb-1">
+                    {{ req }}
+                  </li>
+                </ul>
+              </v-col>
+              <v-col cols="12" md="6">
+                <div class="text-subtitle-2 font-weight-bold mb-2 text-teal">
+                  <v-icon class="me-2" :icon="mdiBriefcaseCheckOutline" size="small" />
+                  Responsibilities
+                </div>
+                <ul class="text-body-2 ps-4">
+                  <li v-for="(res, index) in item.responsibilities" :key="index" class="mb-1">
+                    {{ res }}
+                  </li>
+                </ul>
+              </v-col>
+            </v-row>
+
+            <div class="mt-4 pt-3 border-t">
+              <span class="text-caption text-grey">Full Description:</span>
+              <p class="text-body-2 italic">{{ item.description }}</p>
+            </div>
+          </td>
+        </tr>
       </template>
 
       <template #[`item.actions`]="{ item }">
@@ -324,7 +275,7 @@
             </template>
           </v-tooltip>
 
-          <v-tooltip location="top" text="Edit CV">
+          <v-tooltip location="top" text="Edit Candidate">
             <template #activator="{ props }">
               <VBtn
                 v-bind="props"
@@ -337,7 +288,7 @@
             </template>
           </v-tooltip>
 
-          <v-tooltip location="top" text="Delete CV">
+          <v-tooltip location="top" text="Delete Candidate">
             <template #activator="{ props }">
               <VBtn
                 v-bind="props"
@@ -355,12 +306,12 @@
       <template #no-data>
         <div class="d-flex flex-column align-center justify-center pa-8">
           <v-icon class="mb-4" color="grey-lighten-1" :icon="mdiFileDocumentOutline" size="64" />
-          <div class="text-h6 text-medium-emphasis mb-2">No CVs Found</div>
+          <div class="text-h6 text-medium-emphasis mb-2">No Candidates Found</div>
           <div class="text-body-2 text-medium-emphasis mb-4">
-            {{ state.search ? 'Try adjusting your search' : 'Get started by creating your first CV' }}
+            {{ state.search ? 'Try adjusting your search' : 'Get started by adding your first candidate' }}
           </div>
-          <VBtn v-if="!state.search" color="primary" :prepend-icon="mdiPlus" @click="handleCreateCV">
-            Create Your First CV
+          <VBtn v-if="!state.search" color="primary" :prepend-icon="mdiPlus" @click="handleCreate">
+            Add Your Firts Candidate
           </VBtn>
           <VBtn v-else variant="outlined" @click="searchInput = ''">Clear Search</VBtn>
         </div>
@@ -426,6 +377,14 @@
 
 .custom-table :deep(.v-data-table__td) {
   border-top: 1px solid rgba(var(--v-border-color), 0.12) !important;
+}
+
+.v-data-table :deep(.v-data-table__expanded__content) {
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05) !important;
+}
+
+ul {
+  list-style-type: disc;
 }
 
 .experience-cell,

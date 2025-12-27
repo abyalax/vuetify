@@ -3,19 +3,19 @@
   import { ref } from 'vue'
   import { VCol, VRow } from 'vuetify/components'
   import Page from '@/components/layouts/dashboard/page.vue'
-  import TableCV from './_components/table-cv.vue'
+  import TableJobPost from './_components/table-job-post.vue'
   definePage({
     meta: {
       layout: 'authenticated',
       requiresAuth: true,
     },
   })
-  const page = ref({ title: 'Curriculum Vitae' })
+  const page = ref({ title: 'Job Post' })
   const breadcrumbs = ref<Breadcrumb[]>([
     {
-      title: 'CV',
+      title: 'Job Post',
       disabled: true,
-      href: '/cv',
+      href: '/job-post',
     },
   ])
 </script>
@@ -24,7 +24,7 @@
   <Page>
     <VRow>
       <VCol cols="12">
-        <TableCV />
+        <TableJobPost />
       </VCol>
     </VRow>
   </Page>

@@ -13,4 +13,11 @@ export const QueryKey = {
     UPDATE: 'update-candidate',
     DELETE: 'delete-candidate',
   },
+  JOB: {
+    GET_LIST: 'get-list-job',
+    GET: 'get-job',
+    CREATE: 'create-job',
+    UPDATE: 'update-job',
+    DELETE: 'delete-job',
+  },
 }
