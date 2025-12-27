@@ -3,21 +3,29 @@
  *
  * Bootstraps Vuetify and other plugins then mounts the App`
  */
-
-// Plugins
-import { registerPlugins } from '@/plugins'
-
-// Components
-import App from './App.vue'
-
-// Composables
 import { createApp } from 'vue'
-
-// Styles
+import { registerPlugins } from '@/plugins'
+import App from './App.vue'
+import { setupMockBrowser } from './libs/worker'
+import { fakeBackend } from './utils/helpers/fake-backend'
+import '@fontsource/public-sans/400.css'
+import '@fontsource/public-sans/500.css'
+import '@fontsource/public-sans/600.css'
+import '@fontsource/public-sans/700.css'
+import 'ant-design-vue/dist/reset.css'
+import '@/scss/style.scss'
 import 'unfonts.css'
 
-const app = createApp(App)
+async function bootstrap () {
+  if (import.meta.env.DEV) {
+    await setupMockBrowser()
+  }
 
-registerPlugins(app)
+  const app = createApp(App)
+  registerPlugins(app)
+  fakeBackend()
 
-app.mount('#app')
+  app.mount('#app')
+}
+
+bootstrap()

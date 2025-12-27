@@ -1,0 +1,975 @@
+import type { CV } from '@/types'
+import { IndexedDBRepository } from '@/libs/storage/repository'
+
+const cvs: CV[] = [
+  {
+    id: '1',
+    candidateId: '1',
+    name: 'Budi Santoso',
+    summary: 'Experienced Senior Frontend Developer specialized in React and Next.js',
+    skills: ['React', 'TypeScript', 'Next.js', 'Tailwind CSS'],
+    experiences: [
+      {
+        companyName: 'Tech Startup Indo',
+        position: 'Senior Frontend Engineer',
+        startDate: '2020-01-10',
+        endDate: '2023-12-01',
+      },
+      {
+        companyName: 'Digital Agency Jakarta',
+        position: 'Web Developer',
+        startDate: '2017-05-15',
+        endDate: '2019-12-20',
+      },
+    ],
+    educations: [
+      {
+        institution: 'Universitas Indonesia',
+        degree: 'S1 Teknik Informatika',
+        startYear: 2013,
+        endYear: 2017,
+      },
+    ],
+    expectedSalary: 25_000_000,
+    preferredEmploymentType: 'full-time',
+    createdAt: '2025-12-01T08:00:00.000Z',
+    updatedAt: '2025-12-05T10:30:00.000Z',
+  },
+  {
+    id: '2',
+    candidateId: '2',
+    name: 'Siti Aminah',
+    summary: 'Data Scientist with a passion for Machine Learning and Big Data',
+    skills: ['Python', 'TensorFlow', 'SQL', 'PySpark'],
+    experiences: [
+      {
+        companyName: 'E-commerce Giant',
+        position: 'Data Scientist',
+        startDate: '2021-03-01',
+        endDate: '2024-01-15',
+      },
+    ],
+    educations: [
+      {
+        institution: 'ITB',
+        degree: 'S1 Matematika',
+        startYear: 2016,
+        endYear: 2020,
+      },
+    ],
+    expectedSalary: 18_000_000,
+    preferredEmploymentType: 'full-time',
+    createdAt: '2025-11-20T09:15:00.000Z',
+    updatedAt: '2025-11-21T11:00:00.000Z',
+  },
+  {
+    id: '3',
+    candidateId: '3',
+    name: 'Andi Wijaya',
+    summary: 'Backend Engineer focusing on scalable microservices',
+    skills: ['Go', 'PostgreSQL', 'Redis', 'Kafka'],
+    experiences: [
+      {
+        companyName: 'Fintech Solution',
+        position: 'Backend Developer',
+        startDate: '2019-08-20',
+        endDate: '2023-10-10',
+      },
+    ],
+    educations: [
+      {
+        institution: 'Binus University',
+        degree: 'S1 Sistem Informasi',
+        startYear: 2015,
+        endYear: 2019,
+      },
+    ],
+    expectedSalary: 22_000_000,
+    preferredEmploymentType: 'contract',
+    createdAt: '2025-10-15T14:20:00.000Z',
+    updatedAt: '2025-10-16T16:45:00.000Z',
+  },
+  {
+    id: '4',
+    candidateId: '4',
+    name: 'Rina Permata',
+    summary: 'UI/UX Designer creating user-centric digital experiences',
+    skills: ['Figma', 'Adobe XD', 'Prototyping', 'User Research'],
+    experiences: [
+      {
+        companyName: 'Creative Studio Bali',
+        position: 'Lead Designer',
+        startDate: '2018-02-14',
+        endDate: '2022-12-30',
+      },
+    ],
+    educations: [
+      {
+        institution: 'UGM',
+        degree: 'S1 Arsitektur',
+        startYear: 2012,
+        endYear: 2017,
+      },
+    ],
+    expectedSalary: 15_000_000,
+    preferredEmploymentType: 'freelance',
+    createdAt: '2025-12-10T11:00:00.000Z',
+    updatedAt: '2025-12-11T09:00:00.000Z',
+  },
+  {
+    id: '5',
+    candidateId: '5',
+    name: 'Dewi Ratnasari',
+    summary: 'Results-driven product manager',
+    skills: ['Kubernetes', 'Docker', 'Jenkins', 'AWS'],
+    experiences: [
+      {
+        companyName: 'Media Company',
+        position: 'Scrum Master',
+        startDate: '2012-04-24',
+        endDate: '2019-11-16',
+      },
+      {
+        companyName: 'Multinational Consulting',
+        position: 'Blockchain Dev',
+        startDate: '2015-02-15',
+        endDate: '2018-10-03',
+      },
+    ],
+    educations: [
+      {
+        institution: 'Universitas Brawijaya',
+        degree: 'Master in Computer Science',
+        startYear: 2007,
+        endYear: 2011,
+      },
+      {
+        institution: 'Stanford University',
+        degree: 'S1 Desain Komunikasi Visual',
+        startYear: 2015,
+        endYear: 2021,
+      },
+    ],
+    expectedSalary: 20_000_000,
+    preferredEmploymentType: 'freelance',
+    createdAt: '2025-12-18T01:44:21.590618',
+    updatedAt: '2025-11-26T01:44:21.590624',
+  },
+  {
+    id: '6',
+    candidateId: '6',
+    name: 'Fajar Nugraha',
+    summary: 'DevOps Engineer specialized in CI/CD automation',
+    skills: ['Terraform', 'Ansible', 'Azure', 'Linux'],
+    experiences: [
+      {
+        companyName: 'Cloud Services Co',
+        position: 'DevOps Engineer',
+        startDate: '2020-06-01',
+        endDate: '2024-05-01',
+      },
+    ],
+    educations: [
+      {
+        institution: 'Telkom University',
+        degree: 'S1 Teknik Telekomunikasi',
+        startYear: 2016,
+        endYear: 2020,
+      },
+    ],
+    expectedSalary: 28_000_000,
+    preferredEmploymentType: 'full-time',
+    createdAt: '2025-12-20T10:00:00.000Z',
+    updatedAt: '2025-12-21T08:30:00.000Z',
+  },
+  {
+    id: '7',
+    candidateId: '7',
+    name: 'Maya Putri',
+    summary: 'Mobile Developer expert in Flutter and Swift',
+    skills: ['Flutter', 'Swift', 'Dart', 'Firebase'],
+    experiences: [
+      {
+        companyName: 'App House Jakarta',
+        position: 'Mobile Developer',
+        startDate: '2021-01-10',
+        endDate: '2023-11-30',
+      },
+    ],
+    educations: [
+      {
+        institution: 'Gunadarma University',
+        degree: 'S1 Sistem Komputer',
+        startYear: 2016,
+        endYear: 2020,
+      },
+    ],
+    expectedSalary: 17_000_000,
+    preferredEmploymentType: 'full-time',
+    createdAt: '2025-11-05T12:00:00.000Z',
+    updatedAt: '2025-11-06T14:00:00.000Z',
+  },
+  {
+    id: '8',
+    candidateId: '8',
+    name: 'Eko Prasetyo',
+    summary: 'Cybersecurity Analyst focusing on penetration testing',
+    skills: ['Ethical Hacking', 'Wireshark', 'Python', 'Metasploit'],
+    experiences: [
+      {
+        companyName: 'Security Firm X',
+        position: 'Security Consultant',
+        startDate: '2019-03-15',
+        endDate: '2023-12-15',
+      },
+    ],
+    educations: [
+      {
+        institution: 'Universitas Diponegoro',
+        degree: 'S1 Informatika',
+        startYear: 2014,
+        endYear: 2018,
+      },
+    ],
+    expectedSalary: 30_000_000,
+    preferredEmploymentType: 'contract',
+    createdAt: '2025-10-30T09:00:00.000Z',
+    updatedAt: '2025-10-31T10:00:00.000Z',
+  },
+  {
+    id: '9',
+    candidateId: '9',
+    name: 'Lestari Wahyuni',
+    summary: 'Quality Assurance Engineer with automation expertise',
+    skills: ['Selenium', 'Cypress', 'JMeter', 'Java'],
+    experiences: [
+      {
+        companyName: 'Software House Bandung',
+        position: 'QA Lead',
+        startDate: '2018-09-01',
+        endDate: '2024-02-01',
+      },
+    ],
+    educations: [
+      {
+        institution: 'UNPAD',
+        degree: 'S1 Teknik Informatika',
+        startYear: 2014,
+        endYear: 2018,
+      },
+    ],
+    expectedSalary: 16_000_000,
+    preferredEmploymentType: 'full-time',
+    createdAt: '2025-12-05T15:30:00.000Z',
+    updatedAt: '2025-12-06T16:00:00.000Z',
+  },
+  {
+    id: '10',
+    candidateId: '10',
+    name: 'Rizky Ramadhan',
+    summary: 'Digital Marketer specialized in SEO and SEM',
+    skills: ['Google Ads', 'SEO', 'Content Strategy', 'GA4'],
+    experiences: [
+      {
+        companyName: 'Marketing Agency Asia',
+        position: 'SEO Specialist',
+        startDate: '2020-05-20',
+        endDate: '2023-10-20',
+      },
+    ],
+    educations: [
+      {
+        institution: 'Universitas Airlangga',
+        degree: 'S1 Ilmu Komunikasi',
+        startYear: 2015,
+        endYear: 2019,
+      },
+    ],
+    expectedSalary: 12_000_000,
+    preferredEmploymentType: 'full-time',
+    createdAt: '2025-11-15T11:45:00.000Z',
+    updatedAt: '2025-11-16T12:00:00.000Z',
+  },
+  {
+    id: '11',
+    candidateId: '11',
+    name: 'Agus Setiawan',
+    summary: 'Fullstack Developer adept in MERN stack',
+    skills: ['MongoDB', 'Express.js', 'React', 'Node.js'],
+    experiences: [
+      {
+        companyName: 'Global Tech Corp',
+        position: 'Fullstack Developer',
+        startDate: '2021-02-01',
+        endDate: '2024-03-01',
+      },
+    ],
+    educations: [
+      {
+        institution: 'BINUS',
+        degree: 'S1 Teknik Informatika',
+        startYear: 2017,
+        endYear: 2021,
+      },
+    ],
+    expectedSalary: 21_000_000,
+    preferredEmploymentType: 'full-time',
+    createdAt: '2025-12-22T08:00:00.000Z',
+    updatedAt: '2025-12-22T08:00:00.000Z',
+  },
+  {
+    id: '12',
+    candidateId: '12',
+    name: 'Indah Kusuma',
+    summary: 'HR Manager with extensive recruitment experience',
+    skills: ['Talent Acquisition', 'Payroll', 'Employee Relations'],
+    experiences: [
+      {
+        companyName: 'Retail Group Indo',
+        position: 'HR Manager',
+        startDate: '2015-11-01',
+        endDate: '2023-08-01',
+      },
+    ],
+    educations: [
+      {
+        institution: 'Universitas Gadjah Mada',
+        degree: 'S1 Psikologi',
+        startYear: 2011,
+        endYear: 2015,
+      },
+    ],
+    expectedSalary: 19_000_000,
+    preferredEmploymentType: 'full-time',
+    createdAt: '2025-11-10T09:30:00.000Z',
+    updatedAt: '2025-11-11T10:00:00.000Z',
+  },
+  {
+    id: '13',
+    candidateId: '13',
+    name: 'Hendra Wijaya',
+    summary: 'Cloud Architect with AWS Professional Certification',
+    skills: ['AWS', 'GCP', 'CloudFormation', 'Python'],
+    experiences: [
+      {
+        companyName: 'Tech Consultant SG',
+        position: 'Cloud Architect',
+        startDate: '2019-01-15',
+        endDate: '2024-01-01',
+      },
+    ],
+    educations: [
+      {
+        institution: 'NTU Singapore',
+        degree: 'Master of Engineering',
+        startYear: 2016,
+        endYear: 2018,
+      },
+    ],
+    expectedSalary: 45_000_000,
+    preferredEmploymentType: 'full-time',
+    createdAt: '2025-12-15T14:00:00.000Z',
+    updatedAt: '2025-12-16T15:00:00.000Z',
+  },
+  {
+    id: '14',
+    candidateId: '14',
+    name: 'Sari Devi',
+    summary: 'Project Manager for large-scale IT transformations',
+    skills: ['PMP', 'Agile', 'Jira', 'Risk Management'],
+    experiences: [
+      {
+        companyName: 'Banking Solution Inc',
+        position: 'Senior Project Manager',
+        startDate: '2018-04-01',
+        endDate: '2023-12-31',
+      },
+    ],
+    educations: [
+      {
+        institution: 'Universitas Indonesia',
+        degree: 'S1 Manajemen',
+        startYear: 2010,
+        endYear: 2014,
+      },
+    ],
+    expectedSalary: 35_000_000,
+    preferredEmploymentType: 'full-time',
+    createdAt: '2025-11-25T10:00:00.000Z',
+    updatedAt: '2025-11-26T11:00:00.000Z',
+  },
+  {
+    id: '15',
+    candidateId: '15',
+    name: 'Bambang Sudjatmiko',
+    summary: 'Network Engineer specialized in Cisco systems',
+    skills: ['CCNA', 'CCNP', 'Routing & Switching', 'Firewall'],
+    experiences: [
+      {
+        companyName: 'Telco Provider Indo',
+        position: 'Network Engineer',
+        startDate: '2017-07-01',
+        endDate: '2024-02-15',
+      },
+    ],
+    educations: [
+      {
+        institution: 'ITS Surabaya',
+        degree: 'S1 Teknik Elektro',
+        startYear: 2013,
+        endYear: 2017,
+      },
+    ],
+    expectedSalary: 18_500_000,
+    preferredEmploymentType: 'full-time',
+    createdAt: '2025-12-05T09:00:00.000Z',
+    updatedAt: '2025-12-05T09:00:00.000Z',
+  },
+  {
+    id: '16',
+    candidateId: '16',
+    name: 'Ratna Sari',
+    summary: 'Business Analyst bridging the gap between tech and business',
+    skills: ['UML', 'Data Analysis', 'SQL', 'Tableau'],
+    experiences: [
+      {
+        companyName: 'Financial Services Co',
+        position: 'Business Analyst',
+        startDate: '2020-03-01',
+        endDate: '2023-11-01',
+      },
+    ],
+    educations: [
+      {
+        institution: 'Universitas Padjadjaran',
+        degree: 'S1 Ekonomi',
+        startYear: 2015,
+        endYear: 2019,
+      },
+    ],
+    expectedSalary: 16_500_000,
+    preferredEmploymentType: 'full-time',
+    createdAt: '2025-11-12T13:00:00.000Z',
+    updatedAt: '2025-11-13T14:00:00.000Z',
+  },
+  {
+    id: '17',
+    candidateId: '17',
+    name: 'Kevin Pratama',
+    summary: 'Game Developer passionate about Unity and C#',
+    skills: ['Unity', 'C#', '3D Modeling', 'Game Design'],
+    experiences: [
+      {
+        companyName: 'Indie Game Studio',
+        position: 'Game Developer',
+        startDate: '2021-08-01',
+        endDate: '2024-01-30',
+      },
+    ],
+    educations: [
+      {
+        institution: 'AMIKOM Yogyakarta',
+        degree: 'S1 Informatika',
+        startYear: 2017,
+        endYear: 2021,
+      },
+    ],
+    expectedSalary: 14_000_000,
+    preferredEmploymentType: 'full-time',
+    createdAt: '2025-12-18T10:30:00.000Z',
+    updatedAt: '2025-12-18T10:30:00.000Z',
+  },
+  {
+    id: '18',
+    candidateId: '18',
+    name: 'Nadia Utami',
+    summary: 'Social Media Manager with a focus on TikTok trends',
+    skills: ['Copywriting', 'Content Creation', 'Analytics'],
+    experiences: [
+      {
+        companyName: 'Lifestyle Brand Jakarta',
+        position: 'Social Media Lead',
+        startDate: '2019-10-15',
+        endDate: '2023-12-15',
+      },
+    ],
+    educations: [
+      {
+        institution: 'Universitas Sebelas Maret',
+        degree: 'S1 Komunikasi',
+        startYear: 2014,
+        endYear: 2018,
+      },
+    ],
+    expectedSalary: 11_000_000,
+    preferredEmploymentType: 'freelance',
+    createdAt: '2025-11-28T08:45:00.000Z',
+    updatedAt: '2025-11-29T09:00:00.000Z',
+  },
+  {
+    id: '19',
+    candidateId: '19',
+    name: 'Taufik Hidayat',
+    summary: 'Embedded Systems Engineer specializing in IoT',
+    skills: ['C++', 'Arduino', 'Raspberry Pi', 'MQTT'],
+    experiences: [
+      {
+        companyName: 'Smart Home Tech',
+        position: 'Hardware Engineer',
+        startDate: '2020-02-01',
+        endDate: '2024-04-01',
+      },
+    ],
+    educations: [
+      {
+        institution: 'ITB',
+        degree: 'S1 Teknik Elektro',
+        startYear: 2015,
+        endYear: 2019,
+      },
+    ],
+    expectedSalary: 23_000_000,
+    preferredEmploymentType: 'full-time',
+    createdAt: '2025-12-12T15:00:00.000Z',
+    updatedAt: '2025-12-13T10:00:00.000Z',
+  },
+  {
+    id: '20',
+    candidateId: '20',
+    name: 'Lulu Anindita',
+    summary: 'Content Writer with a niche in tech and finance',
+    skills: ['SEO Writing', 'Editing', 'WordPress', 'Creative Writing'],
+    experiences: [
+      {
+        companyName: 'Tech Blog Indonesia',
+        position: 'Senior Writer',
+        startDate: '2018-05-10',
+        endDate: '2023-11-10',
+      },
+    ],
+    educations: [
+      {
+        institution: 'Universitas Sanata Dharma',
+        degree: 'S1 Sastra Inggris',
+        startYear: 2013,
+        endYear: 2017,
+      },
+    ],
+    expectedSalary: 10_000_000,
+    preferredEmploymentType: 'freelance',
+    createdAt: '2025-11-01T11:00:00.000Z',
+    updatedAt: '2025-11-01T11:00:00.000Z',
+  },
+  {
+    id: '21',
+    candidateId: '21',
+    name: 'Yusuf Mansur',
+    summary: 'AI Engineer focusing on Computer Vision',
+    skills: ['Python', 'OpenCV', 'PyTorch', 'CUDA'],
+    experiences: [
+      {
+        companyName: 'AI Research Lab',
+        position: 'AI Engineer',
+        startDate: '2021-06-01',
+        endDate: '2024-05-01',
+      },
+    ],
+    educations: [
+      {
+        institution: 'University of Tokyo',
+        degree: 'Master of AI',
+        startYear: 2019,
+        endYear: 2021,
+      },
+    ],
+    expectedSalary: 40_000_000,
+    preferredEmploymentType: 'full-time',
+    createdAt: '2025-12-24T09:20:00.000Z',
+    updatedAt: '2025-12-24T10:00:00.000Z',
+  },
+  {
+    id: '22',
+    candidateId: '22',
+    name: 'Dian Sastro',
+    summary: 'Public Relations Specialist with 8 years of experience',
+    skills: ['Media Relations', 'Crisis Management', 'Branding'],
+    experiences: [
+      {
+        companyName: 'Top Agency PR',
+        position: 'PR Director',
+        startDate: '2016-01-10',
+        endDate: '2023-12-01',
+      },
+    ],
+    educations: [
+      {
+        institution: 'Universitas Indonesia',
+        degree: 'S1 Ilmu Komunikasi',
+        startYear: 2011,
+        endYear: 2015,
+      },
+    ],
+    expectedSalary: 32_000_000,
+    preferredEmploymentType: 'full-time',
+    createdAt: '2025-11-18T14:30:00.000Z',
+    updatedAt: '2025-11-19T15:00:00.000Z',
+  },
+  {
+    id: '23',
+    candidateId: '23',
+    name: 'Rahmat Hidayat',
+    summary: 'Android Developer specializing in Kotlin Coroutines',
+    skills: ['Kotlin', 'Jetpack Compose', 'MVVM', 'Dagger Hilt'],
+    experiences: [
+      {
+        companyName: 'Unicorn Startup',
+        position: 'Senior Android Engineer',
+        startDate: '2019-09-01',
+        endDate: '2024-01-01',
+      },
+    ],
+    educations: [
+      {
+        institution: 'Universitas Telkom',
+        degree: 'S1 Informatika',
+        startYear: 2015,
+        endYear: 2019,
+      },
+    ],
+    expectedSalary: 28_000_000,
+    preferredEmploymentType: 'full-time',
+    createdAt: '2025-12-07T12:00:00.000Z',
+    updatedAt: '2025-12-08T13:00:00.000Z',
+  },
+  {
+    id: '24',
+    candidateId: '24',
+    name: 'Aisyah Putri',
+    summary: 'Customer Success Manager for SaaS products',
+    skills: ['Zendesk', 'Salesforce', 'Churn Reduction', 'Customer Training'],
+    experiences: [
+      {
+        companyName: 'SaaS Solutions Indo',
+        position: 'Customer Success Lead',
+        startDate: '2020-04-15',
+        endDate: '2023-11-15',
+      },
+    ],
+    educations: [
+      {
+        institution: 'Universitas Mercu Buana',
+        degree: 'S1 Manajemen',
+        startYear: 2016,
+        endYear: 2020,
+      },
+    ],
+    expectedSalary: 14_000_000,
+    preferredEmploymentType: 'full-time',
+    createdAt: '2025-11-22T10:15:00.000Z',
+    updatedAt: '2025-11-23T11:00:00.000Z',
+  },
+  {
+    id: '25',
+    candidateId: '25',
+    name: 'Guntur Pratama',
+    summary: 'Database Administrator with high-availability expertise',
+    skills: ['MySQL', 'PostgreSQL', 'Oracle DB', 'Clustering'],
+    experiences: [
+      {
+        companyName: 'Data Center Asia',
+        position: 'Senior DBA',
+        startDate: '2015-08-01',
+        endDate: '2024-02-01',
+      },
+    ],
+    educations: [
+      {
+        institution: 'Bina Nusantara University',
+        degree: 'S1 Sistem Informasi',
+        startYear: 2011,
+        endYear: 2015,
+      },
+    ],
+    expectedSalary: 24_000_000,
+    preferredEmploymentType: 'full-time',
+    createdAt: '2025-12-26T17:00:00.000Z',
+    updatedAt: '2025-12-26T17:30:00.000Z',
+  },
+  {
+    id: '26',
+    candidateId: '26',
+    name: 'John Doe',
+    summary: 'Game developer using Unity',
+    skills: ['PyTorch', 'Keras', 'NLP', 'Computer Vision'],
+    experiences: [
+      {
+        companyName: 'HealthTech Startup',
+        position: 'AI Researcher',
+        startDate: '2019-10-15',
+        endDate: '2024-03-15',
+      },
+      {
+        companyName: 'Local Software House',
+        position: 'Java Developer',
+        startDate: '2014-11-17',
+      },
+    ],
+    educations: [
+      {
+        institution: 'University of Tokyo',
+        degree: 'Self-taught',
+        startYear: 2008,
+        endYear: 2013,
+      },
+      {
+        institution: 'Universitas Brawijaya',
+        degree: 'S1 Matematika',
+        startYear: 2010,
+        endYear: 2016,
+      },
+    ],
+    expectedSalary: 43_000_000,
+    preferredEmploymentType: 'part-time',
+    createdAt: '2025-08-02T01:44:21.590449',
+    updatedAt: '2025-11-27T01:44:21.590472',
+  },
+  {
+    id: '27',
+    candidateId: '27',
+    name: 'Natasya Willlona',
+    summary: 'Mobile app developer for iOS and Android',
+    skills: ['React', 'Redux', 'Hooks', 'Next.js'],
+    experiences: [
+      {
+        companyName: 'HealthTech Startup',
+        position: 'Lead Angular Dev',
+        startDate: '2014-08-05',
+        endDate: '2023-07-25',
+      },
+    ],
+    educations: [
+      {
+        institution: 'Universitas Indonesia',
+        degree: 'S1 Teknik Elektro',
+        startYear: 2012,
+        endYear: 2016,
+      },
+    ],
+    expectedSalary: 8_000_000,
+    preferredEmploymentType: 'full-time',
+    createdAt: '2025-05-10T01:44:21.590499',
+    updatedAt: '2025-11-30T01:44:21.590505',
+  },
+  {
+    id: '28',
+    candidateId: '28',
+    name: 'Rendy Wijaayanto',
+    summary: 'Game developer using Unity',
+    skills: ['Java', 'Spring Boot', 'Hibernate', 'Maven'],
+    experiences: [
+      {
+        companyName: 'E-commerce Raksasa',
+        position: 'QA Tester',
+        startDate: '2015-04-24',
+        endDate: '2023-08-03',
+      },
+      {
+        companyName: 'Logistics Firm',
+        position: 'Embedded Engineer',
+        startDate: '2023-07-23',
+        endDate: '2016-12-11',
+      },
+      {
+        companyName: 'PT Teknologi Maju',
+        position: 'Fullstack Developer',
+        startDate: '2016-12-14',
+        endDate: '2021-11-21',
+      },
+      {
+        companyName: 'Government Agency',
+        position: 'Junior Frontend Developer',
+        startDate: '2019-03-21',
+        endDate: '2016-07-06',
+      },
+    ],
+    educations: [
+      {
+        institution: 'Universitas Padjadjaran',
+        degree: 'Master in Computer Science',
+        startYear: 2005,
+        endYear: 2008,
+      },
+    ],
+    expectedSalary: 16_000_000,
+    preferredEmploymentType: 'freelance',
+    createdAt: '2025-07-26T01:44:21.590541',
+    updatedAt: '2025-12-24T01:44:21.590548',
+  },
+  {
+    id: '29',
+    candidateId: '29',
+    name: 'Budi Setia',
+    summary: 'Business analyst bridging tech and business',
+    skills: ['Python', 'Django', 'Flask', 'FastAPI'],
+    experiences: [
+      {
+        companyName: 'HealthTech Startup',
+        position: 'DevOps Engineer',
+        startDate: '2011-03-03',
+        endDate: '2017-08-23',
+      },
+      {
+        companyName: 'E-commerce Raksasa',
+        position: 'Embedded Engineer',
+        startDate: '2016-06-25',
+      },
+      {
+        companyName: 'Media Company',
+        position: 'Lead Angular Dev',
+        startDate: '2015-04-19',
+        endDate: '2015-08-12',
+      },
+      {
+        companyName: 'Government Agency',
+        position: 'Data Analyst',
+        startDate: '2011-12-25',
+      },
+    ],
+    educations: [
+      {
+        institution: 'Overseas University',
+        degree: 'S1 Matematika',
+        startYear: 2008,
+        endYear: 2012,
+      },
+      {
+        institution: 'Universitas Indonesia',
+        degree: 'S1 Teknik Industri',
+        startYear: 2014,
+        endYear: 2019,
+      },
+      {
+        institution: 'National University of Singapore',
+        degree: 'Diploma in IT',
+        startYear: 2015,
+        endYear: 2018,
+      },
+    ],
+    expectedSalary: 46_000_000,
+    preferredEmploymentType: 'part-time',
+    createdAt: '2025-06-12T01:44:21.590582',
+    updatedAt: '2025-12-07T01:44:21.590588',
+  },
+  {
+    id: '30',
+    candidateId: '30',
+    name: 'Dewi Ratnasari',
+    summary: 'Results-driven product manager',
+    skills: ['Kubernetes', 'Docker', 'Jenkins', 'AWS'],
+    experiences: [
+      {
+        companyName: 'Media Company',
+        position: 'Scrum Master',
+        startDate: '2012-04-24',
+        endDate: '2019-11-16',
+      },
+      {
+        companyName: 'Multinational Consulting',
+        position: 'Blockchain Dev',
+        startDate: '2015-02-15',
+        endDate: '2018-10-03',
+      },
+    ],
+    educations: [
+      {
+        institution: 'Universitas Brawijaya',
+        degree: 'Master in Computer Science',
+        startYear: 2007,
+        endYear: 2011,
+      },
+      {
+        institution: 'Institut Teknologi Sepuluh Nopember',
+        degree: 'S1 Desain Komunikasi Visual',
+        startYear: 2010,
+        endYear: 2015,
+      },
+      {
+        institution: 'Stanford University',
+        degree: 'S1 Desain Komunikasi Visual',
+        startYear: 2015,
+        endYear: 2021,
+      },
+    ],
+    expectedSalary: 20_000_000,
+    preferredEmploymentType: 'freelance',
+    createdAt: '2025-12-18T01:44:21.590618',
+    updatedAt: '2025-11-26T01:44:21.590624',
+  },
+  {
+    id: '31',
+    candidateId: '31',
+    name: 'Jack Daniels',
+    summary: 'Business analyst bridging tech and business',
+    skills: ['Python', 'Django', 'Flask', 'FastAPI'],
+    experiences: [
+      {
+        companyName: 'Government Agency',
+        position: 'AI Researcher',
+        startDate: '2022-10-14',
+        endDate: '2023-03-23',
+      },
+      {
+        companyName: 'Global Tech Corp',
+        position: 'Data Scientist',
+        startDate: '2012-07-15',
+      },
+      {
+        companyName: 'Local Software House',
+        position: 'Network Engineer',
+        startDate: '2022-05-21',
+      },
+      {
+        companyName: 'Manufacturing Giant',
+        position: 'Blockchain Dev',
+        startDate: '2018-03-12',
+      },
+    ],
+    educations: [
+      {
+        institution: 'Universitas Padjadjaran',
+        degree: 'S1 Manajemen',
+        startYear: 2008,
+        endYear: 2012,
+      },
+      {
+        institution: 'Institut Teknologi Sepuluh Nopember',
+        degree: 'S1 Statistika',
+        startYear: 2014,
+        endYear: 2019,
+      },
+      {
+        institution: 'Institut Teknologi Bandung',
+        degree: 'S1 Desain Komunikasi Visual',
+        startYear: 2017,
+        endYear: 2022,
+      },
+    ],
+    expectedSalary: 28_000_000,
+    preferredEmploymentType: 'freelance',
+    createdAt: '2025-03-28T01:44:21.591517',
+    updatedAt: '2025-12-13T01:44:21.591523',
+  },
+]
+
+export class CVRepository extends IndexedDBRepository<CV> {
+  constructor () {
+    super('cv-db', 'cvs')
+    this.init()
+  }
+
+  async init () {
+    if (await this.isEmpty()) {
+      this.create(cvs)
+    }
+  }
+}

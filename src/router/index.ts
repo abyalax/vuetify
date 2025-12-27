@@ -4,10 +4,11 @@
  * Automatic routes for `./src/pages/*.vue`
  */
 
-// Composables
-import { createRouter, createWebHistory } from 'vue-router'
 import { setupLayouts } from 'virtual:generated-layouts'
+import { createRouter, createWebHistory } from 'vue-router'
 import { routes } from 'vue-router/auto-routes'
+import { useAuthStore } from '@/stores/auth'
+import { useUIStore } from '@/stores/ui'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -27,6 +28,36 @@ router.onError((err, to) => {
   } else {
     console.error(err)
   }
+})
+
+router.beforeEach(to => {
+  const auth = useAuthStore()
+
+  const requiresAuth = to.matched.some(
+    record => record.meta.requiresAuth === true,
+  )
+
+  if (requiresAuth && !auth.user) {
+    auth.returnUrl = to.fullPath
+    return {
+      path: '/auth/login',
+      query: { redirect: to.fullPath },
+    }
+  }
+
+  if (auth.user && to.path === '/auth/login') {
+    return auth.returnUrl ?? '/'
+  }
+})
+
+router.beforeEach(() => {
+  const uiStore = useUIStore()
+  uiStore.isLoading = true
+})
+
+router.afterEach(() => {
+  const uiStore = useUIStore()
+  uiStore.isLoading = false
 })
 
 router.isReady().then(() => {

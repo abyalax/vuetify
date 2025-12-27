@@ -37,6 +37,8 @@
 </template>
 
 <script setup lang="ts">
+  import { mdiGithub, mdiReddit, mdiShieldStarOutline } from '@mdi/js'
+
   const items = [
     {
       title: 'Vuetify Documentation',
@@ -45,7 +47,7 @@
     },
     {
       title: 'Vuetify Support',
-      icon: 'mdi-shield-star-outline',
+      icon: mdiShieldStarOutline,
       href: 'https://support.vuetifyjs.com/',
     },
     {
@@ -55,7 +57,7 @@
     },
     {
       title: 'Vuetify GitHub',
-      icon: `mdi-github`,
+      icon: mdiGithub,
       href: 'https://github.com/vuetifyjs/vuetify',
     },
     {
@@ -65,7 +67,7 @@
     },
     {
       title: 'Vuetify Reddit',
-      icon: `mdi-reddit`,
+      icon: mdiReddit,
       href: 'https://reddit.com/r/vuetifyjs',
     },
   ]

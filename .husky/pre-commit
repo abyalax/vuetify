@@ -1,3 +1,2 @@
 pnpm type-check
-pnpm build-only
 pnpm lint-staged

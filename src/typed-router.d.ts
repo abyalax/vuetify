@@ -19,6 +19,26 @@ declare module 'vue-router/auto-routes' {
    */
   export interface RouteNamedMap {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
+    '/auth/_components/AuthFooter': RouteRecordInfo<'/auth/_components/AuthFooter', '/auth/_components/AuthFooter', Record<never, never>, Record<never, never>>,
+    '/auth/_components/form/form-login': RouteRecordInfo<'/auth/_components/form/form-login', '/auth/_components/form/form-login', Record<never, never>, Record<never, never>>,
+    '/auth/_components/form/FormRegister': RouteRecordInfo<'/auth/_components/form/FormRegister', '/auth/_components/form/FormRegister', Record<never, never>, Record<never, never>>,
+    '/auth/login': RouteRecordInfo<'/auth/login', '/auth/login', Record<never, never>, Record<never, never>>,
+    '/auth/register': RouteRecordInfo<'/auth/register', '/auth/register', Record<never, never>, Record<never, never>>,
+    '/cv/': RouteRecordInfo<'/cv/', '/cv', Record<never, never>, Record<never, never>>,
+    '/cv/_components/form/form-cv': RouteRecordInfo<'/cv/_components/form/form-cv', '/cv/_components/form/form-cv', Record<never, never>, Record<never, never>>,
+    '/cv/_components/table-cv-server': RouteRecordInfo<'/cv/_components/table-cv-server', '/cv/_components/table-cv-server', Record<never, never>, Record<never, never>>,
+    '/cv/[id]/': RouteRecordInfo<'/cv/[id]/', '/cv/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
+    '/cv/[id]/update/': RouteRecordInfo<'/cv/[id]/update/', '/cv/:id/update', { id: ParamValue<true> }, { id: ParamValue<false> }>,
+    '/cv/create/': RouteRecordInfo<'/cv/create/', '/cv/create', Record<never, never>, Record<never, never>>,
+    '/dashboard/': RouteRecordInfo<'/dashboard/', '/dashboard', Record<never, never>, Record<never, never>>,
+    '/dashboard/_components/analytics-report': RouteRecordInfo<'/dashboard/_components/analytics-report', '/dashboard/_components/analytics-report', Record<never, never>, Record<never, never>>,
+    '/dashboard/_components/help-support': RouteRecordInfo<'/dashboard/_components/help-support', '/dashboard/_components/help-support', Record<never, never>, Record<never, never>>,
+    '/dashboard/_components/income-overview': RouteRecordInfo<'/dashboard/_components/income-overview', '/dashboard/_components/income-overview', Record<never, never>, Record<never, never>>,
+    '/dashboard/_components/recent-order': RouteRecordInfo<'/dashboard/_components/recent-order', '/dashboard/_components/recent-order', Record<never, never>, Record<never, never>>,
+    '/dashboard/_components/sales-report': RouteRecordInfo<'/dashboard/_components/sales-report', '/dashboard/_components/sales-report', Record<never, never>, Record<never, never>>,
+    '/dashboard/_components/transaction-history': RouteRecordInfo<'/dashboard/_components/transaction-history', '/dashboard/_components/transaction-history', Record<never, never>, Record<never, never>>,
+    '/dashboard/_components/unique-visitor': RouteRecordInfo<'/dashboard/_components/unique-visitor', '/dashboard/_components/unique-visitor', Record<never, never>, Record<never, never>>,
+    '/dashboard/_components/widget-five': RouteRecordInfo<'/dashboard/_components/widget-five', '/dashboard/_components/widget-five', Record<never, never>, Record<never, never>>,
   }
 
   /**
@@ -34,6 +54,86 @@ declare module 'vue-router/auto-routes' {
   export interface _RouteFileInfoMap {
     'src/pages/index.vue': {
       routes: '/'
+      views: never
+    }
+    'src/pages/auth/_components/AuthFooter.vue': {
+      routes: '/auth/_components/AuthFooter'
+      views: never
+    }
+    'src/pages/auth/_components/form/form-login.vue': {
+      routes: '/auth/_components/form/form-login'
+      views: never
+    }
+    'src/pages/auth/_components/form/FormRegister.vue': {
+      routes: '/auth/_components/form/FormRegister'
+      views: never
+    }
+    'src/pages/auth/login.vue': {
+      routes: '/auth/login'
+      views: never
+    }
+    'src/pages/auth/register.vue': {
+      routes: '/auth/register'
+      views: never
+    }
+    'src/pages/cv/index.vue': {
+      routes: '/cv/'
+      views: never
+    }
+    'src/pages/cv/_components/form/form-cv.vue': {
+      routes: '/cv/_components/form/form-cv'
+      views: never
+    }
+    'src/pages/cv/_components/table-cv-server.vue': {
+      routes: '/cv/_components/table-cv-server'
+      views: never
+    }
+    'src/pages/cv/[id]/index.vue': {
+      routes: '/cv/[id]/'
+      views: never
+    }
+    'src/pages/cv/[id]/update/index.vue': {
+      routes: '/cv/[id]/update/'
+      views: never
+    }
+    'src/pages/cv/create/index.vue': {
+      routes: '/cv/create/'
+      views: never
+    }
+    'src/pages/dashboard/index.vue': {
+      routes: '/dashboard/'
+      views: never
+    }
+    'src/pages/dashboard/_components/analytics-report.vue': {
+      routes: '/dashboard/_components/analytics-report'
+      views: never
+    }
+    'src/pages/dashboard/_components/help-support.vue': {
+      routes: '/dashboard/_components/help-support'
+      views: never
+    }
+    'src/pages/dashboard/_components/income-overview.vue': {
+      routes: '/dashboard/_components/income-overview'
+      views: never
+    }
+    'src/pages/dashboard/_components/recent-order.vue': {
+      routes: '/dashboard/_components/recent-order'
+      views: never
+    }
+    'src/pages/dashboard/_components/sales-report.vue': {
+      routes: '/dashboard/_components/sales-report'
+      views: never
+    }
+    'src/pages/dashboard/_components/transaction-history.vue': {
+      routes: '/dashboard/_components/transaction-history'
+      views: never
+    }
+    'src/pages/dashboard/_components/unique-visitor.vue': {
+      routes: '/dashboard/_components/unique-visitor'
+      views: never
+    }
+    'src/pages/dashboard/_components/widget-five.vue': {
+      routes: '/dashboard/_components/widget-five'
       views: never
     }
   }

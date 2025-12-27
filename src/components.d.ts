@@ -11,9 +11,28 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    AppFooter: typeof import('./components/AppFooter.vue')['default']
-    HelloWorld: typeof import('./components/HelloWorld.vue')['default']
+    AppFooter: typeof import('./components/ui/app-footer.vue')['default']
+    Breadcrumbs: typeof import('./components/ui/breadcrumbs.vue')['default']
+    ComponentTitle: typeof import('./components/ui/component-title.vue')['default']
+    Footer: typeof import('./components/layouts/dashboard/footer.vue')['default']
+    HelloWorld: typeof import('./components/ui/hello-world.vue')['default']
+    InputArrayObject: typeof import('./components/ui/input-array-object.vue')['default']
+    InputArrayString: typeof import('./components/ui/input-array-string.vue')['default']
+    Logo: typeof import('./components/layouts/dashboard/logo.vue')['default']
+    NavCollapse: typeof import('./components/layouts/dashboard/sidebar/nav-collapse.vue')['default']
+    NavGroup: typeof import('./components/layouts/dashboard/sidebar/nav-group.vue')['default']
+    NavItem: typeof import('./components/layouts/dashboard/sidebar/nav-item.vue')['default']
+    Notification: typeof import('./components/ui/notification.vue')['default']
+    NotificationDd: typeof import('./components/layouts/dashboard/header/notification-dd.vue')['default']
+    Page: typeof import('./components/layouts/dashboard/page.vue')['default']
+    ProfileDd: typeof import('./components/layouts/dashboard/header/profile-dd.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SearchBarPanel: typeof import('./components/layouts/dashboard/header/search-bar-panel.vue')['default']
+    ThemeSwitcher: typeof import('./components/ui/theme-switcher.vue')['default']
+    UiParentCard: typeof import('./components/ui/ui-parent-card.vue')['default']
+    UiTitleCard: typeof import('./components/ui/ui-title-card.vue')['default']
+    VerticalHeader: typeof import('./components/layouts/dashboard/header/vertical-header.vue')['default']
+    VerticalSidebar: typeof import('./components/layouts/dashboard/sidebar/vertical-sidebar.vue')['default']
   }
 }

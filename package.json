@@ -14,12 +14,23 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@ant-design/icons-vue": "^7.0.1",
+    "@fontsource/public-sans": "^5.2.7",
     "@fontsource/roboto": "5.2.7",
     "@mdi/font": "7.4.47",
+    "@mdi/js": "^7.4.47",
     "@tanstack/vue-query": "^5.92.1",
+    "@vee-validate/zod": "^4.15.1",
+    "@vueuse/core": "^14.1.0",
+    "ant-design-vue": "^4.2.6",
+    "axios": "^1.13.2",
     "pinia": "^3.0.3",
+    "vee-validate": "^4.15.1",
     "vue": "^3.5.21",
     "vue-router": "^4.5.1",
+    "vue-tabler-icons": "^2.21.0",
+    "vue3-apexcharts": "^1.10.0",
+    "vue3-perfect-scrollbar": "^2.0.0",
     "vuetify": "^3.10.1",
     "zod": "^4.2.1"
   },
@@ -32,6 +43,7 @@
     "eslint-config-vuetify": "^4.2.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
+    "msw": "^2.12.4",
     "npm-run-all2": "^8.0.4",
     "sass-embedded": "^1.92.1",
     "typescript": "~5.9.2",
@@ -40,6 +52,7 @@
     "unplugin-vue-components": "^29.0.0",
     "unplugin-vue-router": "^0.15.0",
     "vite": "^7.1.5",
+    "vite-plugin-vue-devtools": "^8.0.5",
     "vite-plugin-vue-layouts-next": "^1.0.0",
     "vite-plugin-vuetify": "^2.1.2",
     "vue-tsc": "^3.0.7"
@@ -47,6 +60,11 @@
   "lint-staged": {
     "*.{js,ts,vue}": [
       "eslint --fix"
+    ]
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
     ]
   }
 }

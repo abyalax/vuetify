@@ -18,7 +18,7 @@
             class="py-4"
             color="surface-variant"
             image="https://cdn.vuetifyjs.com/docs/images/one/create/feature.png"
-            prepend-icon="mdi-rocket-launch-outline"
+            :prepend-icon="mdiRocketLaunchOutline"
             rounded="lg"
             variant="tonal"
           >
@@ -42,7 +42,7 @@
 
         <v-col v-for="link in links" :key="link.href" cols="6">
           <v-card
-            append-icon="mdi-open-in-new"
+            :append-icon="mdiOpenInNew"
             class="py-4"
             color="surface-variant"
             :href="link.href"
@@ -61,28 +61,30 @@
 </template>
 
 <script setup lang="ts">
+  import { mdiAccountGroupOutline, mdiOpenInNew, mdiRocketLaunchOutline, mdiStarCircleOutline, mdiTextBoxOutline, mdiWidgetsOutline } from '@mdi/js'
+
   const links = [
     {
       href: 'https://vuetifyjs.com/',
-      icon: 'mdi-text-box-outline',
+      icon: mdiTextBoxOutline,
       subtitle: 'Learn about all things Vuetify in our documentation.',
       title: 'Documentation',
     },
     {
       href: 'https://vuetifyjs.com/introduction/why-vuetify/#feature-guides',
-      icon: 'mdi-star-circle-outline',
+      icon: mdiStarCircleOutline,
       subtitle: 'Explore available framework Features.',
       title: 'Features',
     },
     {
       href: 'https://vuetifyjs.com/components/all',
-      icon: 'mdi-widgets-outline',
+      icon: mdiWidgetsOutline,
       subtitle: 'Discover components in the API Explorer.',
       title: 'Components',
     },
     {
       href: 'https://discord.vuetifyjs.com',
-      icon: 'mdi-account-group-outline',
+      icon: mdiAccountGroupOutline,
       subtitle: 'Connect with Vuetify developers.',
       title: 'Community',
     },
