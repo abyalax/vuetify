@@ -1,10 +1,10 @@
 <script setup lang="ts">
-  import type { FormDataCV } from '../../_components/form/cv-schema'
+  import type { FormDataCandidate } from '../../_components/form/candidate-schema'
   import type { Breadcrumb } from '@/components/ui'
   import { useRoute } from 'vue-router'
-  import FormCV from '../../_components/form/form-cv.vue'
-  import { useGetCV } from '../../_hooks/use-get-cv'
-  import { useUpdateCV } from '../../_hooks/use-update-cv'
+  import FormCV from '../../_components/form/form-candidate.vue'
+  import { useGetCandidate } from '../../_hooks/use-get-candidate'
+  import { useUpdateCandidate } from '../../_hooks/use-update-candidate'
 
   definePage({
     meta: {
@@ -12,26 +12,28 @@
       requiresAuth: true,
     },
   })
+
   const { params } = useRoute()
   // @ts-expect-error
   const id = params.id
-  const { data } = useGetCV(id)
-  const { mutate } = useUpdateCV(id)
-  const page = ref({ title: 'Curriculum Vitae' })
+  const { data } = useGetCandidate(id)
+  const { mutate } = useUpdateCandidate(id)
+
+  const page = ref({ title: 'Candidate' })
   const breadcrumbs = ref<Breadcrumb[]>([
     {
-      title: 'CV',
+      title: 'Candidate',
       disabled: false,
-      href: '/cv',
+      href: '/candidate',
     },
     {
       title: 'Detail',
-      disabled: false,
-      href: `/cv/${id}`,
+      disabled: true,
+      href: `/candidate/${id}`,
     },
   ])
 
-  function onSubmit (values: FormDataCV) {
+  function onSubmit (values: FormDataCandidate) {
     mutate(values)
   }
 

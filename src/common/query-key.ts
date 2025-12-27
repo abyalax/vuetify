@@ -6,4 +6,11 @@ export const QueryKey = {
     UPDATE: 'update-cv',
     DELETE: 'delete-cv',
   },
+  CANDIDATE: {
+    GET_LIST: 'get-list-candidate',
+    GET: 'get-candidate',
+    CREATE: 'create-candidate',
+    UPDATE: 'update-candidate',
+    DELETE: 'delete-candidate',
+  },
 }

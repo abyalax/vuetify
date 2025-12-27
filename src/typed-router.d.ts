@@ -24,6 +24,12 @@ declare module 'vue-router/auto-routes' {
     '/auth/_components/form/FormRegister': RouteRecordInfo<'/auth/_components/form/FormRegister', '/auth/_components/form/FormRegister', Record<never, never>, Record<never, never>>,
     '/auth/login': RouteRecordInfo<'/auth/login', '/auth/login', Record<never, never>, Record<never, never>>,
     '/auth/register': RouteRecordInfo<'/auth/register', '/auth/register', Record<never, never>, Record<never, never>>,
+    '/candidate/': RouteRecordInfo<'/candidate/', '/candidate', Record<never, never>, Record<never, never>>,
+    '/candidate/_components/form/form-candidate': RouteRecordInfo<'/candidate/_components/form/form-candidate', '/candidate/_components/form/form-candidate', Record<never, never>, Record<never, never>>,
+    '/candidate/_components/table-candidate': RouteRecordInfo<'/candidate/_components/table-candidate', '/candidate/_components/table-candidate', Record<never, never>, Record<never, never>>,
+    '/candidate/[id]/': RouteRecordInfo<'/candidate/[id]/', '/candidate/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
+    '/candidate/[id]/update/': RouteRecordInfo<'/candidate/[id]/update/', '/candidate/:id/update', { id: ParamValue<true> }, { id: ParamValue<false> }>,
+    '/candidate/create/': RouteRecordInfo<'/candidate/create/', '/candidate/create', Record<never, never>, Record<never, never>>,
     '/cv/': RouteRecordInfo<'/cv/', '/cv', Record<never, never>, Record<never, never>>,
     '/cv/_components/form/form-cv': RouteRecordInfo<'/cv/_components/form/form-cv', '/cv/_components/form/form-cv', Record<never, never>, Record<never, never>>,
     '/cv/_components/table-cv-server': RouteRecordInfo<'/cv/_components/table-cv-server', '/cv/_components/table-cv-server', Record<never, never>, Record<never, never>>,
@@ -74,6 +80,30 @@ declare module 'vue-router/auto-routes' {
     }
     'src/pages/auth/register.vue': {
       routes: '/auth/register'
+      views: never
+    }
+    'src/pages/candidate/index.vue': {
+      routes: '/candidate/'
+      views: never
+    }
+    'src/pages/candidate/_components/form/form-candidate.vue': {
+      routes: '/candidate/_components/form/form-candidate'
+      views: never
+    }
+    'src/pages/candidate/_components/table-candidate.vue': {
+      routes: '/candidate/_components/table-candidate'
+      views: never
+    }
+    'src/pages/candidate/[id]/index.vue': {
+      routes: '/candidate/[id]/'
+      views: never
+    }
+    'src/pages/candidate/[id]/update/index.vue': {
+      routes: '/candidate/[id]/update/'
+      views: never
+    }
+    'src/pages/candidate/create/index.vue': {
+      routes: '/candidate/create/'
       views: never
     }
     'src/pages/cv/index.vue': {

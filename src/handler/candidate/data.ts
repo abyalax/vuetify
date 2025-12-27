@@ -1,0 +1,403 @@
+import type { Candidate } from '@/types'
+import { IndexedDBRepository } from '@/libs/storage/repository'
+
+const candidates: Candidate[] = [
+  {
+    id: '1',
+    fullName: 'Budi Santoso',
+    email: 'budisantoso@mail.com',
+    phoneNumbers: ['087765290292'],
+    status: 'active',
+    location: 'Kediri, Jawa Timur',
+    createdAt: '2025-12-27T10:43:26.509Z',
+    updatedAt: '2025-12-27T10:43:26.509Z',
+  },
+  {
+    id: '2',
+    fullName: 'Siti Aminah',
+    email: 'sitiaminah@mail.com',
+    phoneNumbers: [
+      '087715290293',
+      '087265697296',
+    ],
+    status: 'active',
+    location: 'Surabaya, Jawa Timur',
+    createdAt: '2025-12-27T10:43:26.509Z',
+    updatedAt: '2025-12-27T10:43:26.509Z',
+  },
+  {
+    id: '3',
+    fullName: 'Andi Wijaya',
+    email: 'andiwijaya@mail.com',
+    phoneNumbers: [
+    ],
+    status: 'active',
+    location: 'Malang, Jawa Timur',
+    createdAt: '2025-12-27T10:43:26.509Z',
+    updatedAt: '2025-12-27T10:43:26.509Z',
+  },
+  {
+    id: '4',
+    fullName: 'Rina Permata',
+    email: 'rinapermata@mail.com',
+    phoneNumbers: [
+      '087715290293',
+      '087265697296',
+    ],
+    status: 'active',
+    location: 'Kediri, Jawa Timur',
+    createdAt: '2025-12-27T10:43:26.509Z',
+    updatedAt: '2025-12-27T10:43:26.509Z',
+  },
+  {
+    id: '5',
+    fullName: 'Dewi Ratnasari',
+    email: 'dewiratnasari@mail.com',
+    phoneNumbers: [
+      '087715290293',
+      '087265697296',
+    ],
+    status: 'active',
+    location: 'Kediri, Jawa Timur',
+    createdAt: '2025-12-27T10:43:26.509Z',
+    updatedAt: '2025-12-27T10:43:26.509Z',
+  },
+  {
+    id: '6',
+    fullName: 'Fajar Nugraha',
+    email: 'fajanugraha@mail.com',
+    phoneNumbers: [
+    ],
+    status: 'active',
+    location: 'Kediri, Jawa Timur',
+    createdAt: '2025-12-27T10:43:26.509Z',
+    updatedAt: '2025-12-27T10:43:26.509Z',
+  },
+  {
+    id: '7',
+    fullName: 'Maya Putri',
+    email: 'mayaputri@mail.com',
+    phoneNumbers: [
+      '087715290293',
+      '087265697296',
+    ],
+    status: 'active',
+    location: 'Kediri, Jawa Timur',
+    createdAt: '2025-12-27T10:43:26.509Z',
+    updatedAt: '2025-12-27T10:43:26.509Z',
+  },
+  {
+    id: '8',
+    fullName: 'Eko Prasetyo',
+    email: 'ekoprasetyo@mail.com',
+    phoneNumbers: [
+      '087715290293',
+      '087265697296',
+    ],
+    status: 'active',
+    location: 'Kediri, Jawa Timur',
+    createdAt: '2025-12-27T10:43:26.509Z',
+    updatedAt: '2025-12-27T10:43:26.509Z',
+  },
+  {
+    id: '9',
+    fullName: 'Lestari Wahyuni',
+    email: 'lestariwahyuni@mail.com',
+    phoneNumbers: [
+      '087715290293',
+      '087265697296',
+    ],
+    status: 'active',
+    location: 'Surabaya, Jawa Timur',
+    createdAt: '2025-12-27T10:43:26.509Z',
+    updatedAt: '2025-12-27T10:43:26.509Z',
+  },
+  {
+    id: '10',
+    fullName: 'Rizky Ramadhan',
+    email: 'rizkyramadhan@mail.com',
+    phoneNumbers: [
+      '087715290293',
+    ],
+    status: 'active',
+    location: 'Kediri, Jawa Timur',
+    createdAt: '2025-12-27T10:43:26.509Z',
+    updatedAt: '2025-12-27T10:43:26.509Z',
+  },
+  {
+    id: '11',
+    fullName: 'Agus Setiawan',
+    email: 'agussetiawan@mail.com',
+    phoneNumbers: [
+      '087715290293',
+      '087265697296',
+    ],
+    status: 'active',
+    location: 'Malang, Jawa Timur',
+    createdAt: '2025-12-27T10:43:26.509Z',
+    updatedAt: '2025-12-27T10:43:26.509Z',
+  },
+  {
+    id: '12',
+    fullName: 'Indah Kusuma',
+    email: 'indahkusuma@mail.com',
+    phoneNumbers: [
+      '087715290293',
+    ],
+    status: 'active',
+    location: 'Kediri, Jawa Timur',
+    createdAt: '2025-12-27T10:43:26.509Z',
+    updatedAt: '2025-12-27T10:43:26.509Z',
+  },
+  {
+    id: '13',
+    fullName: 'Hendra Wijaya',
+    email: 'hendrawijaya@mail.com',
+    phoneNumbers: [
+      '087715290293',
+      '087265697296',
+    ],
+    status: 'active',
+    location: 'Kediri, Jawa Timur',
+    createdAt: '2025-12-27T10:43:26.509Z',
+    updatedAt: '2025-12-27T10:43:26.509Z',
+  },
+  {
+    id: '14',
+    fullName: 'Sari Devi',
+    email: 'saridevi@mail.com',
+    phoneNumbers: [
+      '087715290293',
+      '087265697296',
+    ],
+    status: 'active',
+    location: 'Kediri, Jawa Timur',
+    createdAt: '2025-12-27T10:43:26.509Z',
+    updatedAt: '2025-12-27T10:43:26.509Z',
+  },
+  {
+    id: '15',
+    fullName: 'Bambang Sudjatmiko',
+    email: 'bambangsudjatmiko@mail.com',
+    phoneNumbers: [
+      '087265697296',
+    ],
+    status: 'active',
+    location: 'Kediri, Jawa Timur',
+    createdAt: '2025-12-27T10:43:26.509Z',
+    updatedAt: '2025-12-27T10:43:26.509Z',
+  },
+  {
+    id: '16',
+    fullName: 'Ratna Sari',
+    email: 'ratnasari@mail.com',
+    phoneNumbers: [
+      '087715290293',
+      '087265697296',
+    ],
+    status: 'active',
+    location: 'Kediri, Jawa Timur',
+    createdAt: '2025-12-27T10:43:26.509Z',
+    updatedAt: '2025-12-27T10:43:26.509Z',
+  },
+  {
+    id: '17',
+    fullName: 'Kevin Pratama',
+    email: 'kevinpratama@mail.com',
+    phoneNumbers: [
+      '087265697296',
+    ],
+    status: 'active',
+    location: 'Kediri, Jawa Timur',
+    createdAt: '2025-12-27T10:43:26.509Z',
+    updatedAt: '2025-12-27T10:43:26.509Z',
+  },
+  {
+    id: '18',
+    fullName: 'Nadia Utami',
+    email: 'nadiautami@mail.com',
+    phoneNumbers: [
+      '087715290293',
+      '087265697296',
+    ],
+    status: 'active',
+    location: 'Kediri, Jawa Timur',
+    createdAt: '2025-12-27T10:43:26.509Z',
+    updatedAt: '2025-12-27T10:43:26.509Z',
+  },
+  {
+    id: '19',
+    fullName: 'Taufik Hidayat',
+    email: 'taufikhidayat@mail.com',
+    phoneNumbers: [
+      '087715290293',
+      '087265697296',
+    ],
+    status: 'active',
+    location: 'Kediri, Jawa Timur',
+    createdAt: '2025-12-27T10:43:26.509Z',
+    updatedAt: '2025-12-27T10:43:26.509Z',
+  },
+  {
+    id: '20',
+    fullName: 'Lulu Anindita',
+    email: 'luluanindita@mail.com',
+    phoneNumbers: [
+      '087715290293',
+      '087265697296',
+    ],
+    status: 'active',
+    location: 'Kediri, Jawa Timur',
+    createdAt: '2025-12-27T10:43:26.509Z',
+    updatedAt: '2025-12-27T10:43:26.509Z',
+  },
+  {
+    id: '21',
+    fullName: 'Yusuf Mansur',
+    email: 'yusufmansur@mail.com',
+    phoneNumbers: [
+      '087715290293',
+      '087265697296',
+    ],
+    status: 'active',
+    location: 'Kediri, Jawa Timur',
+    createdAt: '2025-12-27T10:43:26.509Z',
+    updatedAt: '2025-12-27T10:43:26.509Z',
+  },
+  {
+    id: '22',
+    fullName: 'Dian Sastro',
+    email: 'diansastro@mail.com',
+    phoneNumbers: [
+      '087715290293',
+    ],
+    status: 'active',
+    location: 'Kediri, Jawa Timur',
+    createdAt: '2025-12-27T10:43:26.509Z',
+    updatedAt: '2025-12-27T10:43:26.509Z',
+  },
+  {
+    id: '23',
+    fullName: 'Rahmat Hidayat',
+    email: 'rahmathidayat@mail.com',
+    phoneNumbers: [
+      '087715290293',
+      '087265697296',
+    ],
+    status: 'active',
+    location: 'Kediri, Jawa Timur',
+    createdAt: '2025-12-27T10:43:26.509Z',
+    updatedAt: '2025-12-27T10:43:26.509Z',
+  },
+  {
+    id: '24',
+    fullName: 'Aisyah Putri',
+    email: 'aisyahputri@mail.com',
+    phoneNumbers: [
+      '087715290293',
+      '087265697296',
+    ],
+    status: 'active',
+    location: 'Kediri, Jawa Timur',
+    createdAt: '2025-12-27T10:43:26.509Z',
+    updatedAt: '2025-12-27T10:43:26.509Z',
+  },
+  {
+    id: '25',
+    fullName: 'Guntur Pratama',
+    email: 'gunturpratama@mail.com',
+    phoneNumbers: [
+    ],
+    status: 'active',
+    location: 'Kediri, Jawa Timur',
+    createdAt: '2025-12-27T10:43:26.509Z',
+    updatedAt: '2025-12-27T10:43:26.509Z',
+  },
+  {
+    id: '26',
+    fullName: 'John Doe',
+    email: 'johndoe@mail.com',
+    phoneNumbers: [
+      '087715290293',
+      '087265697296',
+    ],
+    status: 'active',
+    location: 'Kediri, Jawa Timur',
+    createdAt: '2025-12-27T10:43:26.509Z',
+    updatedAt: '2025-12-27T10:43:26.509Z',
+  },
+  {
+    id: '27',
+    fullName: 'Natasya Willlona',
+    email: 'natasyawilllona@mail.com',
+    phoneNumbers: [
+      '087715290293',
+    ],
+    status: 'active',
+    location: 'Kediri, Jawa Timur',
+    createdAt: '2025-12-27T10:43:26.509Z',
+    updatedAt: '2025-12-27T10:43:26.509Z',
+  },
+  {
+    id: '28',
+    fullName: 'Rendy Wijaayanto',
+    email: 'rendywijaayanto@mail.com',
+    phoneNumbers: [
+      '087715290293',
+      '087265697296',
+    ],
+    status: 'active',
+    location: 'Kediri, Jawa Timur',
+    createdAt: '2025-12-27T10:43:26.509Z',
+    updatedAt: '2025-12-27T10:43:26.509Z',
+  },
+  {
+    id: '29',
+    fullName: 'Budi Setia',
+    email: 'budisetia@mail.com',
+    phoneNumbers: [
+      '087715290293',
+      '087265697296',
+    ],
+    status: 'active',
+    location: 'Kediri, Jawa Timur',
+    createdAt: '2025-12-27T10:43:26.509Z',
+    updatedAt: '2025-12-27T10:43:26.509Z',
+  },
+  {
+    id: '30',
+    fullName: 'Dewi Ratnasari',
+    email: 'dewiratnasari@mail.com',
+    phoneNumbers: [
+      '087715290293',
+    ],
+    status: 'active',
+    location: 'Kediri, Jawa Timur',
+    createdAt: '2025-12-27T10:43:26.509Z',
+    updatedAt: '2025-12-27T10:43:26.509Z',
+  },
+  {
+    id: '31',
+    fullName: 'Jack Daniels',
+    email: 'jackdaniels@mail.com',
+    phoneNumbers: [
+    ],
+    status: 'active',
+    location: 'Kediri, Jawa Timur',
+    createdAt: '2025-12-27T10:43:26.509Z',
+    updatedAt: '2025-12-27T10:43:26.509Z',
+  },
+]
+
+export class CandidateRepository extends IndexedDBRepository<Candidate> {
+  constructor () {
+    super('candidate-db', 'candidates')
+    this.init()
+  }
+
+  async init () {
+    if (await this.isEmpty()) {
+      this.create(candidates)
+    }
+  }
+}

@@ -1,8 +1,10 @@
 import { setupWorker } from 'msw/browser'
-import { cvHandlers } from '@/handler/cv'
+import { candidateHandlers } from '@/handler/candidate/api'
+import { cvHandlers } from '@/handler/cv/api'
 
 const worker = setupWorker(
   ...cvHandlers,
+  ...candidateHandlers,
 )
 
 export async function setupMockBrowser () {

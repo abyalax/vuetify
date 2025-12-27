@@ -15,7 +15,8 @@ export interface Candidate {
   updatedAt: string
 }
 
-// domains/cv/types/cv.type.ts
+export type CreateCandidate = Omit<Candidate, 'id'>
+export type UpdateCandidate = Partial<Candidate>
 
 export type EmploymentType
   = | 'full-time'

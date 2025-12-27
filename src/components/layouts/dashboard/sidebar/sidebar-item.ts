@@ -4,7 +4,9 @@ import {
   DashboardOutlined,
   LoginOutlined,
   ProfileOutlined,
+  UserAddOutlined,
 } from '@ant-design/icons-vue'
+import { UsersGroupIcon } from 'vue-tabler-icons'
 
 export interface menu {
   header?: string
@@ -34,6 +36,11 @@ const sidebarItem: menu[] = [
     title: 'Curriculum Vitae',
     icon: BookOutlined,
     to: '/cv',
+  },
+  {
+    title: 'Candidate',
+    icon: UsersGroupIcon,
+    to: '/candidate',
   },
   { header: 'Authentication' },
   {

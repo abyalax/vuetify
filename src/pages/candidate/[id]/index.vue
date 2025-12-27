@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import type { Breadcrumb } from '@/components/ui'
   import { useRoute } from 'vue-router'
-  import { useGetCV } from '../_hooks/use-get-cv'
+  import { useGetCandidate } from '../_hooks/use-get-candidate'
 
   definePage({
     meta: {
@@ -9,23 +9,21 @@
       requiresAuth: true,
     },
   })
-
   const route = useRoute()
   // @ts-expect-error
   const id = route.params.id
-  const { data } = useGetCV(id)
-
-  const page = ref({ title: 'Curriculum Vitae' })
+  const { data } = useGetCandidate(id)
+  const page = ref({ title: 'Candidate' })
   const breadcrumbs = ref<Breadcrumb[]>([
     {
-      title: 'CV',
+      title: 'Candidate',
       disabled: false,
-      href: '/cv',
+      href: '/candidate',
     },
     {
       title: 'Detail',
       disabled: true,
-      href: `/cv/${id}`,
+      href: `/candidate/${id}`,
     },
   ])
 
