@@ -77,7 +77,7 @@
   function updateOptions (options: {
     page: number
     itemsPerPage: number
-    sortBy: { key: string, order: 'asc' | 'desc' }[]
+    sortBy: { key: string, order: SortOrder }[]
   }) {
     state.page = options.page
     state.per_page = options.itemsPerPage

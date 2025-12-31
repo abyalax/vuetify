@@ -6,13 +6,12 @@ import { QueryKey } from '@/common/query-key'
 import { candidateApi } from '@/modules/candidate'
 
 export function useGetListCandidate (params: Ref<TFilterParams>) {
-  // needed for reactivity
-  const queryKey = computed(() => [
-    QueryKey.CANDIDATE.GET_LIST,
-    { ...unref(params) },
-  ])
   return useQuery({
-    queryKey,
+    // needed computed for dependency graph
+    queryKey: computed(() => [
+      QueryKey.CANDIDATE.GET_LIST,
+      unref(params),
+    ]),
     queryFn: () => candidateApi.list(params.value),
   })
 }

@@ -6,12 +6,12 @@ import { QueryKey } from '@/common/query-key'
 import { jobPostApi } from '@/modules/job-post'
 
 export function useGetListJob (params: Ref<TFilterParams>) {
-  const queryKey = computed(() => [
-    QueryKey.JOB.GET_LIST,
-    { ...unref(params) },
-  ])
   return useQuery({
-    queryKey,
+    // needed computed for dependency graph
+    queryKey: computed(() => [
+      QueryKey.JOB.GET_LIST,
+      unref(params),
+    ]),
     queryFn: () => jobPostApi.list(params.value),
   })
 }

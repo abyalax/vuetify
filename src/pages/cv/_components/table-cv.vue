@@ -80,7 +80,7 @@
   function updateOptions (options: {
     page: number
     itemsPerPage: number
-    sortBy: { key: string, order: 'asc' | 'desc' }[]
+    sortBy: { key: string, order: SortOrder }[]
   }) {
     state.page = options.page
     state.per_page = options.itemsPerPage
@@ -92,14 +92,14 @@
 
   watch(
     state,
-    () => {
+    value => {
       router.replace({
         query: {
-          page: state.page?.toString(),
-          per_page: state.per_page?.toString(),
-          search: state.search || undefined,
-          sort: state.sort,
-          order: state.order,
+          page: value.page,
+          per_page: value.per_page,
+          search: value.search,
+          sort: value.sort,
+          order: value.order,
         },
       })
     },
