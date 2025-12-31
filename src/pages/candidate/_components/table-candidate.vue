@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import type { TFilterParams } from '@/common/meta'
+  import type { SortOrder, TFilterParams } from '@/common/meta'
   import type { Candidate } from '@/types'
   import { mdiChevronDown, mdiClose, mdiDelete, mdiDeleteOutline, mdiDownload, mdiEyeOutline, mdiFileDocumentOutline, mdiMagnify, mdiPackage, mdiPencilOutline, mdiPlus } from '@mdi/js'
   import { useDebounceFn } from '@vueuse/core'
@@ -84,7 +84,7 @@
 
     const sort = options.sortBy[0]
     state.sort = sort?.key
-    state.order = sort?.order?.toUpperCase() as 'ASC' | 'DESC' | undefined
+    state.order = sort?.order?.toLowerCase() as SortOrder
   }
 
   watch(

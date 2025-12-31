@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import type { TFilterParams } from '@/common/meta'
+  import type { SortOrder, TFilterParams } from '@/common/meta'
   import type { CV } from '@/types'
   import { mdiBriefcaseOutline, mdiChevronDown, mdiClose, mdiDelete, mdiDeleteOutline, mdiDownload, mdiEyeOutline, mdiFileDocumentOutline, mdiMagnify, mdiPackage, mdiPencilOutline, mdiPlus, mdiSchoolOutline } from '@mdi/js'
   import { useDebounceFn } from '@vueuse/core'
@@ -12,11 +12,13 @@
   const router = useRouter()
   const route = useRoute()
   const selected = ref<CV[]>([])
-  const expanded = ref([])
+  const expanded = ref<string[]>([])
   const state = reactive<TFilterParams>({
     page: Number(route.query.page) || 1,
     per_page: Number(route.query.per_page) || 10,
-    search: (route.query.search as string) ?? '',
+    search: route.query.search as string,
+    sort: route.query.sort as string,
+    order: route.query.order as SortOrder,
   })
   const searchInput = ref(state.search)
   const debouncedSearch = useDebounceFn((value?: string) => {
@@ -85,7 +87,7 @@
 
     const sort = options.sortBy[0]
     state.sort = sort?.key
-    state.order = sort?.order?.toUpperCase() as 'ASC' | 'DESC' | undefined
+    state.order = sort?.order.toLowerCase() as SortOrder
   }
 
   watch(

@@ -10,10 +10,12 @@ export type TMetaResponse = TMetaPage & {
   total?: number
 }
 
+export type SortOrder = 'asc' | 'desc'
+
 export type TMetaRequest<T = unknown> = TMetaPage & {
   search?: string
   sort?: string
-  order?: 'asc' | 'desc'
+  order?: SortOrder
   orderBy?: string
   filters?: T
 }
@@ -23,7 +25,7 @@ export type TFilterParams<T = Record<string, unknown>> = {
   per_page?: number
   search?: string
   sort?: string
-  order?: 'ASC' | 'DESC'
+  order?: 'asc' | 'desc'
 } & T
 
 export type TResponseList<T> = {
