@@ -1,6 +1,27 @@
 <script lang="ts" setup>
+  import { computed } from 'vue'
+  import { hasPermission } from '@/stores/auth'
+  import { useAuthStore } from '@/stores/auth/auth-store'
   import NavItem from './nav-item.vue'
+
+  const auth = useAuthStore()
   const componentProps = defineProps({ item: Object, level: Number })
+
+  const filteredChildren = computed(() => {
+    if (!auth.user || !componentProps.item?.children) {
+      return componentProps.item?.children || []
+    }
+
+    return componentProps.item.children.filter((child: any) => {
+      // Allow items without permissions
+      if (!child.permissions) {
+        return true
+      }
+
+      // Check if user has any of the required permissions
+      return hasPermission(auth.user, child.permissions)
+    })
+  })
 </script>
 
 <template>
@@ -34,7 +55,7 @@
     <!-- ---------------------------------------------- -->
     <!---Sub Item-->
     <!-- ---------------------------------------------- -->
-    <template v-for="(subitem, i) in item?.children" :key="i">
+    <template v-for="(subitem, i) in filteredChildren" :key="i">
       <NavCollapse v-if="subitem?.children" :item="subitem" :level="(componentProps.level ?? 0) + 1" />
       <NavItem v-else :item="subitem" :level="(componentProps.level ?? 0) + 1" />
     </template>

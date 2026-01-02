@@ -5,23 +5,23 @@
   import { PERMISSION } from '@/common/permission'
   import { ROLES } from '@/common/role'
   import Page from '@/components/layouts/dashboard/page.vue'
-  import TableJobPost from './_components/table-job-post.vue'
+  import TableCandidate from './_components/table-candidate.vue'
   definePage({
     meta: {
       layout: 'authenticated',
       requiresAuth: true,
       roles: [ROLES.ADMIN],
       permissions: [
-        PERMISSION.ADMIN.job_read,
+        PERMISSION.ADMIN.candidate_read,
       ],
     },
   })
-  const page = ref({ title: 'Job Post' })
+  const page = ref({ title: 'Candidate' })
   const breadcrumbs = ref<Breadcrumb[]>([
     {
-      title: 'Job Post',
+      title: 'Candidate',
       disabled: true,
-      href: '/job-post',
+      href: '/candidate',
     },
   ])
 </script>
@@ -30,7 +30,7 @@
   <Page>
     <VRow>
       <VCol cols="12">
-        <TableJobPost />
+        <TableCandidate />
       </VCol>
     </VRow>
   </Page>

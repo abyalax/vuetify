@@ -1,27 +1,26 @@
 export const PERMISSION = {
-  user_read: 'user.read',
-  user_write: 'user.write',
-  user_update: 'user.update',
-  user_delete: 'user.delete',
-  cv_read: 'cv.read',
-  cv_write: 'cv.write',
-  cv_update: 'cv.update',
-  cv_delete: 'cv.delete',
-  candidate_read: 'candidate.read',
-  candidate_write: 'candidate.write',
-  candidate_update: 'candidate.update',
-  candidate_delete: 'candidate.delete',
-  job_read: 'job-post.read',
-  job_write: 'job-post.write',
-  job_update: 'job-post.update',
-  job_delete: 'job-post.delete',
-
-  me_cv_read: 'cv.read',
-  me_cv_write: 'cv.write',
-  me_cv_update: 'cv.update',
-  me_cv_delete: 'cv.delete',
+  ADMIN: {
+    user_read: 'admin.user.read',
+    user_write: 'admin.user.write',
+    user_update: 'admin.user.update',
+    user_delete: 'admin.user.delete',
+    cv_read: 'admin.cv.read',
+    cv_write: 'admin.cv.write',
+    cv_update: 'admin.cv.update',
+    cv_delete: 'admin.cv.delete',
+    candidate_read: 'admin.candidate.read',
+    candidate_write: 'admin.candidate.write',
+    candidate_update: 'admin.candidate.update',
+    candidate_delete: 'admin.candidate.delete',
+    job_read: 'admin.job-post.read',
+    job_write: 'admin.job-post.write',
+    job_update: 'admin.job-post.update',
+    job_delete: 'admin.job-post.delete',
+  },
+  CANDIDATE: {
+    cv_read: 'candidate.cv.read',
+    cv_write: 'candidate.cv.write',
+    cv_update: 'candidate.cv.update',
+    cv_delete: 'candidate.cv.delete',
+  },
 }
-
-/**
-
- */

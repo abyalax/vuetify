@@ -1,6 +1,10 @@
 <script setup lang="ts">
-  import { shallowRef } from 'vue'
+  import { computed } from 'vue'
+  import { useRoute } from 'vue-router'
+  import { hasPermission } from '@/stores/auth'
+  import { useAuthStore } from '@/stores/auth/auth-store'
   import { useCustomizerStore } from '@/stores/customizer-store'
+
   import LogoDark from '../logo.vue'
 
   import NavCollapse from './nav-collapse.vue'
@@ -9,7 +13,23 @@
   import sidebarItems from './sidebar-item'
 
   const customizer = useCustomizerStore()
-  const sidebarMenu = shallowRef(sidebarItems)
+  const auth = useAuthStore()
+
+  const filteredMenu = computed(() => {
+    if (!auth.user) {
+      return sidebarItems
+    }
+
+    return sidebarItems.filter(item => {
+      // Allow headers, dividers, and items without permissions
+      if (item.header || item.divider || !item.permissions) {
+        return true
+      }
+
+      // Check if user has any of the required permissions
+      return hasPermission(auth.user, item.permissions)
+    })
+  })
 </script>
 
 <template>
@@ -33,7 +53,7 @@
     <perfect-scrollbar class="scrollnavbar">
       <v-list aria-busy="true" aria-label="menu list">
         <!---Menu Loop -->
-        <template v-for="(item, i) in sidebarMenu" :key="i">
+        <template v-for="(item, i) in filteredMenu" :key="i">
           <!---Item Sub Header -->
           <NavGroup v-if="item.header" :key="item.title" :item="item" />
           <!---Item Divider -->

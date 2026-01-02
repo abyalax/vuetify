@@ -12,7 +12,7 @@
       requiresAuth: true,
       roles: [ROLES.ADMIN],
       permissions: [
-        PERMISSION.cv_read,
+        PERMISSION.ADMIN.cv_read,
       ],
     },
   })

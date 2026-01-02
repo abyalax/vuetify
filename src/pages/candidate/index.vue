@@ -1,37 +1,29 @@
 <script setup lang="ts">
   import type { Breadcrumb } from '@/components/ui'
   import { ref } from 'vue'
-  import { VCol, VRow } from 'vuetify/components'
   import { PERMISSION } from '@/common/permission'
   import { ROLES } from '@/common/role'
   import Page from '@/components/layouts/dashboard/page.vue'
-  import TableCandidate from './_components/table-candidate.vue'
   definePage({
     meta: {
       layout: 'authenticated',
       requiresAuth: true,
-      roles: [ROLES.ADMIN],
-      permissions: [
-        PERMISSION.candidate_read,
-      ],
+      roles: [ROLES.CANDIDATE],
+      permissions: [PERMISSION.CANDIDATE.cv_read],
     },
   })
-  const page = ref({ title: 'Candidate' })
+  const page = ref({ title: 'Curriculum Vitae' })
   const breadcrumbs = ref<Breadcrumb[]>([
     {
-      title: 'Candidate',
+      title: 'CV',
       disabled: true,
-      href: '/candidate',
+      href: '/cv',
     },
   ])
 </script>
 <template>
   <Breadcrumbs :breadcrumbs="breadcrumbs" :title="page.title" />
   <Page>
-    <VRow>
-      <VCol cols="12">
-        <TableCandidate />
-      </VCol>
-    </VRow>
+    This is plan for page cv that user guest have
   </Page>
 </template>

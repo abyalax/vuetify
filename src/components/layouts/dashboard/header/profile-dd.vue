@@ -30,7 +30,7 @@
       </v-avatar>
       <div>
         <h6 class="text-h6 mb-0">{{ $state.user?.name }}</h6>
-        <p class="text-caption mb-0">{{ $state.user?.roles[0]?.name }}</p>
+        <p class="text-caption mb-0">{{ $state.user?.role }}</p>
       </div>
       <div class="ml-auto">
         <v-btn

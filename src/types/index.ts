@@ -100,11 +100,6 @@ export interface JobPost {
 export type CreateJobPost = Omit<JobPost, 'id'>
 export type UpdateJobPost = Partial<JobPost>
 
-export type Role = {
-  id: number
-  name: string
-}
-
 export type Permission = {
   id: number
   key: string
@@ -116,7 +111,7 @@ export type User = {
   name: string
   email: string
   password: string
-  roles: Role[]
+  role: string
   permissions: Permission[]
 }
 

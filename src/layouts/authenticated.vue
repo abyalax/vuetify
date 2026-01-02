@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { RouterView } from 'vue-router'
-  import VerticalHeader from '@/components/layouts/dashboard/header/vertical-header.vue'
-  import VerticalSidebar from '@/components/layouts/dashboard/sidebar/vertical-sidebar.vue'
+  import Header from '@/components/layouts/dashboard/header/header.vue'
+  import Sidebar from '@/components/layouts/dashboard/sidebar/sidebar.vue'
   import Notification from '@/components/ui/notification.vue'
   import { useCustomizerStore } from '@/stores/customizer-store'
   import LoaderWrapper from './blank/_components/LoaderWrapper.vue'
@@ -14,8 +14,8 @@
   <v-locale-provider>
 
     <v-app :class="[customizer.mini_sidebar ? 'mini-sidebar' : '']">
-      <VerticalSidebar />
-      <VerticalHeader />
+      <Sidebar />
+      <Header />
 
       <v-main class="page-wrapper">
         <v-container fluid>

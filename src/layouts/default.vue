@@ -1,14 +1,14 @@
 <script setup lang="ts">
   import { RouterView } from 'vue-router'
   import FooterPanel from '@/components/layouts/dashboard/footer.vue'
-  import VerticalHeader from '@/components/layouts/dashboard/header/vertical-header.vue'
+  import Header from '@/components/layouts/dashboard/header/header.vue'
   import LoaderWrapper from './blank/_components/LoaderWrapper.vue'
 
 </script>
 
 <template>
   <v-locale-provider>
-    <VerticalHeader />
+    <Header />
 
     <v-main class="page-wrapper">
       <v-container fluid>

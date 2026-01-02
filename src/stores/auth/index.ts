@@ -3,16 +3,15 @@ import { useAuthStore } from './auth-store'
 
 export type RouteAuthMeta = {
   requiresAuth?: boolean
-  roles?: string[]
+  role?: string
   permissions?: string[]
   redirectTo?: string
 }
 
-export function hasRole (user: User, roles: string[]): boolean {
-  return user.roles.some(r => roles.includes(r.name))
-}
-
-export function hasPermission (user: User, permissions: string[]): boolean {
+export function hasPermission (user: User | null, permissions: string[]): boolean {
+  if (user === null) {
+    return false
+  }
   return user.permissions.some(p => permissions.includes(p.key))
 }
 
@@ -24,7 +23,7 @@ export function canAccess (
     return false
   }
 
-  if (meta.roles?.length && user && !hasRole(user, meta.roles)) {
+  if (meta.role && user && user.role === meta.role) {
     return false
   }
 

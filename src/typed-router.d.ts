@@ -28,11 +28,12 @@ declare module 'vue-router/auto-routes' {
     '/auth/login': RouteRecordInfo<'/auth/login', '/auth/login', Record<never, never>, Record<never, never>>,
     '/auth/register': RouteRecordInfo<'/auth/register', '/auth/register', Record<never, never>, Record<never, never>>,
     '/candidate/': RouteRecordInfo<'/candidate/', '/candidate', Record<never, never>, Record<never, never>>,
-    '/candidate/_components/form/form-candidate': RouteRecordInfo<'/candidate/_components/form/form-candidate', '/candidate/_components/form/form-candidate', Record<never, never>, Record<never, never>>,
-    '/candidate/_components/table-candidate': RouteRecordInfo<'/candidate/_components/table-candidate', '/candidate/_components/table-candidate', Record<never, never>, Record<never, never>>,
-    '/candidate/[id]/': RouteRecordInfo<'/candidate/[id]/', '/candidate/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
-    '/candidate/[id]/update/': RouteRecordInfo<'/candidate/[id]/update/', '/candidate/:id/update', { id: ParamValue<true> }, { id: ParamValue<false> }>,
-    '/candidate/create/': RouteRecordInfo<'/candidate/create/', '/candidate/create', Record<never, never>, Record<never, never>>,
+    '/candidates/': RouteRecordInfo<'/candidates/', '/candidates', Record<never, never>, Record<never, never>>,
+    '/candidates/_components/form/form-candidate': RouteRecordInfo<'/candidates/_components/form/form-candidate', '/candidates/_components/form/form-candidate', Record<never, never>, Record<never, never>>,
+    '/candidates/_components/table-candidate': RouteRecordInfo<'/candidates/_components/table-candidate', '/candidates/_components/table-candidate', Record<never, never>, Record<never, never>>,
+    '/candidates/[id]/': RouteRecordInfo<'/candidates/[id]/', '/candidates/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
+    '/candidates/[id]/update/': RouteRecordInfo<'/candidates/[id]/update/', '/candidates/:id/update', { id: ParamValue<true> }, { id: ParamValue<false> }>,
+    '/candidates/create/': RouteRecordInfo<'/candidates/create/', '/candidates/create', Record<never, never>, Record<never, never>>,
     '/cv/': RouteRecordInfo<'/cv/', '/cv', Record<never, never>, Record<never, never>>,
     '/cv/_components/form/form-cv': RouteRecordInfo<'/cv/_components/form/form-cv', '/cv/_components/form/form-cv', Record<never, never>, Record<never, never>>,
     '/cv/_components/table-cv': RouteRecordInfo<'/cv/_components/table-cv', '/cv/_components/table-cv', Record<never, never>, Record<never, never>>,
@@ -114,24 +115,28 @@ declare module 'vue-router/auto-routes' {
       routes: '/candidate/'
       views: never
     }
-    'src/pages/candidate/_components/form/form-candidate.vue': {
-      routes: '/candidate/_components/form/form-candidate'
+    'src/pages/candidates/index.vue': {
+      routes: '/candidates/'
       views: never
     }
-    'src/pages/candidate/_components/table-candidate.vue': {
-      routes: '/candidate/_components/table-candidate'
+    'src/pages/candidates/_components/form/form-candidate.vue': {
+      routes: '/candidates/_components/form/form-candidate'
       views: never
     }
-    'src/pages/candidate/[id]/index.vue': {
-      routes: '/candidate/[id]/'
+    'src/pages/candidates/_components/table-candidate.vue': {
+      routes: '/candidates/_components/table-candidate'
       views: never
     }
-    'src/pages/candidate/[id]/update/index.vue': {
-      routes: '/candidate/[id]/update/'
+    'src/pages/candidates/[id]/index.vue': {
+      routes: '/candidates/[id]/'
       views: never
     }
-    'src/pages/candidate/create/index.vue': {
-      routes: '/candidate/create/'
+    'src/pages/candidates/[id]/update/index.vue': {
+      routes: '/candidates/[id]/update/'
+      views: never
+    }
+    'src/pages/candidates/create/index.vue': {
+      routes: '/candidates/create/'
       views: never
     }
     'src/pages/cv/index.vue': {

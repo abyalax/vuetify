@@ -1,5 +1,5 @@
 import type { TFilterParams, TResponseList } from '@/common/meta'
-import type { FormDataCandidate } from '@/pages/candidate/_components/form/candidate-schema'
+import type { FormDataCandidate } from '@/pages/candidates/_components/form/candidate-schema'
 import type { Candidate } from '@/types'
 import { http } from '@/libs/axios/http'
 
