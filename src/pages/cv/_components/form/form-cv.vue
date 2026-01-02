@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { toTypedSchema } from '@vee-validate/zod'
-  import { ErrorMessage, Field, Form } from 'vee-validate'
+  import { ErrorMessage, Field, useForm } from 'vee-validate'
   import { zodObjectToShape } from '@/libs/zod/zod-to-field-config'
   import { cvSchema, educationShape, experienceSchema, type FormDataCV, type PayloadCV } from './cv-schema'
 
@@ -14,17 +14,28 @@
   const validationSchema = toTypedSchema(cvSchema)
   const experienceShape = zodObjectToShape(experienceSchema)
 
+  const { handleSubmit, resetForm } = useForm<FormDataCV>({
+    validationSchema,
+    initialValues: props.initialValues,
+  })
+
+  const onSubmitForm = handleSubmit(v => props.onSubmit(v))
+
+  watch(
+    () => props.initialValues,
+    values => resetForm({ values }),
+    { immediate: true },
+  )
+
 </script>
 
 <template>
 
-  <!-- @vue-expect-error : type missmatch cause toTypedSchema make the field optional, even at zod is required -->
-  <Form
-    :key="JSON.stringify(props.initialValues)"
+  <form
     class="mt-7 cv-form"
     :initial-values="props.initialValues"
     :validation-schema="validationSchema"
-    @submit="onSubmit"
+    @submit.prevent="onSubmitForm"
   >
     <!-- Name -->
     <div class="mb-6">
@@ -85,7 +96,7 @@
         {{ message }}
       </v-alert>
     </ErrorMessage>
-  </Form>
+  </form>
 </template>
 
 <style lang="scss">

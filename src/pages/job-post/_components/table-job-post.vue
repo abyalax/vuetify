@@ -25,7 +25,7 @@
   }, 500)
 
   const headers = [
-    { title: 'Title', key: 'Title', align: 'start', sortable: true },
+    { title: 'Title', key: 'title', align: 'start', sortable: true },
     { title: 'Department', key: 'department', align: 'start', sortable: true },
     { title: 'Description', key: 'description', sortable: false },
     { title: 'Type Of Employee', key: 'employmentType', sortable: false },
@@ -118,13 +118,13 @@
 
 </script>
 <template>
-  <VCard elevation="2">
-    <VCardTitle class="d-flex align-center justify-space-between pa-4">
+  <v-card elevation="2">
+    <v-card-title class="d-flex align-center justify-space-between pa-4">
       <span class="text-h5 font-weight-medium">Job Post Management</span>
       <VBtn color="primary" :prepend-icon="mdiPlus" @click="handleCreate">
         Create New Job Post
       </VBtn>
-    </VCardTitle>
+    </v-card-title>
 
     <div class="d-flex ga-3 px-4 pb-4">
       <v-dialog max-width="340">
@@ -322,7 +322,7 @@
         </div>
       </template>
     </v-data-table-server>
-  </VCard>
+  </v-card>
 </template>
 
 <style scoped>

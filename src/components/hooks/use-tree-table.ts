@@ -16,7 +16,7 @@ export type FlattenNode<T> = T & {
 function attachRowKey<T extends { id: string, children?: T[] }> (
   rows: T[],
   parentKey = '',
-): (T & { rowKey: string, children?: any[] })[] {
+): (T & { rowKey: string, children?: T[] })[] {
   return rows.map(row => {
     const rowKey = parentKey ? `${parentKey}/${row.id}` : row.id
 
@@ -42,7 +42,7 @@ export function useTreeTable<
   }
 
   const treeData = computed(() =>
-    attachRowKey(source.value),
+    attachRowKey<T>(source.value),
   )
 
   const flattenedItems = computed(() => {

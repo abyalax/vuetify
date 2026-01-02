@@ -5,7 +5,6 @@
   import { useDebounceFn } from '@vueuse/core'
   import { computed, reactive, ref, watch } from 'vue'
   import { useRoute, useRouter } from 'vue-router'
-  import { VBtn, VCard, VCardTitle, VList, VListItem, VMenu, VTextField } from 'vuetify/components'
   import { useDeleteJob } from '../_hooks/use-delete-job-post'
   import { useGetListJob } from '../_hooks/use-get-list-jobs-post'
 
@@ -109,13 +108,13 @@
 
 </script>
 <template>
-  <VCard elevation="2">
-    <VCardTitle class="d-flex align-center justify-space-between pa-4">
+  <v-card elevation="2">
+    <v-card-title class="d-flex align-center justify-space-between pa-4">
       <span class="text-h5 font-weight-medium">Job Post Management</span>
-      <VBtn color="primary" :prepend-icon="mdiPlus" @click="handleCreate">
+      <v-btn color="primary" :prepend-icon="mdiPlus" @click="handleCreate">
         Create New Job Post
-      </VBtn>
-    </VCardTitle>
+      </v-btn>
+    </v-card-title>
 
     <div class="d-flex ga-3 px-4 pb-4">
       <v-dialog max-width="340">
@@ -141,9 +140,9 @@
       <div v-if="selected.length > 0" style="margin-right: 10px;">
         <VMenu>
           <template #activator="{ props }">
-            <VBtn v-bind="props" :append-icon="mdiChevronDown" color="primary" variant="tonal">
+            <v-btn v-bind="props" :append-icon="mdiChevronDown" color="primary" variant="tonal">
               Actions
-            </VBtn>
+            </v-btn>
           </template>
           <VList density="compact">
             <VListItem :prepend-icon="mdiDownload" title="Export Selected" @click="handleBulkExport" />
@@ -206,7 +205,7 @@
         <div class="d-flex justify-center ga-1">
           <v-tooltip location="top" text="View Details">
             <template #activator="{ props }">
-              <VBtn
+              <v-btn
                 v-bind="props"
                 color="info"
                 :icon="mdiEyeOutline"
@@ -219,7 +218,7 @@
 
           <v-tooltip location="top" text="Edit Candidate">
             <template #activator="{ props }">
-              <VBtn
+              <v-btn
                 v-bind="props"
                 color="primary"
                 :icon="mdiPencilOutline"
@@ -232,7 +231,7 @@
 
           <v-tooltip location="top" text="Delete Candidate">
             <template #activator="{ props }">
-              <VBtn
+              <v-btn
                 v-bind="props"
                 color="error"
                 :icon="mdiDeleteOutline"
@@ -246,134 +245,7 @@
       </template>
 
     </TreeDataTable>
-
-    <!-- <v-data-table-server
-      v-model="selected"
-      v-model:items-per-page="state.per_page"
-      v-model:page="state.page"
-      class="custom-table"
-      fixed-header
-      :headers="headers"
-      hover
-      item-key="id"
-      :items="treeItems"
-      :items-length="meta?.total ?? 0"
-      :loading="isLoading"
-      :search="state.search"
-      show-select
-      style="max-height: 65dvh;"
-      @update:options="updateOptions"
-    >
-      <template #[`item.tree`]="{ item }">
-        <v-btn
-          v-if="isExpandableRow(item)"
-          icon
-          size="small"
-          variant="text"
-          @click.stop="toggleExpand(item.rowKey)"
-        >
-          <v-icon
-            :icon="expanded.includes(item.rowKey)
-              ? mdiChevronDown
-              : mdiChevronRight"
-          />
-        </v-btn>
-      </template>
-
-      <template #[`item.title`]="{ item }">
-        <div class="d-flex flex-column py-2" :style="{ paddingLeft: `${item.__level * 24}px` }">
-          <span class="font-weight-bold text-primary">{{ item.title }}</span>
-          <span class="text-caption text-grey-darken-1">{{ item.department }}</span>
-        </div>
-      </template>
-
-      <template #[`item.employmentType`]="{ value }">
-        <v-chip class="text-capitalize" size="small" variant="tonal">
-          {{ value.replace('-', ' ') }}
-        </v-chip>
-      </template>
-
-      <template #[`item.status`]="{ value }">
-        <v-chip
-          class="text-uppercase font-weight-bold"
-          :color="value === 'published' ? 'success' : 'warning'"
-          label
-          size="small"
-        >
-          {{ value }}
-        </v-chip>
-      </template>
-
-      <template #[`item.minSalary`]="{ item }">
-        <div class="text-no-wrap text-body-2">
-          {{ formatCurrency(item.minSalary) }} - {{ formatCurrency(item.maxSalary) }}
-        </div>
-      </template>
-
-      <template #[`item.actions`]="{ item }">
-        <div class="d-flex justify-center ga-1">
-          <v-tooltip location="top" text="View Details">
-            <template #activator="{ props }">
-              <VBtn
-                v-bind="props"
-                color="info"
-                :icon="mdiEyeOutline"
-                size="small"
-                variant="text"
-                @click="handleView(item)"
-              />
-            </template>
-          </v-tooltip>
-
-          <v-tooltip location="top" text="Edit Candidate">
-            <template #activator="{ props }">
-              <VBtn
-                v-bind="props"
-                color="primary"
-                :icon="mdiPencilOutline"
-                size="small"
-                variant="text"
-                @click="handleEdit(item)"
-              />
-            </template>
-          </v-tooltip>
-
-          <v-tooltip location="top" text="Delete Candidate">
-            <template #activator="{ props }">
-              <VBtn
-                v-bind="props"
-                color="error"
-                :icon="mdiDeleteOutline"
-                size="small"
-                variant="text"
-                @click="handleDelete(item)"
-              />
-            </template>
-          </v-tooltip>
-        </div>
-      </template>
-
-      <template #no-data>
-        <div class="d-flex flex-column align-center justify-center pa-8">
-          <v-icon class="mb-4" color="grey-lighten-1" :icon="mdiFileDocumentOutline" size="64" />
-          <div class="text-h6 text-medium-emphasis mb-2">No Candidates Found</div>
-          <div class="text-body-2 text-medium-emphasis mb-4">
-            {{ state.search ? 'Try adjusting your search' : 'Get started by adding your first candidate' }}
-          </div>
-          <VBtn v-if="!state.search" color="primary" :prepend-icon="mdiPlus" @click="handleCreate">
-            Add Your Firts Candidate
-          </VBtn>
-          <VBtn v-else variant="outlined" @click="searchInput = ''">Clear Search</VBtn>
-        </div>
-      </template>
-
-      <template #loading>
-        <div class="d-flex justify-center align-center pa-8">
-          <v-progress-circular color="primary" indeterminate />
-        </div>
-      </template>
-    </v-data-table-server> -->
-  </VCard>
+  </v-card>
 </template>
 
 <style scoped>

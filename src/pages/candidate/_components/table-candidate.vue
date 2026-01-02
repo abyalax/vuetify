@@ -109,13 +109,13 @@
 
 </script>
 <template>
-  <VCard elevation="2">
-    <VCardTitle class="d-flex align-center justify-space-between pa-4">
+  <v-card elevation="2">
+    <v-card-title class="d-flex align-center justify-space-between pa-4">
       <span class="text-h5 font-weight-medium">Candidate Management</span>
       <VBtn color="primary" :prepend-icon="mdiPlus" @click="handleCreate">
         Add New Candidate
       </VBtn>
-    </VCardTitle>
+    </v-card-title>
 
     <div class="d-flex ga-3 px-4 pb-4">
       <v-dialog max-width="340">
@@ -267,7 +267,7 @@
         </div>
       </template>
     </v-data-table-server>
-  </VCard>
+  </v-card>
 </template>
 
 <style scoped>

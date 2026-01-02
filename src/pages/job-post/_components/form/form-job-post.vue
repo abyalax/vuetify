@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import type { FormDataJobPost, PayloadJobPost } from './job-schema'
   import { toTypedSchema } from '@vee-validate/zod'
-  import { ErrorMessage, Field, Form } from 'vee-validate'
+  import { ErrorMessage, Field, useForm } from 'vee-validate'
   import { jobPostSchema } from './job-schema'
 
   type Props = {
@@ -13,17 +13,28 @@
   const props = defineProps<Props>()
   const validationSchema = toTypedSchema(jobPostSchema)
 
+  const { handleSubmit, resetForm } = useForm<FormDataJobPost>({
+    validationSchema,
+    initialValues: props.initialValues,
+  })
+
+  const onSubmitForm = handleSubmit(v => props.onSubmit(v))
+
+  watch(
+    () => props.initialValues,
+    values => resetForm({ values }),
+    { immediate: true },
+  )
+
 </script>
 
 <template>
 
-  <!-- @vue-expect-error : type missmatch cause toTypedSchema make the field optional, even at zod is required -->
-  <Form
-    :key="JSON.stringify(props.initialValues)"
+  <form
     class="mt-7 my-form"
     :initial-values="props.initialValues"
     :validation-schema="validationSchema"
-    @submit="onSubmit"
+    @submit.prevent="onSubmitForm"
   >
     <div class="mb-6">
       <v-label>Title</v-label>
@@ -187,7 +198,7 @@
         {{ message }}
       </v-alert>
     </ErrorMessage>
-  </Form>
+  </form>
 </template>
 
 <style lang="scss">
