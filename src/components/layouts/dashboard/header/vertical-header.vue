@@ -1,12 +1,14 @@
 <script setup lang="ts">
   import { GithubOutlined, MenuFoldOutlined, SearchOutlined } from '@ant-design/icons-vue'
   import ThemeSwitcher from '@/components/ui/theme-switcher.vue'
-  import { useCustomizerStore } from '@/stores/customizer'
+  import { useAuthStore } from '@/stores/auth-store'
+  import { useCustomizerStore } from '@/stores/customizer-store'
   import NotificationDD from './notification-dd.vue'
   import ProfileDD from './profile-dd.vue'
   import SearchBarPanel from './search-bar-panel.vue'
 
   const customizer = useCustomizerStore()
+  const { $state } = useAuthStore()
 </script>
 
 <template>
@@ -110,7 +112,7 @@
             <v-avatar class="mr-sm-2 mr-0 py-2">
               <img alt="Julia" src="@/assets/images/users/avatar-1.png">
             </v-avatar>
-            <h6 class="text-subtitle-1 mb-0 d-sm-block d-none">JWT User</h6>
+            <h6 class="text-subtitle-1 mb-0 d-sm-block d-none">{{ $state.user?.name }}</h6>
           </div>
         </v-btn>
       </template>

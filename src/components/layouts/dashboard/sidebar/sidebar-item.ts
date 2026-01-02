@@ -4,7 +4,7 @@ import {
   LoginOutlined,
   ProfileOutlined,
 } from '@ant-design/icons-vue'
-import { TieIcon, UsersGroupIcon } from 'vue-tabler-icons'
+import { HorseToyIcon, TieIcon, UsersGroupIcon } from 'vue-tabler-icons'
 
 export interface menu {
   header?: string
@@ -49,6 +49,12 @@ const sidebarItem: menu[] = [
     title: 'Nested Table',
     icon: TieIcon,
     to: '/job-post-nested',
+  },
+  { header: 'Board Playground' },
+  {
+    title: 'Playground',
+    icon: HorseToyIcon,
+    to: '/playground',
   },
   { header: 'Authentication' },
   {

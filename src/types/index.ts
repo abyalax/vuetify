@@ -89,3 +89,26 @@ export interface JobPost {
 
 export type CreateJobPost = Omit<JobPost, 'id'>
 export type UpdateJobPost = Partial<JobPost>
+
+export type Role = {
+  id: number
+  name: string
+}
+
+export type Permission = {
+  id: number
+  key: string
+  name: string
+}
+
+export type User = {
+  id: string
+  name: string
+  email: string
+  password: string
+  roles: Role[]
+  permissions: Permission[]
+}
+
+export type CreateUser = Omit<User, 'id'>
+export type UpdateUser = Partial<User>

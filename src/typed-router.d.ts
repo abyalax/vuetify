@@ -57,6 +57,7 @@ declare module 'vue-router/auto-routes' {
     '/job-post-nested/[id]/': RouteRecordInfo<'/job-post-nested/[id]/', '/job-post-nested/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
     '/job-post-nested/[id]/update/': RouteRecordInfo<'/job-post-nested/[id]/update/', '/job-post-nested/:id/update', { id: ParamValue<true> }, { id: ParamValue<false> }>,
     '/job-post-nested/create/': RouteRecordInfo<'/job-post-nested/create/', '/job-post-nested/create', Record<never, never>, Record<never, never>>,
+    '/playground/': RouteRecordInfo<'/playground/', '/playground', Record<never, never>, Record<never, never>>,
   }
 
   /**
@@ -224,6 +225,10 @@ declare module 'vue-router/auto-routes' {
     }
     'src/pages/job-post-nested/create/index.vue': {
       routes: '/job-post-nested/create/'
+      views: never
+    }
+    'src/pages/playground/index.vue': {
+      routes: '/playground/'
       views: never
     }
   }

@@ -7,7 +7,6 @@ import { createApp } from 'vue'
 import { registerPlugins } from '@/plugins'
 import App from './App.vue'
 import { setupMockBrowser } from './libs/worker'
-import { fakeBackend } from './utils/helpers/fake-backend'
 import '@fontsource/public-sans/400.css'
 import '@fontsource/public-sans/500.css'
 import '@fontsource/public-sans/600.css'
@@ -23,7 +22,6 @@ async function bootstrap () {
 
   const app = createApp(App)
   registerPlugins(app)
-  fakeBackend()
 
   app.mount('#app')
 }

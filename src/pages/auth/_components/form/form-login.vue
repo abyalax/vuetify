@@ -1,23 +1,28 @@
 <script setup lang="ts">
   import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons-vue'
   import { toTypedSchema } from '@vee-validate/zod'
-  import { ErrorMessage, Field, Form } from 'vee-validate'
+  import { ErrorMessage, Field, useForm } from 'vee-validate'
   import { ref } from 'vue'
-  import { useAuthStore } from '@/stores/auth'
+  import { useAuthStore } from '@/stores/auth-store'
   import { type LoginFormValues, loginSchema } from './login-schema'
 
   const validationSchema = toTypedSchema(loginSchema)
   const showPassword = ref(false)
   const authStore = useAuthStore()
   const initialValues: LoginFormValues = {
-    email: 'info@codedthemes.com',
-    password: 'admin123',
+    email: 'abya.admin@gmail.com',
+    password: '1Password_',
   }
 
-  async function onSubmit (values: LoginFormValues) {
-    await authStore.login(values.email, values.password)
-    console.log(values)
-  }
+  const { handleSubmit } = useForm<LoginFormValues>({
+    validationSchema,
+    initialValues,
+  })
+
+  const onSubmitForm = handleSubmit(async v => {
+    await authStore.login(v.email, v.password)
+  })
+
 </script>
 
 <template>
@@ -28,12 +33,9 @@
     </router-link>
   </div>
 
-  <!-- @vue-expect-error : type missmatch cause toTypedSchema make the field optional, even at zod is required -->
-  <Form
+  <form
     class="mt-7 loginForm"
-    :initial-values="initialValues"
-    :validation-schema="validationSchema"
-    @submit="onSubmit"
+    @submit.prevent="onSubmitForm"
   >
     <!-- Email -->
     <div class="mb-6">
@@ -109,7 +111,7 @@
         {{ message }}
       </v-alert>
     </ErrorMessage>
-  </Form>
+  </form>
 </template>
 
 <style lang="scss">

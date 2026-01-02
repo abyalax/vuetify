@@ -13,10 +13,10 @@
     WalletOutlined,
   } from '@ant-design/icons-vue'
   import { ref } from 'vue'
-  import { useAuthStore } from '@/stores/auth'
+  import { useAuthStore } from '@/stores/auth-store'
 
   const tab = ref(null)
-  const authStore = useAuthStore()
+  const { $state, logout } = useAuthStore()
 </script>
 
 <template>
@@ -29,8 +29,8 @@
         <img alt="Julia" src="@/assets/images/users/avatar-1.png" width="32">
       </v-avatar>
       <div>
-        <h6 class="text-h6 mb-0">JWT User</h6>
-        <p class="text-caption mb-0">UI/UX Designer</p>
+        <h6 class="text-h6 mb-0">{{ $state.user?.name }}</h6>
+        <p class="text-caption mb-0">{{ $state.user?.roles[0]?.name }}</p>
       </div>
       <div class="ml-auto">
         <v-btn
@@ -39,7 +39,7 @@
           rounded="sm"
           size="large"
           variant="text"
-          @click="authStore.logout()"
+          @click="logout()"
         >
           <LogoutOutlined :style="{ fontSize: '20px' }" />
         </v-btn>
@@ -85,7 +85,7 @@
               <v-list-item-title class="text-h6"> Billing</v-list-item-title>
             </v-list-item>
 
-            <v-list-item color="secondary" rounded="0" @click="authStore.logout()">
+            <v-list-item color="secondary" rounded="0" @click="logout()">
               <template #prepend>
                 <LogoutOutlined class="mr-4" :style="{ fontSize: '14px' }" />
               </template>

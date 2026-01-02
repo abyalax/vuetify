@@ -20,4 +20,10 @@ export const QueryKey = {
     UPDATE: 'update-job',
     DELETE: 'delete-job',
   },
+
+  AUTH: {
+    LOGIN: 'auth-login',
+    SESSION: 'auth-session',
+  },
+
 }

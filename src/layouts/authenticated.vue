@@ -3,7 +3,7 @@
   import VerticalHeader from '@/components/layouts/dashboard/header/vertical-header.vue'
   import VerticalSidebar from '@/components/layouts/dashboard/sidebar/vertical-sidebar.vue'
   import Notification from '@/components/ui/notification.vue'
-  import { useCustomizerStore } from '@/stores/customizer'
+  import { useCustomizerStore } from '@/stores/customizer-store'
   import LoaderWrapper from './blank/_components/LoaderWrapper.vue'
 
   const customizer = useCustomizerStore()

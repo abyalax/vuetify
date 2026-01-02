@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { shallowRef } from 'vue'
-  import { useCustomizerStore } from '@/stores/customizer'
+  import { useCustomizerStore } from '@/stores/customizer-store'
   import LogoDark from '../logo.vue'
 
   import NavCollapse from './nav-collapse.vue'
