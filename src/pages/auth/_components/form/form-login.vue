@@ -3,7 +3,7 @@
   import { toTypedSchema } from '@vee-validate/zod'
   import { ErrorMessage, Field, useForm } from 'vee-validate'
   import { ref } from 'vue'
-  import { useAuthStore } from '@/stores/auth-store'
+  import { useAuthStore } from '@/stores/auth/auth-store'
   import { type LoginFormValues, loginSchema } from './login-schema'
 
   const validationSchema = toTypedSchema(loginSchema)

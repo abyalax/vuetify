@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { storeToRefs } from 'pinia'
-  import { useUIStore } from '@/stores/ui'
+  import { useUIStore } from '@/stores/ui-store'
 
   const uiStore = useUIStore()
   const { isLoading } = storeToRefs(uiStore)

@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { GithubOutlined, MenuFoldOutlined, SearchOutlined } from '@ant-design/icons-vue'
   import ThemeSwitcher from '@/components/ui/theme-switcher.vue'
-  import { useAuthStore } from '@/stores/auth-store'
+  import { useAuthStore } from '@/stores/auth/auth-store'
   import { useCustomizerStore } from '@/stores/customizer-store'
   import NotificationDD from './notification-dd.vue'
   import ProfileDD from './profile-dd.vue'

@@ -7,8 +7,8 @@
 import { setupLayouts } from 'virtual:generated-layouts'
 import { createRouter, createWebHistory } from 'vue-router'
 import { routes } from 'vue-router/auto-routes'
-import { useAuthStore } from '@/stores/auth-store'
-import { useUIStore } from '@/stores/ui'
+import { authGuard } from '@/stores/auth'
+import { useUIStore } from '@/stores/ui-store'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,25 +30,7 @@ router.onError((err, to) => {
   }
 })
 
-router.beforeEach(to => {
-  const auth = useAuthStore()
-
-  const requiresAuth = to.matched.some(
-    record => record.meta.requiresAuth === true,
-  )
-
-  if (requiresAuth && !auth.user) {
-    auth.returnUrl = to.fullPath
-    return {
-      path: '/auth/login',
-      query: { redirect: to.fullPath },
-    }
-  }
-
-  if (auth.user && to.path === '/auth/login') {
-    return auth.returnUrl ?? '/'
-  }
-})
+router.beforeEach(authGuard)
 
 router.beforeEach(() => {
   const uiStore = useUIStore()

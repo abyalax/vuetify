@@ -19,6 +19,9 @@ declare module 'vue-router/auto-routes' {
    */
   export interface RouteNamedMap {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
+    '/403': RouteRecordInfo<'/403', '/403', Record<never, never>, Record<never, never>>,
+    '/404': RouteRecordInfo<'/404', '/404', Record<never, never>, Record<never, never>>,
+    '/500': RouteRecordInfo<'/500', '/500', Record<never, never>, Record<never, never>>,
     '/auth/_components/AuthFooter': RouteRecordInfo<'/auth/_components/AuthFooter', '/auth/_components/AuthFooter', Record<never, never>, Record<never, never>>,
     '/auth/_components/form/form-login': RouteRecordInfo<'/auth/_components/form/form-login', '/auth/_components/form/form-login', Record<never, never>, Record<never, never>>,
     '/auth/_components/form/FormRegister': RouteRecordInfo<'/auth/_components/form/FormRegister', '/auth/_components/form/FormRegister', Record<never, never>, Record<never, never>>,
@@ -73,6 +76,18 @@ declare module 'vue-router/auto-routes' {
   export interface _RouteFileInfoMap {
     'src/pages/index.vue': {
       routes: '/'
+      views: never
+    }
+    'src/pages/403.vue': {
+      routes: '/403'
+      views: never
+    }
+    'src/pages/404.vue': {
+      routes: '/404'
+      views: never
+    }
+    'src/pages/500.vue': {
+      routes: '/500'
       views: never
     }
     'src/pages/auth/_components/AuthFooter.vue': {

@@ -37,10 +37,10 @@ const users: User[] = [
     password: '1Password_',
     roles: [{ id: 1, name: 'candidate' }],
     permissions: [
-      { id: 1, key: 'cv.read', name: 'Read CV' },
-      { id: 2, key: 'cv.delete', name: 'Delete CV' },
-      { id: 3, key: 'cv.update', name: 'Update CV' },
-      { id: 4, key: 'cv.create', name: 'Create CV' },
+      { id: 1, key: 'me:cv.read', name: 'Read CV' },
+      { id: 2, key: 'me:cv.delete', name: 'Delete CV' },
+      { id: 3, key: 'me:cv.update', name: 'Update CV' },
+      { id: 4, key: 'me:cv.create', name: 'Create CV' },
     ],
   },
 ]

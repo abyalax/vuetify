@@ -1,3 +1,13 @@
+// router/types.ts
+import type { RouteAuthMeta } from '@/stores/auth'
+import 'vue-router'
+
+declare module 'vue-router' {
+  interface RouteMeta extends RouteAuthMeta {
+    layout?: 'authenticated' | 'guest'
+  }
+}
+
 export type CandidateStatus
   = | 'active'
     | 'inactive'

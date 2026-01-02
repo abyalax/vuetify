@@ -13,7 +13,7 @@
     WalletOutlined,
   } from '@ant-design/icons-vue'
   import { ref } from 'vue'
-  import { useAuthStore } from '@/stores/auth-store'
+  import { useAuthStore } from '@/stores/auth/auth-store'
 
   const tab = ref(null)
   const { $state, logout } = useAuthStore()
