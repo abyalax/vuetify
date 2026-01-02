@@ -24,7 +24,6 @@
   }, 500)
 
   const headers = [
-    { title: '', key: 'tree', width: '48px', sortable: false },
     { title: 'Title', key: 'title', align: 'start', sortable: true },
     { title: 'Department', key: 'department', align: 'start', sortable: true },
     { title: 'Description', key: 'description', sortable: false },

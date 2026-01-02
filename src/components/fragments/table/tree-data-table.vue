@@ -26,6 +26,11 @@
     isExpandableRow,
   } = useTreeTable(source)
 
+  const headers = [
+    { title: '', key: 'tree', width: '48px', sortable: false },
+    ...props.headers,
+  ]
+
 </script>
 
 <template>
