@@ -1,7 +1,8 @@
+import type { TreeNode } from '@/components/hooks/use-tree-table'
 import type { JobPost } from '@/types'
 import { IndexedDBRepository } from '@/libs/storage/repository'
 
-const jobpost: JobPost[] = [
+const jobpost: TreeNode<JobPost>[] = [
   {
     id: 'job-001',
     title: 'Senior Frontend Developer',
@@ -16,6 +17,70 @@ const jobpost: JobPost[] = [
     maxSalary: 25_000_000,
     createdAt: '2025-12-27T10:43:26.509Z',
     updatedAt: '2025-12-27T10:43:26.509Z',
+    children: [
+      {
+        id: 'job-001-a',
+        title: 'Senior Frontend Developer',
+        description: 'Kami mencari pengembang Frontend berpengalaman untuk membangun antarmuka web yang responsif dan performan.',
+        requirements: ['Minimal 5 tahun pengalaman React/Next.js', 'Keahlian dalam Tailwind CSS dan TypeScript', 'Memahami State Management seperti Redux atau Zustand'],
+        responsibilities: ['Mengembangkan fitur baru menggunakan React', 'Melakukan code review', 'Optimasi performa aplikasi web'],
+        department: 'Engineering',
+        employmentType: 'full-time',
+        status: 'published',
+        location: 'Jakarta Selatan, DKI Jakarta',
+        minSalary: 18_000_000,
+        maxSalary: 25_000_000,
+        createdAt: '2025-12-27T10:43:26.509Z',
+        updatedAt: '2025-12-27T10:43:26.509Z',
+      },
+      {
+        id: 'job-001-b',
+        title: 'Senior Frontend Developer',
+        description: 'Kami mencari pengembang Frontend berpengalaman untuk membangun antarmuka web yang responsif dan performan.',
+        requirements: ['Minimal 5 tahun pengalaman React/Next.js', 'Keahlian dalam Tailwind CSS dan TypeScript', 'Memahami State Management seperti Redux atau Zustand'],
+        responsibilities: ['Mengembangkan fitur baru menggunakan React', 'Melakukan code review', 'Optimasi performa aplikasi web'],
+        department: 'Engineering',
+        employmentType: 'full-time',
+        status: 'published',
+        location: 'Jakarta Selatan, DKI Jakarta',
+        minSalary: 18_000_000,
+        maxSalary: 25_000_000,
+        createdAt: '2025-12-27T10:43:26.509Z',
+        updatedAt: '2025-12-27T10:43:26.509Z',
+        children: [
+          {
+            id: 'job-001-b-1',
+            title: 'Senior Frontend Developer',
+            description: 'Kami mencari pengembang Frontend berpengalaman untuk membangun antarmuka web yang responsif dan performan.',
+            requirements: ['Minimal 5 tahun pengalaman React/Next.js', 'Keahlian dalam Tailwind CSS dan TypeScript', 'Memahami State Management seperti Redux atau Zustand'],
+            responsibilities: ['Mengembangkan fitur baru menggunakan React', 'Melakukan code review', 'Optimasi performa aplikasi web'],
+            department: 'Engineering',
+            employmentType: 'full-time',
+            status: 'published',
+            location: 'Jakarta Selatan, DKI Jakarta',
+            minSalary: 18_000_000,
+            maxSalary: 25_000_000,
+            createdAt: '2025-12-27T10:43:26.509Z',
+            updatedAt: '2025-12-27T10:43:26.509Z',
+          },
+          {
+            id: 'job-001-b-2',
+            title: 'Senior Frontend Developer',
+            description: 'Kami mencari pengembang Frontend berpengalaman untuk membangun antarmuka web yang responsif dan performan.',
+            requirements: ['Minimal 5 tahun pengalaman React/Next.js', 'Keahlian dalam Tailwind CSS dan TypeScript', 'Memahami State Management seperti Redux atau Zustand'],
+            responsibilities: ['Mengembangkan fitur baru menggunakan React', 'Melakukan code review', 'Optimasi performa aplikasi web'],
+            department: 'Engineering',
+            employmentType: 'full-time',
+            status: 'published',
+            location: 'Jakarta Selatan, DKI Jakarta',
+            minSalary: 18_000_000,
+            maxSalary: 25_000_000,
+            createdAt: '2025-12-27T10:43:26.509Z',
+            updatedAt: '2025-12-27T10:43:26.509Z',
+          },
+        ],
+      },
+    ],
   },
   {
     id: 'job-002',

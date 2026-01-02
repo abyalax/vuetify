@@ -1,18 +1,17 @@
 <script setup lang="ts">
-  import type { SortOrder, TFilterParams } from '@/common/meta'
+  import type { TFilterParams } from '@/common/meta'
   import type { JobPost } from '@/types'
-  import { mdiBriefcaseCheckOutline, mdiChevronDown, mdiClipboardTextOutline, mdiClose, mdiDelete, mdiDeleteOutline, mdiDownload, mdiEyeOutline, mdiFileDocumentOutline, mdiMagnify, mdiPackage, mdiPencilOutline, mdiPlus } from '@mdi/js'
+  import { mdiChevronDown, mdiClose, mdiDelete, mdiDeleteOutline, mdiDownload, mdiEyeOutline, mdiMagnify, mdiPackage, mdiPencilOutline, mdiPlus } from '@mdi/js'
   import { useDebounceFn } from '@vueuse/core'
   import { computed, reactive, ref, watch } from 'vue'
   import { useRoute, useRouter } from 'vue-router'
-  import { VBtn, VCard, VCardTitle, VList, VListItem, VMenu, VTextField, VTooltip } from 'vuetify/components'
+  import { VBtn, VCard, VCardTitle, VList, VListItem, VMenu, VTextField } from 'vuetify/components'
   import { useDeleteJob } from '../_hooks/use-delete-job-post'
   import { useGetListJob } from '../_hooks/use-get-list-jobs-post'
 
   const router = useRouter()
   const route = useRoute()
   const selected = ref<JobPost[]>([])
-  const expanded = ref([])
   const state = reactive<TFilterParams>({
     page: Number(route.query.page) || 1,
     per_page: Number(route.query.per_page) || 10,
@@ -25,7 +24,8 @@
   }, 500)
 
   const headers = [
-    { title: 'Title', key: 'Title', align: 'start', sortable: true },
+    { title: '', key: 'tree', width: '48px', sortable: false },
+    { title: 'Title', key: 'title', align: 'start', sortable: true },
     { title: 'Department', key: 'department', align: 'start', sortable: true },
     { title: 'Description', key: 'description', sortable: false },
     { title: 'Type Of Employee', key: 'employmentType', sortable: false },
@@ -44,8 +44,8 @@
 
   const { data, isLoading } = useGetListJob(queryParams)
   const { mutate } = useDeleteJob()
-  const items = computed(() => data.value?.items ?? [])
   const meta = computed(() => data.value?.meta)
+  const items = computed(() => data.value?.items ?? [])
 
   function formatCurrency (value: number) {
     return new Intl.NumberFormat('id-ID', {
@@ -54,6 +54,7 @@
       maximumFractionDigits: 0,
     }).format(value)
   }
+
   function handleCreate () {
     router.push('/job-post/create')
   }
@@ -83,17 +84,11 @@
     selected.value = []
   }
 
-  function updateOptions (options: {
-    page: number
-    itemsPerPage: number
-    sortBy: { key: string, order: SortOrder }[]
-  }) {
+  function updateOptions (options: TFilterParams) {
     state.page = options.page
-    state.per_page = options.itemsPerPage
-
-    const sort = options.sortBy[0]
-    state.sort = sort?.key
-    state.order = sort?.order?.toLowerCase() as SortOrder
+    state.per_page = options.per_page
+    state.order = options.order
+    state.sort = options.sort
   }
 
   watch(
@@ -174,29 +169,17 @@
       />
     </div>
 
-    <v-data-table-server
-      v-model="selected"
-      v-model:expanded="expanded"
-      v-model:items-per-page="state.per_page"
-      v-model:page="state.page"
-      class="custom-table"
-      fixed-header
+    <TreeDataTable
       :headers="headers"
-      hover
-      item-key="id"
       :items="items"
-      :items-length="meta?.total ?? 0"
       :loading="isLoading"
-      :search="state.search"
-      show-expand
-      show-select
-      style="max-height: 65dvh;"
-      @update:options="updateOptions"
+      :pagination="state"
+      :total-items="meta?.total ?? 0"
+      @update:pagination="updateOptions"
     >
       <template #[`item.title`]="{ item }">
-        <div class="d-flex flex-column py-2">
-          <span class="font-weight-bold text-primary">{{ item.title }}</span>
-          <span class="text-caption text-grey-darken-1">{{ item.department }}</span>
+        <div :style="{ paddingLeft: `${item.__level * 24}px` }">
+          {{ item.title }}
         </div>
       </template>
 
@@ -223,40 +206,112 @@
         </div>
       </template>
 
-      <template #expanded-row="{ columns, item }">
-        <tr>
-          <td class="py-4 px-6" :colspan="columns.length">
-            <v-row>
-              <v-col cols="12" md="6">
-                <div class="text-subtitle-2 font-weight-bold mb-2 text-indigo">
-                  <v-icon class="me-2" :icon="mdiClipboardTextOutline" size="small" />
-                  Requirements
-                </div>
-                <ul class="text-body-2 ps-4">
-                  <li v-for="(req, index) in item.requirements" :key="index" class="mb-1">
-                    {{ req }}
-                  </li>
-                </ul>
-              </v-col>
-              <v-col cols="12" md="6">
-                <div class="text-subtitle-2 font-weight-bold mb-2 text-teal">
-                  <v-icon class="me-2" :icon="mdiBriefcaseCheckOutline" size="small" />
-                  Responsibilities
-                </div>
-                <ul class="text-body-2 ps-4">
-                  <li v-for="(res, index) in item.responsibilities" :key="index" class="mb-1">
-                    {{ res }}
-                  </li>
-                </ul>
-              </v-col>
-            </v-row>
+      <template #[`item.actions`]="{ item }">
+        <div class="d-flex justify-center ga-1">
+          <v-tooltip location="top" text="View Details">
+            <template #activator="{ props }">
+              <VBtn
+                v-bind="props"
+                color="info"
+                :icon="mdiEyeOutline"
+                size="small"
+                variant="text"
+                @click="handleView(item)"
+              />
+            </template>
+          </v-tooltip>
 
-            <div class="mt-4 pt-3 border-t">
-              <span class="text-caption text-grey">Full Description:</span>
-              <p class="text-body-2 italic">{{ item.description }}</p>
-            </div>
-          </td>
-        </tr>
+          <v-tooltip location="top" text="Edit Candidate">
+            <template #activator="{ props }">
+              <VBtn
+                v-bind="props"
+                color="primary"
+                :icon="mdiPencilOutline"
+                size="small"
+                variant="text"
+                @click="handleEdit(item)"
+              />
+            </template>
+          </v-tooltip>
+
+          <v-tooltip location="top" text="Delete Candidate">
+            <template #activator="{ props }">
+              <VBtn
+                v-bind="props"
+                color="error"
+                :icon="mdiDeleteOutline"
+                size="small"
+                variant="text"
+                @click="handleDelete(item)"
+              />
+            </template>
+          </v-tooltip>
+        </div>
+      </template>
+
+    </TreeDataTable>
+
+    <!-- <v-data-table-server
+      v-model="selected"
+      v-model:items-per-page="state.per_page"
+      v-model:page="state.page"
+      class="custom-table"
+      fixed-header
+      :headers="headers"
+      hover
+      item-key="id"
+      :items="treeItems"
+      :items-length="meta?.total ?? 0"
+      :loading="isLoading"
+      :search="state.search"
+      show-select
+      style="max-height: 65dvh;"
+      @update:options="updateOptions"
+    >
+      <template #[`item.tree`]="{ item }">
+        <v-btn
+          v-if="isExpandableRow(item)"
+          icon
+          size="small"
+          variant="text"
+          @click.stop="toggleExpand(item.rowKey)"
+        >
+          <v-icon
+            :icon="expanded.includes(item.rowKey)
+              ? mdiChevronDown
+              : mdiChevronRight"
+          />
+        </v-btn>
+      </template>
+
+      <template #[`item.title`]="{ item }">
+        <div class="d-flex flex-column py-2" :style="{ paddingLeft: `${item.__level * 24}px` }">
+          <span class="font-weight-bold text-primary">{{ item.title }}</span>
+          <span class="text-caption text-grey-darken-1">{{ item.department }}</span>
+        </div>
+      </template>
+
+      <template #[`item.employmentType`]="{ value }">
+        <v-chip class="text-capitalize" size="small" variant="tonal">
+          {{ value.replace('-', ' ') }}
+        </v-chip>
+      </template>
+
+      <template #[`item.status`]="{ value }">
+        <v-chip
+          class="text-uppercase font-weight-bold"
+          :color="value === 'published' ? 'success' : 'warning'"
+          label
+          size="small"
+        >
+          {{ value }}
+        </v-chip>
+      </template>
+
+      <template #[`item.minSalary`]="{ item }">
+        <div class="text-no-wrap text-body-2">
+          {{ formatCurrency(item.minSalary) }} - {{ formatCurrency(item.maxSalary) }}
+        </div>
       </template>
 
       <template #[`item.actions`]="{ item }">
@@ -321,7 +376,7 @@
           <v-progress-circular color="primary" indeterminate />
         </div>
       </template>
-    </v-data-table-server>
+    </v-data-table-server> -->
   </VCard>
 </template>
 

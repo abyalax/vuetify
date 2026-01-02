@@ -51,6 +51,12 @@ declare module 'vue-router/auto-routes' {
     '/job-post/[id]/': RouteRecordInfo<'/job-post/[id]/', '/job-post/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
     '/job-post/[id]/update/': RouteRecordInfo<'/job-post/[id]/update/', '/job-post/:id/update', { id: ParamValue<true> }, { id: ParamValue<false> }>,
     '/job-post/create/': RouteRecordInfo<'/job-post/create/', '/job-post/create', Record<never, never>, Record<never, never>>,
+    '/job-post-nested/': RouteRecordInfo<'/job-post-nested/', '/job-post-nested', Record<never, never>, Record<never, never>>,
+    '/job-post-nested/_components/form/form-job-post': RouteRecordInfo<'/job-post-nested/_components/form/form-job-post', '/job-post-nested/_components/form/form-job-post', Record<never, never>, Record<never, never>>,
+    '/job-post-nested/_components/table-job-post': RouteRecordInfo<'/job-post-nested/_components/table-job-post', '/job-post-nested/_components/table-job-post', Record<never, never>, Record<never, never>>,
+    '/job-post-nested/[id]/': RouteRecordInfo<'/job-post-nested/[id]/', '/job-post-nested/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
+    '/job-post-nested/[id]/update/': RouteRecordInfo<'/job-post-nested/[id]/update/', '/job-post-nested/:id/update', { id: ParamValue<true> }, { id: ParamValue<false> }>,
+    '/job-post-nested/create/': RouteRecordInfo<'/job-post-nested/create/', '/job-post-nested/create', Record<never, never>, Record<never, never>>,
   }
 
   /**
@@ -194,6 +200,30 @@ declare module 'vue-router/auto-routes' {
     }
     'src/pages/job-post/create/index.vue': {
       routes: '/job-post/create/'
+      views: never
+    }
+    'src/pages/job-post-nested/index.vue': {
+      routes: '/job-post-nested/'
+      views: never
+    }
+    'src/pages/job-post-nested/_components/form/form-job-post.vue': {
+      routes: '/job-post-nested/_components/form/form-job-post'
+      views: never
+    }
+    'src/pages/job-post-nested/_components/table-job-post.vue': {
+      routes: '/job-post-nested/_components/table-job-post'
+      views: never
+    }
+    'src/pages/job-post-nested/[id]/index.vue': {
+      routes: '/job-post-nested/[id]/'
+      views: never
+    }
+    'src/pages/job-post-nested/[id]/update/index.vue': {
+      routes: '/job-post-nested/[id]/update/'
+      views: never
+    }
+    'src/pages/job-post-nested/create/index.vue': {
+      routes: '/job-post-nested/create/'
       views: never
     }
   }

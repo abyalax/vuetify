@@ -1,4 +1,3 @@
-// icons
 import {
   BookOutlined,
   DashboardOutlined,
@@ -45,6 +44,11 @@ const sidebarItem: menu[] = [
     title: 'Candidate',
     icon: UsersGroupIcon,
     to: '/candidate',
+  },
+  {
+    title: 'Nested Table',
+    icon: TieIcon,
+    to: '/job-post-nested',
   },
   { header: 'Authentication' },
   {
