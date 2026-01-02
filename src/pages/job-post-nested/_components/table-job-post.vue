@@ -85,10 +85,7 @@
   }
 
   function updateOptions (options: TFilterParams) {
-    state.page = options.page
-    state.per_page = options.per_page
-    state.order = options.order
-    state.sort = options.sort
+    Object.assign(state, options)
   }
 
   watch(
