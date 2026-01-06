@@ -35,7 +35,5 @@ declare module 'vue' {
     TreeDataTable: typeof import('./components/fragments/table/tree-data-table.vue')['default']
     UiParentCard: typeof import('./components/ui/ui-parent-card.vue')['default']
     UiTitleCard: typeof import('./components/ui/ui-title-card.vue')['default']
-    VerticalHeader: typeof import('./components/layouts/dashboard/header/vertical-header.vue')['default']
-    VerticalSidebar: typeof import('./components/layouts/dashboard/sidebar/vertical-sidebar.vue')['default']
   }
 }

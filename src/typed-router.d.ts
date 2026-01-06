@@ -42,10 +42,15 @@ declare module 'vue-router/auto-routes' {
     '/cv/create/': RouteRecordInfo<'/cv/create/', '/cv/create', Record<never, never>, Record<never, never>>,
     '/dashboard/': RouteRecordInfo<'/dashboard/', '/dashboard', Record<never, never>, Record<never, never>>,
     '/dashboard/_components/analytics-report': RouteRecordInfo<'/dashboard/_components/analytics-report', '/dashboard/_components/analytics-report', Record<never, never>, Record<never, never>>,
+    '/dashboard/_components/average-sla': RouteRecordInfo<'/dashboard/_components/average-sla', '/dashboard/_components/average-sla', Record<never, never>, Record<never, never>>,
     '/dashboard/_components/help-support': RouteRecordInfo<'/dashboard/_components/help-support', '/dashboard/_components/help-support', Record<never, never>, Record<never, never>>,
     '/dashboard/_components/income-overview': RouteRecordInfo<'/dashboard/_components/income-overview', '/dashboard/_components/income-overview', Record<never, never>, Record<never, never>>,
+    '/dashboard/_components/location': RouteRecordInfo<'/dashboard/_components/location', '/dashboard/_components/location', Record<never, never>, Record<never, never>>,
+    '/dashboard/_components/participation-rate': RouteRecordInfo<'/dashboard/_components/participation-rate', '/dashboard/_components/participation-rate', Record<never, never>, Record<never, never>>,
     '/dashboard/_components/recent-order': RouteRecordInfo<'/dashboard/_components/recent-order', '/dashboard/_components/recent-order', Record<never, never>, Record<never, never>>,
     '/dashboard/_components/sales-report': RouteRecordInfo<'/dashboard/_components/sales-report', '/dashboard/_components/sales-report', Record<never, never>, Record<never, never>>,
+    '/dashboard/_components/status-distribution': RouteRecordInfo<'/dashboard/_components/status-distribution', '/dashboard/_components/status-distribution', Record<never, never>, Record<never, never>>,
+    '/dashboard/_components/top-materials': RouteRecordInfo<'/dashboard/_components/top-materials', '/dashboard/_components/top-materials', Record<never, never>, Record<never, never>>,
     '/dashboard/_components/transaction-history': RouteRecordInfo<'/dashboard/_components/transaction-history', '/dashboard/_components/transaction-history', Record<never, never>, Record<never, never>>,
     '/dashboard/_components/unique-visitor': RouteRecordInfo<'/dashboard/_components/unique-visitor', '/dashboard/_components/unique-visitor', Record<never, never>, Record<never, never>>,
     '/dashboard/_components/widget-five': RouteRecordInfo<'/dashboard/_components/widget-five', '/dashboard/_components/widget-five', Record<never, never>, Record<never, never>>,
@@ -171,6 +176,10 @@ declare module 'vue-router/auto-routes' {
       routes: '/dashboard/_components/analytics-report'
       views: never
     }
+    'src/pages/dashboard/_components/average-sla.vue': {
+      routes: '/dashboard/_components/average-sla'
+      views: never
+    }
     'src/pages/dashboard/_components/help-support.vue': {
       routes: '/dashboard/_components/help-support'
       views: never
@@ -179,12 +188,28 @@ declare module 'vue-router/auto-routes' {
       routes: '/dashboard/_components/income-overview'
       views: never
     }
+    'src/pages/dashboard/_components/location.vue': {
+      routes: '/dashboard/_components/location'
+      views: never
+    }
+    'src/pages/dashboard/_components/participation-rate.vue': {
+      routes: '/dashboard/_components/participation-rate'
+      views: never
+    }
     'src/pages/dashboard/_components/recent-order.vue': {
       routes: '/dashboard/_components/recent-order'
       views: never
     }
     'src/pages/dashboard/_components/sales-report.vue': {
       routes: '/dashboard/_components/sales-report'
+      views: never
+    }
+    'src/pages/dashboard/_components/status-distribution.vue': {
+      routes: '/dashboard/_components/status-distribution'
+      views: never
+    }
+    'src/pages/dashboard/_components/top-materials.vue': {
+      routes: '/dashboard/_components/top-materials'
       views: never
     }
     'src/pages/dashboard/_components/transaction-history.vue': {
