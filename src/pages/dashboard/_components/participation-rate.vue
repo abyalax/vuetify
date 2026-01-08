@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  import { mdiCircle } from '@mdi/js'
   import { computed } from 'vue'
 
   type ParticipationItem = {
@@ -79,7 +80,7 @@
             <v-icon
               class="mr-2"
               :color="item.color"
-              icon="mdi-circle"
+              :icon="mdiCircle"
               size="10"
             />
             <span class="text-body-2 flex-grow-1">
