@@ -4,12 +4,6 @@
   import Breadcrumbs from '@/components/ui/breadcrumbs.vue'
   import FormJobPost from '../_components/form/form-job-post.vue'
   import { useCreateJob } from '../_hooks/use-create-job-post'
-  definePage({
-    meta: {
-      layout: 'authenticated',
-      requiresAuth: true,
-    },
-  })
   const page = ref({ title: 'Job Post' })
   const breadcrumbs = ref<Breadcrumb[]>([
     {

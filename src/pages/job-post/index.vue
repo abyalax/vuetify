@@ -2,20 +2,8 @@
   import type { Breadcrumb } from '@/components/ui'
   import { ref } from 'vue'
   import { VCol, VRow } from 'vuetify/components'
-  import { PERMISSION } from '@/common/permission'
-  import { ROLES } from '@/common/role'
   import Page from '@/components/layouts/dashboard/page.vue'
   import TableJobPost from './_components/table-job-post.vue'
-  definePage({
-    meta: {
-      layout: 'authenticated',
-      requiresAuth: true,
-      roles: [ROLES.ADMIN],
-      permissions: [
-        PERMISSION.ADMIN.job_read,
-      ],
-    },
-  })
   const page = ref({ title: 'Job Post' })
   const breadcrumbs = ref<Breadcrumb[]>([
     {

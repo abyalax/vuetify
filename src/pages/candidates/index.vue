@@ -6,16 +6,6 @@
   import { ROLES } from '@/common/role'
   import Page from '@/components/layouts/dashboard/page.vue'
   import TableCandidate from './_components/table-candidate.vue'
-  definePage({
-    meta: {
-      layout: 'authenticated',
-      requiresAuth: true,
-      roles: [ROLES.ADMIN],
-      permissions: [
-        PERMISSION.ADMIN.candidate_read,
-      ],
-    },
-  })
   const page = ref({ title: 'Candidate' })
   const breadcrumbs = ref<Breadcrumb[]>([
     {

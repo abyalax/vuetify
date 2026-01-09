@@ -1,6 +1,7 @@
 import type { AxiosError } from 'axios'
 import type { TResponseError } from '@/common/meta'
 import { useMutation } from '@tanstack/vue-query'
+import { useRouter } from 'vue-router'
 import { QueryKey } from '@/common/query-key'
 import { useNotification } from '@/components/hooks/use-notifications'
 import { candidateApi } from '@/modules/candidate'

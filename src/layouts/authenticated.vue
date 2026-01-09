@@ -4,7 +4,7 @@
   import Sidebar from '@/components/layouts/dashboard/sidebar/sidebar.vue'
   import Notification from '@/components/ui/notification.vue'
   import { useCustomizerStore } from '@/stores/customizer-store'
-  import LoaderWrapper from './blank/_components/LoaderWrapper.vue'
+  import LoaderWrapper from './blank/_components/loader-wrapper.vue'
 
   const customizer = useCustomizerStore()
 </script>

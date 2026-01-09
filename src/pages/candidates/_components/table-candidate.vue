@@ -46,15 +46,15 @@
   const meta = computed(() => data.value?.meta)
 
   function handleCreate () {
-    router.push('/candidate/create')
+    router.push('/candidates/create')
   }
 
   function handleView (params: Candidate) {
-    router.push(`/candidate/${params.id}`)
+    router.push(`/candidates/${params.id}`)
   }
 
   function handleEdit (params: Candidate) {
-    router.push(`/candidate/${params.id}/update`)
+    router.push(`/candidates/${params.id}/update`)
   }
 
   function handleDelete (params: Candidate) {

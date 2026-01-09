@@ -6,12 +6,6 @@
   import { useGetCV } from '../../_hooks/use-get-cv'
   import { useUpdateCV } from '../../_hooks/use-update-cv'
 
-  definePage({
-    meta: {
-      layout: 'authenticated',
-      requiresAuth: true,
-    },
-  })
   const { params } = useRoute()
   // @ts-expect-error
   const id = params.id

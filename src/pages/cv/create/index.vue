@@ -4,12 +4,6 @@
   import Breadcrumbs from '@/components/ui/breadcrumbs.vue'
   import FormCV from '../_components/form/form-cv.vue'
   import { useCreateCV } from '../_hooks/use-create-cv'
-  definePage({
-    meta: {
-      layout: 'authenticated',
-      requiresAuth: true,
-    },
-  })
   const page = ref({ title: 'Curriculum Vitae' })
   const breadcrumbs = ref<Breadcrumb[]>([
     {

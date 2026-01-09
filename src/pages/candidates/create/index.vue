@@ -4,12 +4,6 @@
   import Breadcrumbs from '@/components/ui/breadcrumbs.vue'
   import FormCV from '../_components/form/form-candidate.vue'
   import { useCreateCandidate } from '../_hooks/use-create-candidate'
-  definePage({
-    meta: {
-      layout: 'authenticated',
-      requiresAuth: true,
-    },
-  })
   const page = ref({ title: 'Candidate' })
   const breadcrumbs = ref<Breadcrumb[]>([
     {

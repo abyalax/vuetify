@@ -2,7 +2,7 @@
   import { RouterView } from 'vue-router'
   import FooterPanel from '@/components/layouts/dashboard/footer.vue'
   import Header from '@/components/layouts/dashboard/header/header.vue'
-  import LoaderWrapper from './blank/_components/LoaderWrapper.vue'
+  import LoaderWrapper from './blank/_components/loader-wrapper.vue'
 
 </script>
 

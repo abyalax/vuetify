@@ -1,25 +1,29 @@
 <script lang="ts" setup>
+  import type { menu } from './sidebar-item'
   import { computed } from 'vue'
-  import { hasPermission } from '@/stores/auth'
+  import { getUserPermissionNames } from '@/stores/auth'
   import { useAuthStore } from '@/stores/auth/auth-store'
   import NavItem from './nav-item.vue'
 
   const auth = useAuthStore()
-  const componentProps = defineProps({ item: Object, level: Number })
+  const componentProps = defineProps<{ item: menu, level?: number }>()
 
   const filteredChildren = computed(() => {
     if (!auth.user || !componentProps.item?.children) {
       return componentProps.item?.children || []
     }
 
-    return componentProps.item.children.filter((child: any) => {
-      // Allow items without permissions
+    // Extract user permissions (using permission.name for UI)
+    const userPermissions = getUserPermissionNames(auth.user)
+
+    return componentProps.item.children.filter((child: menu) => {
+      // Allow items without permissions (public)
       if (!child.permissions) {
         return true
       }
 
-      // Check if user has any of the required permissions
-      return hasPermission(auth.user, child.permissions)
+      // OR logic - salah satu permission cukup
+      return child.permissions.some((perm: string) => userPermissions.includes(perm))
     })
   })
 </script>
@@ -32,23 +36,23 @@
     <!-- ---------------------------------------------- -->
     <!---Dropdown  -->
     <!-- ---------------------------------------------- -->
-    <template #activator="{ props }">
+    <template #activator="{ props: activatorProps }">
       <v-list-item
-        v-bind="props"
+        v-bind="activatorProps"
         class="mb-1"
         color="primary"
         rounded
-        :value="item?.title"
+        :value="componentProps.item?.title"
       >
         <!---Icon  -->
         <template #prepend>
-          <component :is="item?.icon" class="iconClass" :level="level" />
+          <component :is="componentProps.item?.icon" class="iconClass" :level="componentProps.level" />
         </template>
         <!---Title  -->
-        <v-list-item-title class="mr-auto">{{ item?.title }}</v-list-item-title>
+        <v-list-item-title class="mr-auto">{{ componentProps.item?.title }}</v-list-item-title>
         <!---If Caption-->
-        <v-list-item-subtitle v-if="item?.subCaption" class="text-caption mt-n1 hide-menu">
-          {{ item?.subCaption }}
+        <v-list-item-subtitle v-if="componentProps.item?.subCaption" class="text-caption mt-n1 hide-menu">
+          {{ componentProps.item?.subCaption }}
         </v-list-item-subtitle>
       </v-list-item>
     </template>

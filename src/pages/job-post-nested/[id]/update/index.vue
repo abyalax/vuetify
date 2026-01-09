@@ -6,13 +6,6 @@
   import { useGetJob } from '../../_hooks/use-get-job-post'
   import { useUpdateJob } from '../../_hooks/use-update-job-post'
 
-  definePage({
-    meta: {
-      layout: 'authenticated',
-      requiresAuth: true,
-    },
-  })
-
   const { params } = useRoute()
   // @ts-expect-error
   const id = params.id

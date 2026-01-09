@@ -3,13 +3,6 @@
   import { useRoute } from 'vue-router'
   import { useGetCV } from '../_hooks/use-get-cv'
 
-  definePage({
-    meta: {
-      layout: 'authenticated',
-      requiresAuth: true,
-    },
-  })
-
   const route = useRoute()
   // @ts-expect-error
   const id = route.params.id

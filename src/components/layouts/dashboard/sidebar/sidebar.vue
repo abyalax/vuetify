@@ -1,9 +1,9 @@
 <script setup lang="ts">
   import { computed } from 'vue'
-  import { useRoute } from 'vue-router'
-  import { hasPermission } from '@/stores/auth'
+  import { getUserPermissionNames } from '@/stores/auth'
   import { useAuthStore } from '@/stores/auth/auth-store'
   import { useCustomizerStore } from '@/stores/customizer-store'
+  import { filterPermission } from '@/utils/permission'
 
   import LogoDark from '../logo.vue'
 
@@ -20,14 +20,19 @@
       return sidebarItems
     }
 
-    return sidebarItems.filter(item => {
-      // Allow headers, dividers, and items without permissions
+    // Extract user permissions (using permission.name for UI)
+    const userPermissions = getUserPermissionNames(auth.user)
+
+    // Filter sidebar items based on permissions
+    // Logic: OR - salah satu permission cukup, atau no permission = public
+    return filterPermission(sidebarItems as any, (item: any) => {
+      // Allow headers, dividers, and items without permissions (public)
       if (item.header || item.divider || !item.permissions) {
         return true
       }
 
-      // Check if user has any of the required permissions
-      return hasPermission(auth.user, item.permissions)
+      // OR logic - salah satu permission cukup
+      return item.permissions.some((perm: string) => userPermissions.includes(perm))
     })
   })
 </script>

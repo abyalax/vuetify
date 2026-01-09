@@ -2,15 +2,8 @@
   import type { Breadcrumb } from '@/components/ui'
   import { useRoute } from 'vue-router'
   import { useGetCandidate } from '../_hooks/use-get-candidate'
-
-  definePage({
-    meta: {
-      layout: 'authenticated',
-      requiresAuth: true,
-    },
-  })
   const route = useRoute()
-  // @ts-expect-error
+  // @ts-expect-errorya
   const id = route.params.id
   const { data } = useGetCandidate(id)
   const page = ref({ title: 'Candidate' })

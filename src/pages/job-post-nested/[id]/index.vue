@@ -3,12 +3,6 @@
   import { useRoute } from 'vue-router'
   import { useGetJob } from '../_hooks/use-get-job-post'
 
-  definePage({
-    meta: {
-      layout: 'authenticated',
-      requiresAuth: true,
-    },
-  })
   const route = useRoute()
   // @ts-expect-error
   const id = route.params.id

@@ -4,12 +4,6 @@
   import { VCol, VRow } from 'vuetify/components'
   import Page from '@/components/layouts/dashboard/page.vue'
   import TableJobPost from './_components/table-job-post.vue'
-  definePage({
-    meta: {
-      layout: 'authenticated',
-      requiresAuth: true,
-    },
-  })
   const page = ref({ title: 'Job Post' })
   const breadcrumbs = ref<Breadcrumb[]>([
     {

@@ -13,12 +13,6 @@
   import TransactionHistory from './_components/transaction-history.vue'
   import UniqueVisitor from './_components/unique-visitor.vue'
   import WidgetFive from './_components/widget-five.vue'
-  definePage({
-    meta: {
-      layout: 'authenticated',
-      requiresAuth: true,
-    },
-  })
   const breadcrumbs = ref<Breadcrumb[]>([
     {
       title: 'Dashboard',

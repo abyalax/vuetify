@@ -4,7 +4,7 @@ import 'vue-router'
 
 declare module 'vue-router' {
   interface RouteMeta extends RouteAuthMeta {
-    layout?: 'authenticated' | 'guest'
+    permissions?: string[] | string[][] // Support AND (string[]) or OR of ANDs (string[][])
   }
 }
 
@@ -104,6 +104,19 @@ export type Permission = {
   id: number
   key: string
   name: string
+  created_at?: string | null
+  updated_at?: string | null
+  deleted_at?: string | null
+}
+
+export type Role = {
+  id: string
+  name: string
+  key: string
+  permissions: Permission[]
+  created_at?: string | null
+  updated_at?: string | null
+  deleted_at?: string | null
 }
 
 export type User = {
@@ -111,8 +124,8 @@ export type User = {
   name: string
   email: string
   password: string
-  role: string
-  permissions: Permission[]
+  roles: Role[] // New structure: user has multiple roles
+  permissions?: Permission[] // Keep for backward compatibility, but prefer using roles[].permissions
 }
 
 export type CreateUser = Omit<User, 'id'>

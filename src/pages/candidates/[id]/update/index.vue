@@ -2,16 +2,9 @@
   import type { FormDataCandidate } from '../../_components/form/candidate-schema'
   import type { Breadcrumb } from '@/components/ui'
   import { useRoute } from 'vue-router'
-  import FormCV from '../../_components/form/form-candidate.vue'
+  import FormCandidate from '../../_components/form/form-candidate.vue'
   import { useGetCandidate } from '../../_hooks/use-get-candidate'
   import { useUpdateCandidate } from '../../_hooks/use-update-candidate'
-
-  definePage({
-    meta: {
-      layout: 'authenticated',
-      requiresAuth: true,
-    },
-  })
 
   const { params } = useRoute()
   // @ts-expect-error
@@ -41,5 +34,5 @@
 
 <template>
   <Breadcrumbs :breadcrumbs="breadcrumbs" :title="page.title" />
-  <FormCV button-submit="Save" :initial-values="data" :on-submit="onSubmit" />
+  <FormCandidate button-submit="Save" :initial-values="data" :on-submit="onSubmit" />
 </template>

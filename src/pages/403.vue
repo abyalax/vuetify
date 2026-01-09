@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { mdiArrowLeft, mdiBackspace, mdiHome, mdiLockAlert, mdiRefresh } from '@mdi/js'
+  import { mdiArrowLeft, mdiHome, mdiLockAlert, mdiRefresh } from '@mdi/js'
   import { computed } from 'vue'
   import { useRouter } from 'vue-router'
 
