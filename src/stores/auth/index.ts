@@ -35,7 +35,7 @@ function getUserPermissionKeys (user: User | null): Set<string> {
  * Extract user permission names from roles structure
  * Returns array of permission names (for UI/component check)
  */
-export function getUserPermissionNames (user: User | null): string[] {
+export function getUserPermissionKey (user: User | null): string[] {
   if (!user) {
     return []
   }
@@ -43,12 +43,12 @@ export function getUserPermissionNames (user: User | null): string[] {
   // Prefer roles structure, fallback to permissions for backward compatibility
   if (user.roles && user.roles.length > 0) {
     return user.roles
-      .flatMap(role => role.permissions.map(p => p.name))
+      .flatMap(role => role.permissions.map(p => p.key))
   }
 
   // Fallback to direct permissions array
   if (user.permissions && user.permissions.length > 0) {
-    return user.permissions.map(p => p.name)
+    return user.permissions.map(p => p.key)
   }
 
   return []
@@ -63,7 +63,7 @@ export function hasPermission (user: User | null, permissions: string[]): boolea
     return false
   }
 
-  const userPermissions = getUserPermissionNames(user)
+  const userPermissions = getUserPermissionKey(user)
   // AND logic - semua permission harus ada
   return permissions.every(p => userPermissions.includes(p))
 }

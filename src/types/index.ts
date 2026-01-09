@@ -8,6 +8,10 @@ declare module 'vue-router' {
   }
 }
 
+export interface TreeNode<T> {
+  children?: T[]
+}
+
 export type CandidateStatus
   = | 'active'
     | 'inactive'

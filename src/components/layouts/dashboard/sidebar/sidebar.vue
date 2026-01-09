@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { computed } from 'vue'
-  import { getUserPermissionNames } from '@/stores/auth'
+  import { getUserPermissionKey } from '@/stores/auth'
   import { useAuthStore } from '@/stores/auth/auth-store'
   import { useCustomizerStore } from '@/stores/customizer-store'
   import { filterPermission } from '@/utils/permission'
@@ -10,7 +10,7 @@
   import NavCollapse from './nav-collapse.vue'
   import NavGroup from './nav-group.vue'
   import NavItem from './nav-item.vue'
-  import sidebarItems from './sidebar-item'
+  import sidebarItems, { type Menu } from './sidebar-item'
 
   const customizer = useCustomizerStore()
   const auth = useAuthStore()
@@ -21,11 +21,11 @@
     }
 
     // Extract user permissions (using permission.name for UI)
-    const userPermissions = getUserPermissionNames(auth.user)
+    const userPermissions = getUserPermissionKey(auth.user)
 
     // Filter sidebar items based on permissions
     // Logic: OR - salah satu permission cukup, atau no permission = public
-    return filterPermission(sidebarItems as any, (item: any) => {
+    return filterPermission<Menu>(sidebarItems, (item: any) => {
       // Allow headers, dividers, and items without permissions (public)
       if (item.header || item.divider || !item.permissions) {
         return true

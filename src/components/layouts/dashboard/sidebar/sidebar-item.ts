@@ -5,9 +5,9 @@ import {
   ProfileOutlined,
 } from '@ant-design/icons-vue'
 import { HorseToyIcon, TieIcon, UsersGroupIcon } from 'vue-tabler-icons'
-import { PERMISSION_NAMES } from '@/common/permission'
+import { PERMISSION } from '@/common/permission'
 
-export interface menu {
+export interface Menu {
   header?: string
   title?: string
   icon?: object
@@ -17,14 +17,14 @@ export interface menu {
   chipColor?: string
   chipVariant?: string
   chipIcon?: string
-  children?: menu[]
+  children?: Menu[]
   disabled?: boolean
   type?: string
   subCaption?: string
   permissions?: string[]
 }
 
-const sidebarItem: menu[] = [
+const sidebarItem: Menu[] = [
   { header: 'Navigation' },
   {
     title: 'Dashboard',
@@ -36,19 +36,19 @@ const sidebarItem: menu[] = [
     title: 'Curriculum Vitae',
     icon: BookOutlined,
     to: '/cv',
-    permissions: [PERMISSION_NAMES.ADMIN.cv_read],
+    permissions: [PERMISSION.ADMIN.cv_read],
   },
   {
     title: 'Job Post',
     icon: TieIcon,
     to: '/job-post',
-    permissions: [PERMISSION_NAMES.ADMIN.job_read],
+    permissions: [PERMISSION.ADMIN.job_read],
   },
   {
     title: 'Candidate',
     icon: UsersGroupIcon,
     to: '/candidates',
-    permissions: [PERMISSION_NAMES.ADMIN.candidate_read],
+    permissions: [PERMISSION.ADMIN.candidate_read],
   },
   {
     title: 'Nested Table',
@@ -60,7 +60,7 @@ const sidebarItem: menu[] = [
     title: 'Playground',
     icon: HorseToyIcon,
     to: '/playground',
-    permissions: [PERMISSION_NAMES.CANDIDATE.PLAYGROUND],
+    permissions: [PERMISSION.CANDIDATE.PLAYGROUND],
   },
   { header: 'Authentication' },
   {

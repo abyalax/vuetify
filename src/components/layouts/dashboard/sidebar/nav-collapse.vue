@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-  import type { menu } from './sidebar-item'
+  import type { Menu } from './sidebar-item'
   import { computed } from 'vue'
-  import { getUserPermissionNames } from '@/stores/auth'
+  import { getUserPermissionKey } from '@/stores/auth'
   import { useAuthStore } from '@/stores/auth/auth-store'
   import NavItem from './nav-item.vue'
 
   const auth = useAuthStore()
-  const componentProps = defineProps<{ item: menu, level?: number }>()
+  const componentProps = defineProps<{ item: Menu, level?: number }>()
 
   const filteredChildren = computed(() => {
     if (!auth.user || !componentProps.item?.children) {
@@ -14,9 +14,9 @@
     }
 
     // Extract user permissions (using permission.name for UI)
-    const userPermissions = getUserPermissionNames(auth.user)
+    const userPermissions = getUserPermissionKey(auth.user)
 
-    return componentProps.item.children.filter((child: menu) => {
+    return componentProps.item.children.filter((child: Menu) => {
       // Allow items without permissions (public)
       if (!child.permissions) {
         return true

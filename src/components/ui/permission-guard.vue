@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { computed } from 'vue'
-  import { getUserPermissionNames, hasPermission } from '@/stores/auth'
+  import { getUserPermissionKey, hasPermission } from '@/stores/auth'
   import { useAuthStore } from '@/stores/auth/auth-store'
 
   interface Props {
@@ -30,7 +30,7 @@
 
     if (props.logic === 'OR') {
       // OR logic - salah satu permission cukup
-      const userPermissions = getUserPermissionNames(auth.user)
+      const userPermissions = getUserPermissionKey(auth.user)
       return props.permissions.some(p => userPermissions.includes(p))
     } else {
       // AND logic - semua permission harus ada (default)
