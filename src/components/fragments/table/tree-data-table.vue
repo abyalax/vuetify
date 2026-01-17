@@ -3,7 +3,7 @@
   import type { TFilterParams } from '@/common/meta'
   import { mdiChevronDown, mdiChevronRight, mdiFileDocumentOutline } from '@mdi/js'
   import { computed } from 'vue'
-  import { useTreeTable } from '@/components/hooks/use-tree-table'
+  import { useTreeTable } from '@/components/fragments/table/use-tree-table'
 
   const props = defineProps<{
     headers: readonly TableHeader[]

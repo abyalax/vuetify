@@ -1,4 +1,4 @@
-import type { TreeNode } from '@/components/hooks/use-tree-table'
+import type { TreeNode } from '@/components/fragments/table/use-tree-table'
 import type { JobPost } from '@/types'
 import { IndexedDBRepository } from '@/libs/storage/repository'
 
