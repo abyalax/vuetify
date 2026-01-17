@@ -3,6 +3,7 @@ import { authHandler } from '@/handler/auth'
 import { candidateHandlers } from '@/handler/candidate/api'
 import { cvHandlers } from '@/handler/cv/api'
 import { jobPostHandlers } from '@/handler/job-post/api'
+import { materialHandlers } from '@/handler/material/api'
 import { userHandlers } from '@/handler/user/api'
 
 const worker = setupWorker(
@@ -11,6 +12,7 @@ const worker = setupWorker(
   ...jobPostHandlers,
   ...userHandlers,
   ...authHandler,
+  ...materialHandlers,
 )
 
 export async function setupMockBrowser () {

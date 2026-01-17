@@ -32,7 +32,9 @@ import JobPostDetailPage from '@/pages/job-post/[id]/index.vue'
 import JobPostUpdatePage from '@/pages/job-post/[id]/update/index.vue'
 import JobPostCreatePage from '@/pages/job-post/create/index.vue'
 import JobPostPage from '@/pages/job-post/index.vue'
+import PlaygroundDynamicCellPage from '@/pages/playground/dynamic-cell/index.vue'
 import PlaygroundPage from '@/pages/playground/index.vue'
+
 import { authGuard } from '@/stores/auth'
 import { useUIStore } from '@/stores/ui-store'
 
@@ -221,19 +223,22 @@ const routes: RouteRecordRaw[] = [
     ],
   },
   {
-    path: '/',
+    path: '/playground/',
     component: AuthenticatedLayout,
     meta: {
-      requiresAuth: true,
-      permissions: [
-        PERMISSION.CANDIDATE.PLAYGROUND,
-      ],
+      requiresAuth: false,
+      permissions: [],
     },
     children: [
       {
-        path: 'playground',
+        path: '',
         name: 'playground',
         component: PlaygroundPage,
+      },
+      {
+        path: 'dynamic-cell',
+        name: 'dynamic-cell',
+        component: PlaygroundDynamicCellPage,
       },
     ],
   },

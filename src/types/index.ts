@@ -104,13 +104,29 @@ export interface JobPost {
 export type CreateJobPost = Omit<JobPost, 'id'>
 export type UpdateJobPost = Partial<JobPost>
 
+export type NestedGroup = {
+  name: string
+  number: string
+  children?: NestedGroup[]
+}
+
+export type Material = {
+  id: string
+  server: string
+  group: NestedGroup
+  vendor_direct: string
+  vendor_aggregator: string
+  category: string
+  sub_category: string
+}
+
+export type CreateMaterial = Omit<Material, 'id'>
+export type UpdateMaterial = Partial<Material>
+
 export type Permission = {
   id: number
   key: string
   name: string
-  created_at?: string | null
-  updated_at?: string | null
-  deleted_at?: string | null
 }
 
 export type Role = {
@@ -118,9 +134,6 @@ export type Role = {
   name: string
   key: string
   permissions: Permission[]
-  created_at?: string | null
-  updated_at?: string | null
-  deleted_at?: string | null
 }
 
 export type User = {
@@ -128,8 +141,8 @@ export type User = {
   name: string
   email: string
   password: string
-  roles: Role[] // New structure: user has multiple roles
-  permissions?: Permission[] // Keep for backward compatibility, but prefer using roles[].permissions
+  roles: Role[]
+  permissions?: Permission[]
 }
 
 export type CreateUser = Omit<User, 'id'>
