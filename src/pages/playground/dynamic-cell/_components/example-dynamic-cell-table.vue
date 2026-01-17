@@ -1,7 +1,7 @@
 <script setup lang="ts">
+  import { mdiChevronDown, mdiChevronRight } from '@mdi/js'
   import { useHierarchicalCellTable } from '../_hooks/use-hierachical-cell-table'
 
-  // todo : consistency naming children or groups
   const materials = [
     {
       id: 'm-1',
@@ -10,52 +10,130 @@
       vendor_aggregator: 'Koperasi Karyawan, PT',
       category: 'Material',
       sub_category: 'Raw',
-      group: {
-        name: 'MatGroup',
-        number: '1000',
-        server: 'BCG',
-        vendor_direct: 'Metra Kreative, PT',
-        vendor_aggregator: 'Koperasi Karyawan, PT',
-        category: 'Material',
-        sub_category: 'Raw',
-        children: [
-          {
-            name: 'Ext v1',
-            number: '1000-1',
+      children: [
+        {
+          name: 'MatGroup',
+          number: '1000',
+          data: {
+            id: 'm-1',
             server: 'BCG',
-            vendor_direct: 'Metra Kreative, PT',
-            vendor_aggregator: 'Koperasi Karyawan, PT',
+            vendor_direct: 'Mat Kreative, PT',
+            vendor_aggregator: 'Koperasi MatGroup, PT',
             category: 'Material',
             sub_category: 'Raw',
-            children: [
-              {
-                name: 'Matnum',
-                number: '1000-1a',
+          },
+          children: [
+            {
+              name: 'Ext v1',
+              number: '1000-1',
+              data: {
+                id: 'm-1',
                 server: 'BCG',
-                vendor_direct: 'Metra Kreative, PT',
-                vendor_aggregator: 'Koperasi Karyawan, PT',
+                vendor_direct: 'Ekt v1 Kreative, PT',
+                vendor_aggregator: 'Koperasi Ekt v1, PT',
                 category: 'Material',
                 sub_category: 'Raw',
-                children: [
-                  {
-                    name: 'Subs',
-                    number: '1000-1a1',
+              },
+              children: [
+                {
+                  name: 'Matnum',
+                  number: '1000-1a',
+                  data: {
+                    id: 'm-1',
                     server: 'BCG',
-                    vendor_direct: 'Metra Kreative, PT',
-                    vendor_aggregator: 'Koperasi Karyawan, PT',
+                    vendor_direct: 'Matnum Kreative, PT',
+                    vendor_aggregator: 'Koperasi Matnum, PT',
                     category: 'Material',
                     sub_category: 'Raw',
                   },
-                ],
-              },
-            ],
+                  children: [
+                    {
+                      name: 'Subs',
+                      number: '1000-1a1',
+                      data: {
+                        id: 'm-1',
+                        server: 'BCG',
+                        vendor_direct: 'Subs Kreative, PT',
+                        vendor_aggregator: 'Koperasi Subs, PT',
+                        category: 'Material',
+                        sub_category: 'Raw',
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'm-2',
+      server: 'SSH',
+      vendor_direct: 'Metra Efisien, PT',
+      vendor_aggregator: 'Koperasi Managerial, PT',
+      category: 'Jasa',
+      sub_category: 'Consultant',
+      children: [
+        {
+          name: 'FanGroup',
+          number: '1001',
+          data: {
+            id: 'm-1b',
+            server: 'SSH',
+            vendor_direct: 'Fan Efficien, PT',
+            vendor_aggregator: 'Koperasi FanGroup, PT',
+            category: 'Jasa',
+            sub_category: 'Consultant',
           },
-        ],
-      },
+          children: [
+            {
+              name: 'Ext a1',
+              number: '1000-1',
+              data: {
+                id: 'm-1b',
+                server: 'SSH',
+                vendor_direct: 'Ekt a1 Kreative, PT',
+                vendor_aggregator: 'Koperasi Ekt a1, PT',
+                category: 'Jasa',
+                sub_category: 'Consultant',
+              },
+              children: [
+                {
+                  name: 'Matnum',
+                  number: '1000-1a',
+                  data: {
+                    id: 'm-1b',
+                    server: 'SSH',
+                    vendor_direct: 'Matnum Efficien, PT',
+                    vendor_aggregator: 'Koperasi Matnum, PT',
+                    category: 'Jasa',
+                    sub_category: 'Consultant',
+                  },
+                  children: [
+                    {
+                      name: 'Subs',
+                      number: '1000-1a1',
+                      data: {
+                        id: 'm-1b',
+                        server: 'SSH',
+                        vendor_direct: 'Subs Efficien, PT',
+                        vendor_aggregator: 'Koperasi Subs, PT',
+                        category: 'Jasa',
+                        sub_category: 'Consultant',
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
     },
   ]
 
-  const { rows } = useHierarchicalCellTable(materials)
+  const { rows, toggle } = useHierarchicalCellTable(materials)
 
   console.log(rows.value)
 
@@ -65,11 +143,15 @@
   <v-table class="custom-table" fixed-header>
     <thead>
       <tr>
-        <th>Server</th>
-        <th colspan="4">Group</th>
+        <th rowspan="2">Server</th>
+        <th colspan="5">Group</th>
+        <th colspan="2">Vendor</th>
+      </tr>
+      <tr>
+        <th colspan="4">Group Name</th>
         <th>Group Number</th>
-        <th>Vendor Direct</th>
-        <th>Vendor Aggregator</th>
+        <th>Direct</th>
+        <th>Aggregator</th>
       </tr>
     </thead>
 
@@ -80,11 +162,27 @@
           {{ row.data?.server }}
         </td>
 
-        <td :colspan="4 - row.meta.depth">
-          {{ row.node.record.name }}
-        </td>
+        <template v-if="row.meta.depth === 0">
+          <td :colspan="4">
+            {{ row.node.record.name }}
+          </td>
+        </template>
 
-        <!-- last work, disini row dan colspan belum implement as well -->
+        <template v-else>
+          <!-- Empty cells for depth -->
+          <td v-for="i in Math.max(0, row.meta.depth - 1)" :key="`empty-${i}`" colspan="1" />
+          <!-- Icon cell -->
+          <td colspan="1">
+            <v-icon v-if="!row.meta.isLeaf" :icon="row.meta.isExpanded ? mdiChevronDown : mdiChevronRight" @click="toggle(row.node.nodeKey)" />
+          </td>
+          <!-- Name cell -->
+          <td colspan="1">
+            {{ row.node.record.name }}
+          </td>
+          <!-- Empty cells to fill 4 columns -->
+          <td v-for="i in Math.max(0, 3 - row.meta.depth)" :key="`empty-end-${i}`" colspan="1" />
+        </template>
+
         <td>{{ row.node.record.number }}</td>
         <td>{{ row.data?.vendor_direct }}</td>
         <td>{{ row.data?.vendor_aggregator }}</td>
@@ -92,6 +190,10 @@
 
     </tbody>
   </v-table>
+
+  <pre>
+    <code>{{ rows }}</code>
+  </pre>
 
 </template>
 <style scoped>

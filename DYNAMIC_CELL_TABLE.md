@@ -95,3 +95,76 @@ Struktur data terdiri dari material yang memiliki properti `group` yang bersaran
 5. Dokumentasi API dan penggunaan hook untuk developer lain.
 
 Dokumentasi ini akan diperbarui seiring perkembangan implementasi.
+
+## Todo
+- Adding button with icon chevron to toggle collapse per cell/row
+- di bagian ini
+
+  ```ts
+  <td :colspan="4 - row.meta.depth">
+     {{ row.node.record.name }}
+   </td>
+  <!-- last work, disini row dan colspan belum implement as well -->
+          <td>{{ row.node.record.number }}</td>
+          <td>{{ row.data?.vendor_direct }}</td>
+          <td>{{ row.data?.vendor_aggregator }}</td>
+  ```
+
+  ini belum menerapkan konsep yanng saya mention disini
+
+  ```ts
+   <tr>
+          <!-- Need State to recalculate again rowspan at here cell -->
+          <!-- on every action open/close all cell on the entire table -->
+          <td rowspan="6">
+            <!-- Need State open/close collapsible for icon -->
+            <v-icon :icon="mdiChevronDown" />
+          </td>
+
+          <!-- Need State to recalculate again rowspan at here cell -->
+          <!-- on every action open/close all cell on the entire table -->
+          <td rowspan="6">BCG</td>
+
+          <!-- Merge 4 column untuk parent pertama -->
+          <!-- merge berapa column ini didapat dari hitungan berapa jumlah child nya -->
+          <!-- tapi untuk sementara hardcode dulu, belum dinamis -->
+          <!-- but still scallable if need more nested -->
+          <td colspan="4">MatGroup</td>
+          <td>1000</td>
+          <td>Metra Kreative, PT</td>
+          <td>Koperasi Karyawan, PT</td>
+        </tr>
+
+        <tr>
+          <!-- Instead of skip, render cell kosong -->
+          <td colspan="1"><v-icon :icon="mdiChevronDown" /></td>
+          <td colspan="1">Ext v1</td>
+          <!-- like this, don't use cell with colspan > 1 -->
+          <td colspan="1" />
+          <td colspan="1" />
+          <!-- row based, so child have their row data -->
+          <td>1000-1</td>
+          <td>Metra Kreative, PT</td>
+          <td>Koperasi Karyawan, PT</td>
+        </tr>
+
+        <tr>
+          <!-- look, disini ada pola di bagian nested nya -->
+          <!-- nested child => geser data ke cell sebelahnya dan row bawahnya -->
+          <td colspan="1" />
+          <td colspan="1"><v-icon :icon="mdiChevronDown" /></td>
+          <td colspan="1">Matnum</td>
+          <td colspan="1" />
+
+          <!-- row based, so child have their row data -->
+          <td colspan="1">1000-1a</td>
+          <td colspan="1">Metra Kreative, PT</td>
+          <td colspan="1">Koperasi Karyawan, PT</td>
+        </tr>
+  ```
+
+  pada bagian ini, sebenernya hasilnya sudah bener, tapi di before after nya belum ada cell kosong seperti yang saya temukan polanya di file board-table.vue
+
+  ```ts
+  :colspan="4 - row.meta.depth"
+  ```

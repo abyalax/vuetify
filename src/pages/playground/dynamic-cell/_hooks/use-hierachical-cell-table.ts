@@ -1,9 +1,19 @@
 import { computed, ref } from 'vue'
 import { dfsPostOrder, dfsPreOrder } from './dfs-algorithm'
 
+export type MaterialData = {
+  id: string
+  server: string
+  vendor_direct: string
+  vendor_aggregator: string
+  category: string
+  sub_category: string
+}
+
 export type NestedGroup = {
   name: string
   number: string
+  data: MaterialData
   children?: NestedGroup[]
 }
 
@@ -18,28 +28,28 @@ export type NodeMeta = {
   parentId?: string
 }
 
-export type GroupNode<TData = any> = {
+export type GroupNode = {
   nodeKey: string
-  record: GroupRecord<TData>
-  children?: GroupNode<TData>[]
+  record: GroupRecord
+  children?: GroupNode[]
 }
 
-export type GroupRecord<TData = any> = {
+export type GroupRecord = {
   id: string
   name: string
   number: string
-  data: TData
-  children?: GroupRecord<TData>[]
+  data: MaterialData
+  children?: GroupRecord[]
 }
 
-export type RenderRow<TData> = {
-  node: GroupNode<TData>
+export type RenderRow = {
+  node: GroupNode
   meta: NodeMeta
-  data: TData
+  data: MaterialData
 }
 
-function computeNodeMeta<TData> (
-  nodes: GroupNode<TData>[],
+function computeNodeMeta (
+  nodes: GroupNode[],
   expanded: ExpandedState,
 ): Map<string, NodeMeta> {
   const metaMap = new Map<string, NodeMeta>()
@@ -75,7 +85,7 @@ function computeNodeMeta<TData> (
   }
 
   for (const root of nodes) {
-    dfsPreOrder<GroupNode<TData>, void>(root, {
+    dfsPreOrder(root, {
       getChildren: n => n.children,
       isExpanded: n => expanded[n.nodeKey] !== false,
       onVisit: ({ node, depth, parent }) => {
@@ -89,71 +99,73 @@ function computeNodeMeta<TData> (
   return metaMap
 }
 
-function nestedGroupToRecord<TData> (
+function nestedGroupToRecord (
   group: NestedGroup,
-  data: TData,
+  data: MaterialData,
   id: string,
-): GroupRecord<TData> {
+): GroupRecord {
   return {
     id,
     name: group.name,
     number: group.number,
     data,
-    children: group.children?.map((c, idx) =>
-      nestedGroupToRecord(
-        c,
-        data,
-        `${id}/${c.number}-${idx}`,
-      ),
+    children: group.children?.map(c =>
+      nestedGroupToRecord(c, c.data, `${id}/${c.number}`),
     ),
   }
 }
 
 interface HasGroupProperty {
-  group: NestedGroup
+  children: NestedGroup[]
 }
 
-function buildGroupTree<TData extends HasGroupProperty> (
-  items: TData[],
-): GroupNode<TData>[] {
-  return items.map(item => {
-    const rootRecord = nestedGroupToRecord(
-      item.group,
-      item,
-      `root/${(item as any).id || Math.random().toString(36)}`,
-    )
+function buildGroupTree (
+  items: HasGroupProperty[],
+): GroupNode[] {
+  const roots: GroupNode[] = []
 
-    function buildNode (
-      record: GroupRecord<TData>,
-      path: string,
-    ): GroupNode<TData> {
-      const nodeKey = `${path}/${record.number}`
+  function buildNode (
+    record: GroupRecord,
+    path: string,
+  ): GroupNode {
+    const nodeKey = `${path}/${record.number}`
 
-      return {
-        nodeKey,
-        record,
-        children: record.children?.map(c =>
-          buildNode(c, nodeKey),
-        ),
-      }
+    return {
+      nodeKey,
+      record,
+      children: record.children?.map(c =>
+        buildNode(c, nodeKey),
+      ),
     }
+  }
 
-    return buildNode(rootRecord, 'root')
-  })
+  for (const item of items) {
+    for (const child of item.children) {
+      const rootRecord = nestedGroupToRecord(child, child.data, `root/${child.number}`)
+      const rootNode = buildNode(rootRecord, 'root')
+      roots.push(rootNode)
+    }
+  }
+
+  return roots
 }
 
-function buildRenderRows<TData> (
-  roots: GroupNode<TData>[],
+function buildRenderRows (
+  roots: GroupNode[],
   expanded: ExpandedState,
-): RenderRow<TData>[] {
+  maxDepth?: number,
+): RenderRow[] {
   const metaMap = computeNodeMeta(roots, expanded)
-  const rows: RenderRow<TData>[] = []
+  const rows: RenderRow[] = []
 
   for (const root of roots) {
-    dfsPreOrder<GroupNode<TData>, void>(root, {
+    dfsPreOrder(root, {
       getChildren: n => n.children,
       isExpanded: n => expanded[n.nodeKey] !== false,
-      onVisit: ({ node }) => {
+      onVisit: ({ node, depth }) => {
+        if (maxDepth !== undefined && depth > maxDepth) {
+          return
+        }
         rows.push({
           node,
           meta: metaMap.get(node.nodeKey)!,
@@ -170,9 +182,11 @@ function buildRenderRows<TData> (
  * COMPOSABLE
  * ====================== */
 
-export function useHierarchicalCellTable<TData extends HasGroupProperty> (
-  data: TData[],
+export function useHierarchicalCellTable (
+  data: HasGroupProperty[],
+  options: { maxDepth?: number } = {},
 ) {
+  const { maxDepth } = options
   const expanded = ref<ExpandedState>({})
 
   const groupRoots = computed(() =>
@@ -180,7 +194,7 @@ export function useHierarchicalCellTable<TData extends HasGroupProperty> (
   )
 
   const rows = computed(() =>
-    buildRenderRows(groupRoots.value, expanded.value),
+    buildRenderRows(groupRoots.value, expanded.value, maxDepth),
   )
 
   function toggle (nodeKey: string) {
