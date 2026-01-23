@@ -19,6 +19,7 @@
   <Page>
     Ini content playground
     <v-container fluid>
+
       <PermissionGuard :permissions="[PERMISSION.CANDIDATE.PLAYGROUND]">
         <v-btn>Must Be Show</v-btn>
       </PermissionGuard>
